@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GestioneLido.iml" filepath="$PROJECT_DIR$/GestioneLido.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BondiComella.iml" filepath="$PROJECT_DIR$/BondiComella.iml" />
     </modules>
   </component>
 </project>
