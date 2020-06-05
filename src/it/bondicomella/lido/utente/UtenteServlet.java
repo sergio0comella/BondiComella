@@ -2,7 +2,6 @@ package it.bondicomella.lido.utente;
 
 import it.bondicomella.lido.utente.controller.UtenteController;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,25 +14,27 @@ import java.sql.SQLException;
 @WebServlet("/utenti")
 public class UtenteServlet extends HttpServlet {
 
+    private UtenteController controller;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UtenteController controller = null;
         try {
-            controller = new UtenteController();
+             this.controller = new UtenteController();
         } catch (Exception e) {
             e.printStackTrace();
         }
         PrintWriter out = response.getWriter();
-        response.setContentType("application/json");
+        response.setContentType("application/text");
         response.setCharacterEncoding("UTF-8");
         try {
-            out.print(controller.getListaUtenti());
+            out.print(this.controller.getListaUtenti());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         out.flush();
+
     }
 }

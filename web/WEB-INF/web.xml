@@ -12,4 +12,12 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UtenteServlet</servlet-name>
+        <servlet-class>it.bondicomella.lido.utente.UtenteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UtenteServlet</servlet-name>
+        <url-pattern>/api/utenti</url-pattern>
+    </servlet-mapping>
 </web-app>
