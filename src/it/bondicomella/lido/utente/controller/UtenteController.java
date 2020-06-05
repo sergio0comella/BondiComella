@@ -1,28 +1,29 @@
 package it.bondicomella.lido.utente.controller;
 
 import it.bondicomella.lido.ConnectionDB;
+import it.bondicomella.lido.Util;
+import org.json.JSONArray;
 
 import java.sql.*;
-import java.util.List;
 
 public class UtenteController {
 
     Connection conn;
+    Util util;
 
     public UtenteController() throws Exception {
         this.conn = new ConnectionDB().connect();
+        this.util = new Util();
     }
 
-    public List<String> getListaUtenti() throws SQLException {
-        PreparedStatement query = this.conn.prepareStatement("SELECT * FROM utenti");
-        List<String> utenti = null;
+    public JSONArray getListaUtenti() throws Exception {
+        PreparedStatement query = this.conn.prepareStatement("SELECT * FROM utente");
+        JSONArray utenti;
         try{
             ResultSet rs = query.executeQuery();
-            while(rs.next()){
-                utenti.add(rs.getString(0 ));
-            }
-        }catch (SQLException e){
-            throw new SQLException(); //TODO
+            utenti = util.convert(rs);
+        }catch (Exception e){
+            throw new Exception(); //TODO
         }
 
         return utenti;

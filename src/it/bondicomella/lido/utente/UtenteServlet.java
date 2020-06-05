@@ -31,10 +31,9 @@ public class UtenteServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try {
             out.print(this.controller.getListaUtenti());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (Exception e) {
+            out.println(e);
         }
         out.flush();
-
     }
 }
