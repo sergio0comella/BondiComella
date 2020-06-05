@@ -8,11 +8,8 @@ public class Utente {
     private String cognome;
     private String password;
 
-    public Utente(String email, String nome, String cognome, String password) {
-        this.email = email;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.password = password;
+    public Utente(){
+
     }
 
     public int getId() {
@@ -49,6 +46,10 @@ public class Utente {
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 
     public String getCognomeNome(){
