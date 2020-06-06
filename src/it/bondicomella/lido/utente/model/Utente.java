@@ -1,6 +1,9 @@
 package it.bondicomella.lido.utente.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Utente {
 
@@ -9,7 +12,16 @@ public class Utente {
     private String nome;
     private String cognome;
     private String password;
-    private int ruolo;
+    private String ruolo;
+
+    /**
+     * TODO
+     * Map Role:
+     * CCN - Gestore Cucina
+     * BGT - Gestore Biglietteria
+     * BNG - Bagnino
+     * CLT - Clienti/Utenti
+     */
 
     public Utente(){
 
@@ -55,16 +67,30 @@ public class Utente {
         return this.password;
     }
 
-    public int getRuolo() {
+    public String getRuolo() {
         return ruolo;
     }
 
-    public void setRuolo(int ruolo) {
+    public void setRuolo(String ruolo) {
         this.ruolo = ruolo;
     }
 
     public String getCognomeNome(){
         return this.cognome + ' ' + this.nome;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Utente)) return false;
+        Utente utente = (Utente) o;
+        return getEmail().equals(utente.getEmail()) &&
+                getPassword().equals(utente.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEmail(), getPassword());
     }
 
 }

@@ -6,6 +6,7 @@ import it.bondicomella.lido.utente.model.Utente;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UtenteController {
 
@@ -25,7 +26,7 @@ public class UtenteController {
                 String nome = rs.getString("nome");
                 String cognome = rs.getString("cognome");
                 String email = rs.getString("email");
-                int ruolo = rs.getInt("ruolo");
+                String ruolo = rs.getString("ruolo");
 
                 Utente ut = new Utente();
                 ut.setId(id);

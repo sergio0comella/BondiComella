@@ -12,5 +12,15 @@
 </head>
 <body>
     Hello!
+    <%
+        String pageName = "utenti";
+    %>
+    <input type="button" value="Click" onclick="redirectPage('<%=pageName%>')" />
 </body>
+
+<script>
+    function redirectPage(pageName){
+        window.location.href=pageName;
+    }
+</script>
 </html>
