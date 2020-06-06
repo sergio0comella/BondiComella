@@ -11,4 +11,12 @@
         <servlet-name>UtenteServlet</servlet-name>
         <url-pattern>/api/utenti</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PostazoniServelt</servlet-name>
+        <servlet-class>it.bondicomella.lido.biglietteria.PostazioneServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostazoniServelt</servlet-name>
+        <url-pattern>/api/postazioni</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -13,6 +13,9 @@
     <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('utenti')">
     Utenti
     </button>
+    <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('postazioni')">
+    Postazioni
+    </button>
 </div>
 </body>
 
