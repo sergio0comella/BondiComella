@@ -33,8 +33,7 @@ public class UtenteServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try {
             List<Utente> utenti = this.controller.getListaUtenti();
-            Utente ut = utenti.get(0);
-            request.setAttribute("utenti", ut);
+            request.setAttribute("utenti", utenti);
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/utente.jsp");
             dispatcher.forward(request, response);
 

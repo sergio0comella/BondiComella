@@ -1,5 +1,7 @@
 package it.bondicomella.lido.utente.model;
 
+import java.util.List;
+
 public class Utente {
 
     private int id;
@@ -7,6 +9,7 @@ public class Utente {
     private String nome;
     private String cognome;
     private String password;
+    private int ruolo;
 
     public Utente(){
 
@@ -52,7 +55,16 @@ public class Utente {
         return this.password;
     }
 
+    public int getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(int ruolo) {
+        this.ruolo = ruolo;
+    }
+
     public String getCognomeNome(){
         return this.cognome + ' ' + this.nome;
     }
+
 }

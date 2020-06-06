@@ -25,12 +25,14 @@ public class UtenteController {
                 String nome = rs.getString("nome");
                 String cognome = rs.getString("cognome");
                 String email = rs.getString("email");
+                int ruolo = rs.getInt("ruolo");
 
                 Utente ut = new Utente();
                 ut.setId(id);
                 ut.setNome(nome);
                 ut.setCognome(cognome);
                 ut.setEmail(email);
+                ut.setRuolo(ruolo);
 
                 utenti.add(ut);
             }
@@ -39,4 +41,5 @@ public class UtenteController {
         }
         return utenti;
     }
+
 }
