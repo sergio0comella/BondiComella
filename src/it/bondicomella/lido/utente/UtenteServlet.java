@@ -34,7 +34,7 @@ public class UtenteServlet extends HttpServlet {
         try {
             List<Utente> utenti = this.controller.getListaUtenti();
             request.setAttribute("utenti", utenti);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/utente.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/utenti.jsp");
             dispatcher.forward(request, response);
 
         } catch (Exception e) {

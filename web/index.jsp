@@ -7,15 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Title</title>
-</head>
+<jsp:include page="WEB-INF/data/header.jsp" />
 <body>
-    Hello!
-    <%
-        String pageName = "utenti";
-    %>
-    <input type="button" value="Click" onclick="redirectPage('<%=pageName%>')" />
+<div class="container mt-5">
+    <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('utenti')">
+    Utenti
+    </button>
+</div>
 </body>
 
 <script>
