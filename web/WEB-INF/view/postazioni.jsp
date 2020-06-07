@@ -11,27 +11,57 @@
 <jsp:include page="../data/header.jsp"/>
 <body>
 <div class="container mt-5">
-<h1>Situazione postazioni</h1>
-    <div class="row">
+
+<h1 class="text-center mb-5">Riepilogo postazioni</h1>
+
+    <div class="dropdown-divider"></div>
+    <div class="row justify-content-center font-italic">
+        <div class="col-1">
+            Legenda:
+        </div>
+        <div class="col-2">
+            Bianco = Libero
+        </div>
+        <div class="col-2" style="color: #d9515e;">
+            Rosso = Occupato
+        </div>
+        <div class="col-2" style="color: #eacd78;">
+            Giallo = Prenotato
+        </div>
+    </div>
+    <div class="dropdown-divider"></div>
+
+    <div class="row row-cols-5 align-content-center">
     <%
         List<Postazione> postazioni = (List<Postazione>) request.getAttribute("postazioni");
         for(Postazione postazione : postazioni){
     %>
-            <%if(postazione.getStato().equals("L")) {%>
-                <button class="btn btn-default btn-circle btn-lg m-5 "><i class="fas fa-umbrella-beach"></i></button>
-            <%}else if(postazione.getStato().equals("P")) {%>
-                <button class="btn btn-warning btn-circle btn-lg m-5 "><i class="fas fa-umbrella-beach"></i></button>
-             <%}else if(postazione.getStato().equals("O")){ %>
-                <button class="btn btn-danger btn-circle btn-lg m-5 "><i class="fas fa-umbrella-beach"></i></button>
-             <%}%>
-
-            <%if(postazioni.indexOf(postazione) % 5 == 0)%>
-                <br>
-            <%}%>
+            <div class="col">
+                <%switch (postazione.getStato()) {
+                    case "P":%>
+                    <button class="btn btn-warning btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>">
+                 <% break;
+                     case "O":%>
+                    <button class="btn btn-danger btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>">
+                <% break;
+                     default:%>
+                    <button class="btn btn-default btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>">
+                <% break;
+                }%>
+                <i class="fas fa-umbrella-beach"></i><p class="small text-center">#<%=postazione.getId()%></p></button>
+            </div>
         <%}%>
+
+    </div>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
     </div>
 
 </div>
+
 
 </body>
 </html>
