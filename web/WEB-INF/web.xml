@@ -9,7 +9,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>UtenteServlet</servlet-name>
-        <url-pattern>/api/utenti</url-pattern>
+        <url-pattern>/listaUtenti</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UtenteServlet</servlet-name>
+        <url-pattern>/addUtente</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>PostazoniServelt</servlet-name>
@@ -17,6 +21,10 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>PostazoniServelt</servlet-name>
-        <url-pattern>/api/postazioni</url-pattern>
+        <url-pattern>/listaPostazioni</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostazoniServelt</servlet-name>
+        <url-pattern>/updatePostazione/:id/:stato</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/postazioni")
+@WebServlet("/apiPostazioni")
 public class PostazioneServlet extends HttpServlet {
     private PostazioneController controller;
 
@@ -41,4 +42,32 @@ public class PostazioneServlet extends HttpServlet {
             out.println(e);
         }
     }
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idPostazione = request.getParameter("id");
+        Postazione postazione = null;
+        try {
+            this.controller = new PostazioneController();
+            postazione = this.controller.getPostazioneById(idPostazione);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        String statoPostazione = request.getParameter("stato");
+
+        try {
+            switch (statoPostazione) {
+                case "O":
+                    this.controller.occupaPostazione(postazione);
+                    break;
+                case "L":
+                    this.controller.liberaPostazione(postazione);
+                    break;
+                default:
+                    System.out.println("Case Default");
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 }

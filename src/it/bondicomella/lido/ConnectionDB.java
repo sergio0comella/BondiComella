@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class ConnectionDB{
 
-    public Connection connect() throws Exception {
+    public Connection connect() throws SQLException {
 
         try{
             String url = "jdbc:mysql://localhost:3306/lido_db";
@@ -16,7 +16,7 @@ public class ConnectionDB{
             return conn;
 
         } catch (SQLException | ClassNotFoundException e){
-            throw new Exception("Connessione al db non riuscita.");
+            throw new SQLException("Connessione al db non riuscita.");
         }
     }
 

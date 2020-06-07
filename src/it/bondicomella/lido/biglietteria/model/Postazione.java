@@ -14,6 +14,9 @@ public class Postazione {
      * O - Occupata
      * P - Prenotata
      */
+    public static String OCCUPATA = "O";
+    public static String LIBERA = "L";
+    public static String PRENOTATA = "P";
 
     public Postazione(){
 

@@ -10,10 +10,10 @@
 <jsp:include page="WEB-INF/data/header.jsp" />
 <body>
 <div class="container mt-5">
-    <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('utenti')">
+    <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('listaUtenti')">
     Utenti
     </button>
-    <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('postazioni')">
+    <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('listaPostazioni')">
     Postazioni
     </button>
 </div>
