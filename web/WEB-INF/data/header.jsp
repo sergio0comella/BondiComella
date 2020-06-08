@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">    <script type="text/javascript" src="javascript/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 
     <script src="https://kit.fontawesome.com/3bc88e1c04.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/style/postazioni.style.css">

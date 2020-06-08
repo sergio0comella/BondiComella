@@ -31,6 +31,18 @@
     </div>
     <div class="dropdown-divider"></div>
 
+    <div class="row row-cols-3 mt-4 justify-content-center">
+        <div class="col-3">
+            <p class="nPostazione">Postazione: #<span id="postSelected"></span></p>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-block btn-info" onclick="occupaPostazione()">Occupa</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-block btn-info" onclick="liberaPostazione()">Libera</button>
+        </div>
+    </div>
+
     <div class="row row-cols-5 align-content-center">
     <%
         List<Postazione> postazioni = (List<Postazione>) request.getAttribute("postazioni");
@@ -45,7 +57,7 @@
                     <button class="btn btn-danger btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>">
                 <% break;
                      default:%>
-                    <button class="btn btn-default btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>">
+                    <button class="btn btn-default btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
                 <% break;
                 }%>
                 <i class="fas fa-umbrella-beach"></i><p class="small text-center">#<%=postazione.getId()%></p></button>
@@ -54,7 +66,7 @@
 
     </div>
 
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <div class="dropdown-menu" id="postazioniOptions">
         <a class="dropdown-item" href="#">Action</a>
         <a class="dropdown-item" href="#">Another action</a>
         <a class="dropdown-item" href="#">Something else here</a>
@@ -64,4 +76,7 @@
 
 
 </body>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/postazioni.js" crossorigin="anonymous"></script>
+
 </html>

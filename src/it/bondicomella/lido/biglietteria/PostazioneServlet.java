@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/apiPostazioni")
+@WebServlet("/apiPostazioni/*")
 public class PostazioneServlet extends HttpServlet {
     private PostazioneController controller;
 
@@ -25,6 +25,7 @@ public class PostazioneServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
         try {
             this.controller = new PostazioneController();
         } catch (Exception e) {
@@ -44,15 +45,17 @@ public class PostazioneServlet extends HttpServlet {
     }
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String idPostazione = request.getParameter("id");
+        String statoPostazione = request.getParameter("stato");
         Postazione postazione = null;
+        
         try {
             this.controller = new PostazioneController();
             postazione = this.controller.getPostazioneById(idPostazione);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        String statoPostazione = request.getParameter("stato");
 
         try {
             switch (statoPostazione) {

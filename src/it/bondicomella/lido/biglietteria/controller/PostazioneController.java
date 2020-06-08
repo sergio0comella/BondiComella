@@ -56,30 +56,28 @@ public class PostazioneController {
         return pt;
     }
 
-    public boolean occupaPostazione(Postazione postazione) throws SQLException {
+    public void occupaPostazione(Postazione postazione) throws SQLException {
         String qr = "UPDATE postazione SET stato = ? where id = ?";
         PreparedStatement query = this.conn.prepareStatement(qr);
         query.setString(1, Postazione.OCCUPATA);
         query.setInt(2, postazione.getId());
         try{
-            int result = query.executeUpdate();
+            query.executeUpdate();
         }catch (SQLException e){
             throw new SQLException();
         }
-        return true;
     }
 
-    public boolean liberaPostazione(Postazione postazione) throws SQLException {
+    public void liberaPostazione(Postazione postazione) throws SQLException {
         String qr = "UPDATE postazione SET stato = ? where id = ?";
         PreparedStatement query = this.conn.prepareStatement(qr);
         query.setString(1, Postazione.LIBERA);
         query.setInt(2, postazione.getId());
         try{
-            int result = query.executeUpdate();
+            query.executeUpdate();
         }catch (SQLException e){
             throw new SQLException();
         }
-        return true;
     }
 
     //TODO gestione prenotazione
