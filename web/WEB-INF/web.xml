@@ -25,6 +25,6 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PostazoniServelt</servlet-name>
-        <url-pattern>/updatePostazione/:id/:stato</url-pattern>
+        <url-pattern>/updatePostazione/</url-pattern>
     </servlet-mapping>
 </web-app>

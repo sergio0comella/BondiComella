@@ -8,14 +8,10 @@ function occupaPostazione(){
 
     $.ajax({
         type: 'PUT',
-        dataType: 'JSON',
-        data: {
-            id : $("#postSelected").val(),
-            stato : "OOOOO"
-        },
-        url: 'http://localhost:8080/lido/apiPostazioni',
-        success: function (result) {
-            location.reload();
+        url: 'http://localhost:8080/lido/apiPostazioni?id=' + $("#postSelected").val() + '&stato=O',
+        success: function () {
+            let postazione =  $("#post_"+$("#postSelected").val());
+           postazione.addClass('btn-danger');
         },
         error: function (error) {
             console.log(error)
@@ -24,5 +20,16 @@ function occupaPostazione(){
 }
 
 function liberaPostazione() {
-
+    $.ajax({
+        type: 'PUT',
+        url: 'http://localhost:8080/lido/apiPostazioni?id=' + $("#postSelected").val() + '&stato=L',
+        success: function () {
+            let postazione =  $("#post_"+$("#postSelected").val());
+            postazione.removeClass('btn-danger');
+            postazione.removeClass('btn-warning');
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
 }

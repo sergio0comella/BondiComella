@@ -51,10 +51,10 @@
             <div class="col">
                 <%switch (postazione.getStato()) {
                     case "P":%>
-                    <button class="btn btn-warning btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>">
+                    <button class="btn btn-warning btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
                  <% break;
                      case "O":%>
-                    <button class="btn btn-danger btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>">
+                    <button class="btn btn-danger btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
                 <% break;
                      default:%>
                     <button class="btn btn-default btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
