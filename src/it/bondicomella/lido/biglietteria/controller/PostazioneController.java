@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PostazioneController {
 
-    Connection conn;
+    protected Connection conn;
 
     public PostazioneController() throws SQLException {
         this.conn = new ConnectionDB().connect();
