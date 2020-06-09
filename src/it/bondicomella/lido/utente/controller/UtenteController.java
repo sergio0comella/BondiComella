@@ -43,4 +43,12 @@ public class UtenteController {
         return utenti;
     }
 
+    public boolean doLogin(String email, String password) throws SQLException {
+        PreparedStatement query = this.conn.prepareStatement("SELECT utente.email, utente.password FROM utente WHERE email= ? and password = ? ");
+        query.setString(1,email);
+        query.setString(2,password);
+        ResultSet rs = query.executeQuery();
+        return rs.next();
+    }
+
 }

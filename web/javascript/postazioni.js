@@ -6,7 +6,7 @@ function setOptionsPostazione(postazione) {
 
 function occupaPostazione(){
 
-    $.ajax({
+    $.post({
         type: 'PUT',
         dataType: 'JSON',
         data: {
