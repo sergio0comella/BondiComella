@@ -1,6 +1,6 @@
 function setOptionsPostazione(postazione) {
     let idPostazione = (postazione.id).split('_');
-    $("#postSelected").text(idPostazione[1]);
+    $("#postSelected").text('#' + idPostazione[1]);
     $("#postSelected").val(idPostazione[1]);
 }
 

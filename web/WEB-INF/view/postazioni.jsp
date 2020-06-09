@@ -33,13 +33,13 @@
 
     <div class="row row-cols-3 mt-4 justify-content-center">
         <div class="col-3">
-            <p class="nPostazione">Postazione: #<span id="postSelected"></span></p>
+            <p class="nPostazione">Postazione: <span id="postSelected"></span></p>
         </div>
         <div class="col-3">
-            <button class="btn btn-block btn-info" onclick="editStatoPostazione('O')">Occupa</button>
+            <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('O')">Occupa</button>
         </div>
         <div class="col-3">
-            <button class="btn btn-block btn-info" onclick="editStatoPostazione('L')">Libera</button>
+            <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('L')">Libera</button>
         </div>
     </div>
 
