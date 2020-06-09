@@ -33,13 +33,13 @@
 
     <div class="row row-cols-3 mt-4 justify-content-center">
         <div class="col-3">
-            <p class="nPostazione">Postazione: #<span id="postSelected"></span></p>
+            <p class="nPostazione">Postazione: <span id="postSelected"></span></p>
         </div>
         <div class="col-3">
-            <button class="btn btn-block btn-info" onclick="occupaPostazione()">Occupa</button>
+            <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('O')">Occupa</button>
         </div>
         <div class="col-3">
-            <button class="btn btn-block btn-info" onclick="liberaPostazione()">Libera</button>
+            <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('L')">Libera</button>
         </div>
     </div>
 
@@ -51,10 +51,10 @@
             <div class="col">
                 <%switch (postazione.getStato()) {
                     case "P":%>
-                    <button class="btn btn-warning btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>">
+                    <button class="btn btn-warning btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
                  <% break;
                      case "O":%>
-                    <button class="btn btn-danger btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>">
+                    <button class="btn btn-danger btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
                 <% break;
                      default:%>
                     <button class="btn btn-default btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
@@ -64,12 +64,6 @@
             </div>
         <%}%>
 
-    </div>
-
-    <div class="dropdown-menu" id="postazioniOptions">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
     </div>
 
 </div>

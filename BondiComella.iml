@@ -32,5 +32,6 @@
     <orderEntry type="library" name="OpenFaces-3.0" level="project" />
     <orderEntry type="library" name="IceFaces-3.1.0" level="project" />
     <orderEntry type="library" name="PrimeFaces-6.1" level="project" />
+    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
 </module>
