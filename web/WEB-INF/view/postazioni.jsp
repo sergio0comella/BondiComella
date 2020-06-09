@@ -36,10 +36,10 @@
             <p class="nPostazione">Postazione: #<span id="postSelected"></span></p>
         </div>
         <div class="col-3">
-            <button class="btn btn-block btn-info" onclick="occupaPostazione()">Occupa</button>
+            <button class="btn btn-block btn-info" onclick="editStatoPostazione('O')">Occupa</button>
         </div>
         <div class="col-3">
-            <button class="btn btn-block btn-info" onclick="liberaPostazione()">Libera</button>
+            <button class="btn btn-block btn-info" onclick="editStatoPostazione('L')">Libera</button>
         </div>
     </div>
 
@@ -66,10 +66,11 @@
 
     </div>
 
-    <div class="dropdown-menu" id="postazioniOptions">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
 </div>

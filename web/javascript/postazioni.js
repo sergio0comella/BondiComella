@@ -4,8 +4,20 @@ function setOptionsPostazione(postazione) {
     $("#postSelected").val(idPostazione[1]);
 }
 
-function occupaPostazione(){
+function editStatoPostazione(stato){
+    let postazione = $("#postSelected").val();
+    if(postazione === undefined || postazione === ''){
+        alert('Selezionare una postazione')
+    }else{
+        if(stato === 'O'){
+            this.occupaPostazione();
+        }else if(stato === 'L'){
+            this.liberaPostazione();
+        }
+    }
+}
 
+function occupaPostazione(){
     $.ajax({
         type: 'PUT',
         url: 'http://localhost:8080/lido/apiPostazioni?id=' + $("#postSelected").val() + '&stato=O',
