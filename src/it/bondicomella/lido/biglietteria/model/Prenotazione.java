@@ -10,27 +10,34 @@ public class Prenotazione {
     private boolean pagata;
     private Timestamp dataOraInizio;
     private Timestamp dataOraFine;
-    private int stato;
+    private boolean annullata;
+
+    /**
+     * MAP annullata
+     * 0 - tutto in regola
+     * 1 - cancellata
+     * 2 - terminata
+     */
 
     public Prenotazione(){}
 
-    public Prenotazione(int fkIdUtente, int fkIdPostazione, boolean pagata, Timestamp dataOraInizio, Timestamp dataOraFine, int stato) {
+    public Prenotazione(int fkIdUtente, int fkIdPostazione, boolean pagata, Timestamp dataOraInizio, Timestamp dataOraFine, boolean annullata) {
         this.fkIdUtente = fkIdUtente;
         this.fkIdPostazione = fkIdPostazione;
         this.pagata = pagata;
         this.dataOraInizio = dataOraInizio;
         this.dataOraFine = dataOraFine;
-        this.stato = stato;
+        this.annullata = annullata;
     }
 
-    public Prenotazione(int id, int fkIdUtente, int fkIdPostazione, boolean pagata, Timestamp dataOraInizio, Timestamp dataOraFine, int stato) {
+    public Prenotazione(int id, int fkIdUtente, int fkIdPostazione, boolean pagata, Timestamp dataOraInizio, Timestamp dataOraFine, boolean annullata) {
         this.id = id;
         this.fkIdUtente = fkIdUtente;
         this.fkIdPostazione = fkIdPostazione;
         this.pagata = pagata;
         this.dataOraInizio = dataOraInizio;
         this.dataOraFine = dataOraFine;
-        this.stato = stato;
+        this.annullata = annullata;
     }
 
     public int getId() {
@@ -81,12 +88,12 @@ public class Prenotazione {
         this.dataOraFine = dataOraFine;
     }
 
-    public int getStato() {
-        return stato;
+    public boolean isAnnullata() {
+        return annullata;
     }
 
-    public void setStato(int stato) {
-        this.stato = stato;
+    public void setAnnullata(boolean annullata) {
+        this.annullata = annullata;
     }
 
 }

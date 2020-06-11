@@ -26,13 +26,28 @@ public class PrenotazioneServlet extends HttpServlet {
         try {
             PrenotazioneController controller = new PrenotazioneController();
             response.setCharacterEncoding("UTF-8");
-            Map<Prenotazione, String> prenotazioni = controller.getListaPrenotazioni();
+            Map<Prenotazione, Utente> prenotazioni = controller.getListaPrenotazioni();
             request.setAttribute("prenotazioni", prenotazioni);
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/prenotazioni.jsp");
             dispatcher.forward(request, response);
 
         } catch (Exception e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
+            dispatcher.forward(request, response);
             System.out.println("Errore in GetListaPrenotazioni");
+        }
+    }
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            PrenotazioneController controller = new PrenotazioneController();
+            String idPrenotazione = request.getParameter("idPrenotazione");
+            controller.annullaPrenotazione(idPrenotazione);
+
+        } catch (Exception e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
+            dispatcher.forward(request, response);
+            System.out.println("Errore in AnnullaPrenotazione");
         }
     }
 }

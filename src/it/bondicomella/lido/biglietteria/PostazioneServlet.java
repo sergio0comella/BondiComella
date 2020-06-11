@@ -39,7 +39,9 @@ public class PostazioneServlet extends HttpServlet {
             dispatcher.forward(request, response);
 
         } catch (Exception e) {
-            out.println(e);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
+            dispatcher.forward(request, response);
+            System.out.println("Errore in GetPostazione");
         }
     }
 
@@ -51,11 +53,7 @@ public class PostazioneServlet extends HttpServlet {
         try {
             this.controller = new PostazioneController();
             postazione = this.controller.getPostazioneById(idPostazione);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
 
-        try {
             switch (statoPostazione) {
                 case "O":
                     this.controller.occupaPostazione(postazione);
@@ -67,7 +65,9 @@ public class PostazioneServlet extends HttpServlet {
                     System.out.println("Case Default");
             }
         }catch (SQLException throwables) {
-            throwables.printStackTrace();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
+            dispatcher.forward(request, response);
+            System.out.println("Errore in Modifica postazione");
         }
     }
 

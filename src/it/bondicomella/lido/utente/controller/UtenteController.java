@@ -34,6 +34,7 @@ public class UtenteController {
     }
 
     public List<Utente> getListaUtenti() throws Exception {
+
         PreparedStatement query = this.conn.prepareStatement("SELECT * FROM utente");
         List<Utente> utenti = new ArrayList<>();
         try{
@@ -48,7 +49,7 @@ public class UtenteController {
         return utenti;
     }
 
-    public String getUtenteById(int id) throws SQLException {
+    public Utente getUtenteById(int id) throws SQLException {
 
         Utente utente = new Utente();
         String query = "SELECT * FROM utente WHERE id = ?";
@@ -60,6 +61,6 @@ public class UtenteController {
             utente = this.createUtenteFromRS(rs);
         }
 
-        return utente.getCognomeNome();
+        return utente;
     }
 }
