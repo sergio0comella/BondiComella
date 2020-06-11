@@ -6,7 +6,6 @@ import it.bondicomella.lido.utente.model.Utente;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class UtenteController {
 
@@ -51,4 +50,16 @@ public class UtenteController {
         return rs.next();
     }
 
+    public void getCredenziali (String email, Utente utente) throws SQLException {
+        PreparedStatement query = this.conn.prepareStatement("SELECT utente.nome, utente.ruolo FROM utente WHERE email= ?");
+        query.setString(1, email);
+        ResultSet rs = query.executeQuery();
+        while (rs.next()) {
+            utente.setNome(rs.getString("nome"));
+            utente.setRuolo(rs.getString("ruolo"));
+        }
+
+    }
 }
+
+

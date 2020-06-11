@@ -33,5 +33,8 @@
     <orderEntry type="library" name="IceFaces-3.1.0" level="project" />
     <orderEntry type="library" name="PrimeFaces-6.1" level="project" />
     <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="3bc88e1c04" level="application" />
+    <orderEntry type="library" name="popper.js" level="application" />
   </component>
 </module>
