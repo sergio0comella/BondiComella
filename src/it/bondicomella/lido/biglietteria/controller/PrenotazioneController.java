@@ -2,10 +2,14 @@ package it.bondicomella.lido.biglietteria.controller;
 
 import it.bondicomella.lido.ConnectionDB;
 import it.bondicomella.lido.biglietteria.model.Prenotazione;
+import it.bondicomella.lido.utente.controller.UtenteController;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PrenotazioneController {
     protected Connection conn;
@@ -19,9 +23,10 @@ public class PrenotazioneController {
      * @return
      * @throws SQLException
      */
-    public List<Prenotazione> getListaPrenotazioni() throws SQLException {
+    public Map<Prenotazione, String> getListaPrenotazioni() throws Exception {
 
-        List<Prenotazione> prenotazioni = new ArrayList<>();
+        UtenteController utController = new UtenteController();
+        Map<Prenotazione, String> prenotazioni = new HashMap<>();
 
         String query = "SELECT * FROM prenotazione";
         PreparedStatement ps = this.conn.prepareStatement(query);
@@ -37,7 +42,7 @@ public class PrenotazioneController {
             int stato = rs.getInt("stato");
 
             Prenotazione pt = new Prenotazione(id, fkIdUtente, fkIdPostazione, pagata, dataOraInizio, dataOraFine, stato);
-            prenotazioni.add(pt);
+            prenotazioni.put(pt, utController.getUtenteById(fkIdUtente));
         }
 
         return prenotazioni;

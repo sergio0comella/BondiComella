@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/apiPrenotazioni/*")
 public class PrenotazioneServlet extends HttpServlet {
@@ -25,7 +26,7 @@ public class PrenotazioneServlet extends HttpServlet {
         try {
             PrenotazioneController controller = new PrenotazioneController();
             response.setCharacterEncoding("UTF-8");
-            List<Prenotazione> prenotazioni = controller.getListaPrenotazioni();
+            Map<Prenotazione, String> prenotazioni = controller.getListaPrenotazioni();
             request.setAttribute("prenotazioni", prenotazioni);
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/prenotazioni.jsp");
             dispatcher.forward(request, response);

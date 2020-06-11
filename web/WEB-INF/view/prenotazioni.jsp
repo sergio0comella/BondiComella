@@ -1,6 +1,7 @@
 <%@ page import="it.bondicomella.lido.biglietteria.model.Prenotazione" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.bondicomella.lido.utente.controller.UtenteController" %><%--
+<%@ page import="it.bondicomella.lido.utente.controller.UtenteController" %>
+<%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
   User: sergi
   Date: 09/06/2020
@@ -17,25 +18,25 @@
     <table class="table">
         <thead class="thead-light">
         <tr>
-            <th scope="col">Email</th>
             <th scope="col">Utente</th>
-            <th scope="col">Ruolo</th>
+            <th scope="col">Inizio Prenotazione</th>
+            <th scope="col">Fine Prenotazione</th>
         </tr>
         </thead>
         <tbody>
         <%
-            List<Prenotazione> prenotazioni = (List<Prenotazione>) request.getAttribute("prenotazioni");
-            for(Prenotazione pt : prenotazioni){
+            Map<Prenotazione, String> prenotazioni = (Map<Prenotazione, String>) request.getAttribute("prenotazioni");
+            for(Map.Entry<Prenotazione, String> pt : prenotazioni.entrySet()){
         %>
         <tr>
             <td>
-                <%= pt.getDataOraInizio() %>
+                <%= pt.getValue() %>
             </td>
             <td>
-                <%= pt.getDataOraFine() %>
+                <%= pt.getKey().getDataOraInizio().getTime()%>
             </td>
             <td>
-                <%= pt.getId() %>
+                <%= pt.getKey().getDataOraFine() %>
             </td>
         </tr>
         <%}%>
