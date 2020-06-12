@@ -23,9 +23,13 @@
         <servlet-name>PostazoniServelt</servlet-name>
         <url-pattern>/listaPostazioni</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PrenotazioniServlet</servlet-name>
+        <servlet-class>it.bondicomella.lido.biglietteria.PrenotazioneServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>PostazoniServelt</servlet-name>
-        <url-pattern>/updatePostazione/</url-pattern>
+        <servlet-name>PrenotazioniServlet</servlet-name>
+        <url-pattern>/listaPrenotazioni</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>Login</servlet-name>

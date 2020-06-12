@@ -11,10 +11,13 @@
 <body>
 <div class="container mt-5">
     <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('listaUtenti')">
-    Utenti
+        Utenti
     </button>
-    <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('listaPostazioni')">
-    Postazioni
+    <button class="btn-info btn btn-lg btn-block" value="Postazioni" onclick="redirectPage('listaPostazioni')">
+        Postazioni
+    </button>
+    <button class="btn-info btn btn-lg btn-block" value="Prenotazioni" onclick="redirectPage('listaPrenotazioni')">
+        Prenotazioni
     </button>
 </div>
 </body>

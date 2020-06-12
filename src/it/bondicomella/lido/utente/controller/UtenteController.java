@@ -16,31 +16,52 @@ public class UtenteController {
         this.conn = new ConnectionDB().connect();
     }
 
+    private Utente createUtenteFromRS(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        String nome = rs.getString("nome");
+        String cognome = rs.getString("cognome");
+        String email = rs.getString("email");
+        String ruolo = rs.getString("ruolo");
+
+        Utente ut = new Utente();
+        ut.setId(id);
+        ut.setNome(nome);
+        ut.setCognome(cognome);
+        ut.setEmail(email);
+        ut.setRuolo(ruolo);
+
+        return ut;
+    }
+
     public List<Utente> getListaUtenti() throws Exception {
+
         PreparedStatement query = this.conn.prepareStatement("SELECT * FROM utente");
         List<Utente> utenti = new ArrayList<>();
         try{
             ResultSet rs = query.executeQuery();
             while (rs.next()){
-                int id = rs.getInt("id");
-                String nome = rs.getString("nome");
-                String cognome = rs.getString("cognome");
-                String email = rs.getString("email");
-                String ruolo = rs.getString("ruolo");
-
-                Utente ut = new Utente();
-                ut.setId(id);
-                ut.setNome(nome);
-                ut.setCognome(cognome);
-                ut.setEmail(email);
-                ut.setRuolo(ruolo);
-
+                Utente ut = this.createUtenteFromRS(rs);
                 utenti.add(ut);
             }
         }catch (SQLException e){
             throw new SQLException();
         }
         return utenti;
+    }
+
+    public Utente getUtenteById(int id) throws SQLException {
+
+        Utente utente = new Utente();
+        String query = "SELECT * FROM utente WHERE id = ?";
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setInt(1, id);
+
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            utente = this.createUtenteFromRS(rs);
+        }
+
+        return utente;
     }
 
     public boolean doLogin(String email, String password) throws SQLException {
