@@ -1,6 +1,7 @@
 package it.bondicomella.lido.biglietteria.controller;
 
 import it.bondicomella.lido.ConnectionDB;
+import it.bondicomella.lido.biglietteria.model.Postazione;
 import it.bondicomella.lido.biglietteria.model.Prenotazione;
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
@@ -59,10 +60,11 @@ public class PrenotazioneController {
         return prenotazioni;
     }
 
-    public Prenotazione getPrenotazioneById(int id) throws SQLException {
+    public Prenotazione getPrenotazioneById(String id) throws SQLException {
 
         String query = "SELECT * FROM prenotazione WHERE id = ?";
         PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setString(1, id);
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
@@ -74,12 +76,38 @@ public class PrenotazioneController {
 
 
     public void annullaPrenotazione(String id) throws SQLException {
+        try {
 
-        String query = "UPDATE prenotazione SET annullata = 1 WHERE id = ?";
-        PreparedStatement ps = this.conn.prepareStatement(query);
-        ps.setString(1, id);
-        ps.executeUpdate();
+            this.conn.setAutoCommit(false);
+
+            /** Recupero la prenotazione a partire dall'id **/
+            Prenotazione prenotazione = this.getPrenotazioneById(id);
+
+            /** Recupero la postazione relativa alla prenotazione a partire dalla FK**/
+            PostazioneController postController = new PostazioneController();
+            Postazione postazione = postController.getPostazioneById(String.valueOf(prenotazione.getFkIdPostazione()));
+
+            /** Aggiorno la prenotazione e la imposto ad annullata**/
+            String query = "UPDATE prenotazione SET annullata = 1 WHERE id = ?";
+            PreparedStatement ps = this.conn.prepareStatement(query);
+            ps.setString(1, id);
+
+            /** Aggiorno lo stato della postazione a L (libera) **/
+            String querySecond = "UPDATE postazione SET stato = 'L' WHERE id = ?";
+            PreparedStatement psSecond = this.conn.prepareStatement(querySecond);
+            psSecond.setInt(1, postazione.getId());
+
+            ps.executeUpdate();
+            psSecond.executeUpdate();
+
+            this.conn.commit();
+
+        }catch(SQLException e){
+            System.out.println("Errore nella commit:" + e.getSQLState());
+            this.conn.rollback();
+        }
 
     }
+
 
 }
