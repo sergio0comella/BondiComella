@@ -19,7 +19,7 @@ public class Utente {
      * Map Role:
      * CCN - Gestore Cucina
      * BGT - Gestore Biglietteria
-     * BNG - Bagnino
+     * BGN - Bagnino
      * CLT - Clienti/Utenti
      */
 

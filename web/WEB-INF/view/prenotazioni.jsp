@@ -12,9 +12,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
     <jsp:include page="../data/header.jsp" />
-</head>
 <body>
 <div class="container mt-5">
     <table class="table">

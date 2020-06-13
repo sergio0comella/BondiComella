@@ -9,8 +9,10 @@ function deletePrenotazione(prenotazione) {
                 $("#" + prenotazione.id).attr('disabled', true);
             },
             error: function (error) {
-                console.log(error)
+                alert("Impossibile modificare la prenotazione.");
+                console.log(error);
             }
         })
     }
 }
+
