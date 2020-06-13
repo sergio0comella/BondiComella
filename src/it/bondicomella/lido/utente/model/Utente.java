@@ -76,4 +76,8 @@ public class Utente {
     public void setRuolo(String ruolo) {
         this.ruolo = ruolo;
     }
+
+    public String getCognomeNome() {
+        return this.cognome + ' ' + this.nome;
+    }
 }

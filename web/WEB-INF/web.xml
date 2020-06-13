@@ -44,4 +44,31 @@
         <url-pattern>/lido/login</url-pattern>
     </servlet-mapping>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>reserved</web-resource-name>
+            <url-pattern>/home/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>CLT</role-name>
+            <role-name>BGN</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-role>
+        <role-name>CLT</role-name>
+    </security-role>
+    <security-role>
+        <role-name>BGN</role-name>
+    </security-role>
+    <!--   <login-config> -->
+    <!--     <auth-method>BASIC</auth-method> -->
+    <!--   </login-config> -->
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/index.jsp</form-login-page>
+            <form-error-page>/index.jsp?show=logerror</form-error-page>
+        </form-login-config>
+    </login-config>
+
 </web-app>

@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<jsp:include page="WEB-INF/data/header.jsp" />
+<jsp:include page="../data/header.jsp" />
 <body>
 <div class="container mt-5">
     <button class="btn-info btn btn-lg btn-block" value="Utenti" onclick="redirectPage('listaUtenti')">

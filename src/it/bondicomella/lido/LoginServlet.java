@@ -1,17 +1,18 @@
 package it.bondicomella.lido;
 
-import it.bondicomella.lido.utente.controller.UtenteController;
-import it.bondicomella.lido.utente.model.Utente;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 
-@WebServlet("/ApiLogin/*")
+/**
+ * Servlet implementation class LoginServlet
+ */
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -22,31 +23,59 @@ public class LoginServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean checkLogin = false;
-        UtenteController controller = null;
-        try {
-            controller = new UtenteController();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        Utente utente = new Utente();
-        response.setContentType("text/html");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        System.out.println(email + password);
-        try {
-            checkLogin = controller.doLogin(email,password);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        if(checkLogin) System.out.println("giusto");
-        else System.out.println("sbagliato");
-    }
-
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            doPost(request,response);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            String userName = request.getParameter("txtUserName");
+            String password = request.getParameter("txtPassword");
+
+            out.println("Before Login" + "<br><br>");
+            out.println("IsUserInRole?.."
+                    + request.isUserInRole("pr")+"<br>");
+            out.println("getRemoteUser?.." + request.getRemoteUser()+"<br>");
+            out.println("getUserPrincipal?.."
+                    + request.getUserPrincipal()+"<br>");
+            out.println("getAuthType?.." + request.getAuthType()+"<br><br>");
+
+            try {
+                request.login(userName, password);
+            } catch(ServletException ex) {
+                out.println("Login Failed with a ServletException.."
+                        + ex.getMessage());
+                return;
+            }
+            out.println("After Login..."+"<br><br>");
+            out.println("IsUserInRole?.."
+                    + request.isUserInRole("pr")+"<br>");
+            out.println("getRemoteUser?.." + request.getRemoteUser()+"<br>");
+            out.println("getUserPrincipal?.."
+                    + request.getUserPrincipal()+"<br>");
+            out.println("getAuthType?.." + request.getAuthType()+"<br><br>");
+
+            request.logout();
+            out.println("After Logout..."+"<br><br>");
+            out.println("IsUserInRole?.."
+                    + request.isUserInRole("pr")+"<br>");
+            out.println("getRemoteUser?.." + request.getRemoteUser()+"<br>");
+            out.println("getUserPrincipal?.."
+                    + request.getUserPrincipal()+"<br>");
+            out.println("getAuthType?.." + request.getAuthType()+"<br>");
+        } finally {
+            out.close();
+        }
     }
+
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doGet(request, response);
+    }
+
 }
