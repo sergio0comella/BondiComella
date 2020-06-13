@@ -9,6 +9,15 @@ public class Utente {
     private String password;
     private String ruolo;
 
+    /**
+     * TODO
+     * Map Role:
+     * CCN - Gestore Cucina
+     * BGT - Gestore Biglietteria
+     * BGN - Bagnino
+     * CLT - Clienti/Utenti
+     */
+
     public Utente(){
 
     }
@@ -56,12 +65,8 @@ public class Utente {
         this.password = password;
     }
 
-    public String getCognomeNome(){
-        return this.cognome + ' ' + this.nome;
-    }
-
-    public String getPassword() {
-        return password;
+    public String getPassword(){
+        return this.password;
     }
 
     public String getRuolo() {

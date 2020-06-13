@@ -37,7 +37,8 @@ public class UtenteServlet extends HttpServlet {
             dispatcher.forward(request, response);
 
         } catch (Exception e) {
-            out.println(e);
-        }
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
+            dispatcher.forward(request, response);
+            System.out.println("Errore in Lista Utenti");        }
     }
 }
