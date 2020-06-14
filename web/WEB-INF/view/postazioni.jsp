@@ -31,6 +31,7 @@
     </div>
     <div class="dropdown-divider"></div>
 
+    <%if(request.isUserInRole("BGN") || request.isUserInRole("BGL")){%>
     <div class="row row-cols-3 mt-4 justify-content-center">
         <div class="col-3">
             <p class="nPostazione">Postazione: <span id="postSelected"></span></p>
@@ -42,6 +43,7 @@
             <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('L')">Libera</button>
         </div>
     </div>
+    <%}%>
 
     <div class="row row-cols-5 align-content-center">
     <%

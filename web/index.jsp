@@ -11,9 +11,28 @@
 
 <body>
 <div class="container mt-4">
-    <button class="btn-info btn btn-lg btn-block" value="Prenotazioni" onclick="redirectPage('home')">
-        Home
-    </button>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col">
+            <img src="resources/spiaggia_home.jpg" style="width: 30rem; height: 40rem" alt="...">
+        </div>
+
+
+        <div class="col align-self-center">
+            <div class="card">
+                <div class="card-title text-center">
+                    <h1>Menu</h1>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-block btn-success" onclick="redirectPage('listaPostazioni')">Situazione Postazioni</button>
+                    <button class="btn btn-block btn-danger">Area Ristorazione</button>
+
+                    <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Login</button>
+                    <button class="btn btn-block btn-info">Registrati</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 
