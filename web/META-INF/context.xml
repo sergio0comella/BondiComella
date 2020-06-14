@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/apsw6-db">
+<Context path="/login">
     <Resource auth="Container"
               driverClassName="org.mariadb.jdbc.Driver"
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
@@ -21,7 +21,7 @@
            userTable="utente"
            userNameCol="email"
            userCredCol="password"
-           userRoleTable="user"
+           userRoleTable="utente"
            roleNameCol="ruolo" />
 
 </Context>

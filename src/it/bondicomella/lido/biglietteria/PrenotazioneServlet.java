@@ -17,7 +17,7 @@ import java.util.Map;
 
 @WebServlet("/apiPrenotazioni")
 @ServletSecurity(
-        @HttpConstraint(rolesAllowed = {"ADM", "BGN", "BGL"}))
+        @HttpConstraint(rolesAllowed = {"CCN", "BGN", "BGL"}))
 public class PrenotazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -29,7 +29,7 @@ public class PrenotazioneServlet extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             Map<Prenotazione, Utente> prenotazioni = controller.getListaPrenotazioni();
             request.setAttribute("prenotazioni", prenotazioni);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("home/prenotazioni.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("../WEB-INF/home/prenotazioni.jsp");
             dispatcher.forward(request, response);
 
         } catch (Exception e) {

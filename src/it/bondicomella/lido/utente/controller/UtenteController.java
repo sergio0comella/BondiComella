@@ -64,12 +64,11 @@ public class UtenteController {
         return utente;
     }
 
-    public boolean doLogin(String email, String password) throws SQLException {
-        PreparedStatement query = this.conn.prepareStatement("SELECT utente.email, utente.password FROM utente WHERE email= ? and password = ? ");
+    public Utente getUtenteByEmail(String email) throws SQLException {
+        PreparedStatement query = this.conn.prepareStatement("SELECT u.email, u.id, u.ruolo, u.nome, u.cognome FROM utente u WHERE u.email= ?");
         query.setString(1,email);
-        query.setString(2,password);
         ResultSet rs = query.executeQuery();
-        return rs.next();
+        return this.createUtenteFromRS(rs);
     }
 
 }

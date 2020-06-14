@@ -7,12 +7,13 @@ import it.bondicomella.lido.utente.model.Utente;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -30,7 +31,6 @@ public class PostazioneServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        PrintWriter out = response.getWriter();
         response.setCharacterEncoding("UTF-8");
         try {
             List<Postazione> postazioni = this.controller.getSchemaPostazioni();
