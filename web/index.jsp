@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <jsp:include page="WEB-INF/data/header.jsp" />
-
 <body>
 <div class="container mt-4">
 
@@ -27,8 +26,12 @@
                     <button class="btn btn-block btn-success" onclick="redirectPage('listaPostazioni')">Situazione Postazioni</button>
                     <button class="btn btn-block btn-danger">Area Ristorazione</button>
 
+                    <%if(request.getRemoteUser() == null){%>
                     <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Login</button>
                     <button class="btn btn-block btn-info">Registrati</button>
+                    <%}else{%>
+                        <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Home</button>
+                    <%}%>
                 </div>
             </div>
         </div>

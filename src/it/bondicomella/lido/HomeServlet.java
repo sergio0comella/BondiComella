@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class HomeAuth
  */
-@WebServlet("/home")
+@WebServlet("/homeAuth")
 @ServletSecurity(
         @HttpConstraint(rolesAllowed = {"CLT", "BGN"}))
 public class HomeServlet extends HttpServlet {
@@ -36,20 +36,31 @@ public class HomeServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/home/homeDispatcher.jsp");
+        /** Se ho un utente loggato allora ne creo il bean**/
+        if(request.getRemoteUser() != null){
+            try {
+                UtenteController utController = new UtenteController();
+                Utente ut = utController.getUtenteByEmail(request.getRemoteUser());
+                request.setAttribute("utente", ut);
 
-        try {
+                /** Una volta autenticato faccio il redirects secondo il ruolo **/
+                if(request.isUserInRole("CLT"))
+                    request.getRequestDispatcher("WEB-INF/home/homeUtente.jsp").forward(request, response);
+                else if (request.isUserInRole("BGN"))
+                    request.getRequestDispatcher("homeLido.jsp").forward(request, response);
+                else if (request.isUserInRole("CCN"))
+                    request.getRequestDispatcher("homeCucina.jsp").forward(request, response);
+                else
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
 
-            UtenteController utController = new UtenteController();
-            Utente ut = utController.getUtenteByEmail(request.getRemoteUser());
-            request.setAttribute("utente", ut);
-            dispatcher.forward(request, response);
-
-        } catch (Exception e) {
-            dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
-            dispatcher.forward(request, response);
-            System.out.println("Errore in GetPostazione");
+            } catch (Exception e) {
+                request.getRequestDispatcher("WEB-INF/view/errore.jsp").forward(request, response);
+                System.out.println("Errore in getHomeAuth");
+            }
+        }else{
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
+
     }
 
     /**

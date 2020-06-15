@@ -65,10 +65,14 @@ public class UtenteController {
     }
 
     public Utente getUtenteByEmail(String email) throws SQLException {
-        PreparedStatement query = this.conn.prepareStatement("SELECT u.email, u.id, u.ruolo, u.nome, u.cognome FROM utente u WHERE u.email= ?");
+        PreparedStatement query = this.conn.prepareStatement("SELECT * FROM utente u WHERE u.email = ?");
         query.setString(1,email);
         ResultSet rs = query.executeQuery();
-        return this.createUtenteFromRS(rs);
+        if(rs.next()){
+            return this.createUtenteFromRS(rs);
+        }else{
+            return new Utente();
+        }
     }
 
 }
