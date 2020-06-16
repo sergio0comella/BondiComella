@@ -10,32 +10,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 @WebServlet("/apiRegistrazione")
 public class RegistrazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-      /*  String nome, cognome, email, password;
-
-        System.out.print("sono qui");
+        PrintWriter out = response.getWriter();
+        String nome, cognome, email, password,ruolo;
 
         nome = request.getParameter("nome");
         cognome = request.getParameter("cognome");
         email = request.getParameter("email");
         password = request.getParameter("password");
-        System.out.println(nome + cognome + email + password);
+        ruolo = "CLT";
         try {
             UtenteController nuovoUtente = new UtenteController();
-            nuovoUtente.creaUtente(nome,cognome,email,password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } */
-
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.print("I miss you ha ha!");
-        out.close();
+             if(nuovoUtente.checkEmail(email)){
+                 request.setAttribute("errore","errore");
+                 response.setStatus(400);
+                 out.print("NOTVALIDEMAIL");
+                 out.flush();
+            }
+            else {
+                 nuovoUtente.creaUtente(nome, cognome, email, password, ruolo);
+                 request.login(email,password);
+             }
+        } catch (Exception throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 

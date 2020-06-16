@@ -2,8 +2,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <jsp:include page="../../WEB-INF/data/header.jsp" />
-<div id="file"></div>
-<form>
+<body>
+
+<div class="alert alert-danger" role="alert" id = "Error" style="display: none" >
+    <p id = "message" style="text-align:center"></p>
+</div>
+<form method="post">
     <div class="form-row">
         <div class="col-md-4 mb-3 offset-2">
             <label for="nome">Nome</label>
@@ -32,10 +36,8 @@
             <input type="password" class="form-control" id="re-password" placeholder="conferma password" required>
         </div>
     </div>
-
-
-    <button  id = "bottone" class="btn btn-primary offset-2">Registrati</button>
 </form>
+<button  id = "bottone" class="btn btn-primary offset-2">Registrati</button>
 </body>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/registrazione.js" crossorigin="anonymous"></script>
 </html>

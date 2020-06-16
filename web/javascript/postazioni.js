@@ -17,8 +17,7 @@ function editStatoPostazione(stato){
     }
 }
 
-function occupaPostazione(){
-    $.ajax({
+function occupaPostazione(){    $.ajax({
         type: 'PUT',
         url: 'http://localhost:8080/apiPostazioni?id=' + $("#postSelected").val() + '&stato=O',
         success: function () {
