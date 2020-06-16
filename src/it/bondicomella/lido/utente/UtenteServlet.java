@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet("/apiUtente")
+@WebServlet("/apiUtente/*")
 public class UtenteServlet extends HttpServlet {
 
     private UtenteController controller;
@@ -29,6 +29,11 @@ public class UtenteServlet extends HttpServlet {
         }
         PrintWriter out = response.getWriter();
         response.setCharacterEncoding("UTF-8");
+        System.out.println(request.getContextPath());
+        if(request.getContextPath() == "registrati"){
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/registrazione.jsp");
+            dispatcher.forward(request, response);
+        }
         try {
             List<Utente> utenti = this.controller.getListaUtenti();
             request.setAttribute("utenti", utenti);
@@ -38,6 +43,9 @@ public class UtenteServlet extends HttpServlet {
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
             dispatcher.forward(request, response);
-            System.out.println("Errore in Lista Utenti");        }
+            System.out.println("Errore in Lista Utenti"); }
+
+        request.getAttribute("pippo");
+        System.out.println(request.getAttribute("pippo"));
     }
 }

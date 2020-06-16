@@ -75,4 +75,13 @@ public class UtenteController {
         }
     }
 
+    public void creaUtente(String nome, String cognome, String email, String password) throws SQLException {
+        PreparedStatement query = this.conn.prepareStatement("INSERT INTO utente  VALUES(?,?,?,?)");
+        query.setString(1,nome);
+        query.setString(2,cognome);
+        query.setString(3,email);
+        query.setString(4,password);
+        ResultSet rs = query.executeQuery();
+    }
+
 }

@@ -28,7 +28,7 @@
 
                     <%if(request.getRemoteUser() == null){%>
                     <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Login</button>
-                    <button class="btn btn-block btn-info">Registrati</button>
+                    <button class="btn btn-block btn-info" onclick="redirectPage('apiRegistrazione')">Registrati</button>
                     <%}else{%>
                         <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Home</button>
                     <%}%>
