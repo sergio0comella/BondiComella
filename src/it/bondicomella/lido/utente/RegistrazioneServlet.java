@@ -25,8 +25,7 @@ public class RegistrazioneServlet extends HttpServlet {
         ruolo = "CLT";
         try {
             UtenteController nuovoUtente = new UtenteController();
-             if(nuovoUtente.checkEmail(email)){
-                 request.setAttribute("errore","errore");
+            if(nuovoUtente.checkEmail(email)){
                  response.setStatus(400);
                  out.print("NOTVALIDEMAIL");
                  out.flush();
@@ -34,9 +33,11 @@ public class RegistrazioneServlet extends HttpServlet {
             else {
                  nuovoUtente.creaUtente(nome, cognome, email, password, ruolo);
                  request.login(email,password);
-             }
+            }
         } catch (Exception throwables) {
-            throwables.printStackTrace();
+            response.setStatus(400);
+            out.print("ERROR");
+            out.flush();
         }
 
     }

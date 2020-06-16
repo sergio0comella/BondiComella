@@ -1,58 +1,57 @@
 <%@ page import="it.bondicomella.lido.utente.model.Utente" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<jsp:include page="../data/header.jsp" />
+<jsp:include page="../data/header.jsp"/>
 <link rel="stylesheet" type="text/css" href="../../style/testo.css">
 <body>
-<br>
-<%  Utente ut = (Utente) request.getAttribute("utente"); %>
-<br>
-<div class="row ">
-
-<div class="card border-primary offset-1" style="width: 20rem; height: 10rem">
-    <div class="card-header">Info</div>
-    <div class="card-body text-primary">
-        <div class="row">
-            <p class="offset-2">Nome: <%= ut.getNome()%></p>
+<div class="container mt-4">
+    <% Utente ut = (Utente) request.getAttribute("utente"); %>
+    <div class="row mt-5 mb-4">
+        <div class="col-12 text-center">
+            <h1>Riepilogo utente</h1>
         </div>
+    </div>
+    <div class="row row-cols-2 justify-content-center">
+        <div class="col-4">
+            <h4>Utente: <%=ut.getCognomeNome()%>
+            </h4>
+        </div>
+        <div class="col-4">
+            <h4>Email: <%=ut.getEmail()%>
+            </h4>
+        </div>
+    </div>
+    <hr>
     <div class="row">
-            <p class="offset-2">Email: <%= ut.getEmail()%></p>
-    </div>
-    </div>
-</div>
-
-<div class="card border-dark offset-1" style="width: 25rem;">
-    <div class="card-header">Menù</div>
-    <div class="card-body">
-        <div class="row">
-                <button type="button" class="btn btn-primary btn-lg btn-block mt-1 mb-1">
-                    Effettua una prenotazione
-                </button>
-                <jsp:include page="nuovaPrenotazione.jsp" />
+        <div class="col-12 text-center">
+            <h1>Menu</h1>
         </div>
-
-        <div class="row">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#prenotazioneModal">
-                Inserisci nuova prenotazione
+        <div class="col-12">
+            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('listaPostazioni')">
+                Effettua una prenotazione
             </button>
-            <jsp:include page="nuovaPrenotazione.jsp" />
         </div>
-        <div class="row">
-                <button type="button" class="btn btn-primary btn-lg btn-block mt-1 mb-1">
-                    Effettua un ordine al bar
-                </button>
+        <div class="col-12">
+            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1">
+                Effettua un ordine al bar
+            </button>
         </div>
     </div>
-</div>
+    <hr class="mt-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Le tue Prenotazioni</h1>
+            //TODO
+        </div>
+    </div>
+
+    <jsp:include page="nuovaPrenotazione.jsp"/>
 
 </div>
 </body>
 <script>
-    function newPrenotazione() {
-        console.log("qui")
-        $('#modalNuovaPrenotazione').on('shown.bs.modal', function () {
-            $('#exampleInputEmail1').trigger('focus')
-        })
+    function redirectPage(pageName) {
+        window.location.href = pageName;
     }
 </script>
 </html>

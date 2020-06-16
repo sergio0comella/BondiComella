@@ -34,13 +34,22 @@
     <%if(request.isUserInRole("BGN") || request.isUserInRole("BGL")){%>
     <div class="row row-cols-3 mt-4 justify-content-center">
         <div class="col-3">
-            <p class="nPostazione">Postazione: <span id="postSelected"></span></p>
+            <p class="nPostazione">Postazione: <span class="postSelected"></span></p>
         </div>
         <div class="col-3">
             <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('O')">Occupa</button>
         </div>
         <div class="col-3">
             <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('L')">Libera</button>
+        </div>
+    </div>
+    <%}else if(request.isUserInRole("CLT")){%>
+    <div class="row row-cols-2 mt-4 justify-content-center">
+        <div class="col-6">
+            <p class="nPostazione">Postazione: <span class="postSelected"></span></p>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-block btn-info mt-2" data-toggle="modal" data-target="#prenotazioneModal">Prenota</button>
         </div>
     </div>
     <%}%>
@@ -69,8 +78,7 @@
     </div>
 
 </div>
-
-
+<jsp:include page="../home/nuovaPrenotazione.jsp"/>
 </body>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/postazioni.js" crossorigin="anonymous"></script>

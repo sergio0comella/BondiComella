@@ -2,45 +2,41 @@ $(document).ready(function () {
 
 });
 
-$("#re-password").on('focusout', function(e){
+$("#re-password").on('focusout', function (e) {
     e.preventDefault()
-    if( $("#password").val() != $("#re-password").val()){
+    if ($("#password").val() !== $("#re-password").val()) {
         $("#Error").text("Le password non coincidono");
         $("#Error").show();
-    }else if($("#password").val() == $("#re-password").val()){
+    } else if ($("#password").val() === $("#re-password").val()) {
         $("#Error").hide();
     }
 });
 
-$("#email").on('focusout', function(e){
+$("#email").on('focusout', function (e) {
     e.preventDefault()
-    if( !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val()) ){
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val())) {
         $("#message").text("Formato email errato");
         $("#Error").show();
-    }else{
+    } else {
         $("#Error").hide();
     }
 
 });
 
+//TODO rinominare questo bottone.... Credi di lavorare all'inps? Qui i nomi delle variabili devo essere seri!
+$("#bottone").on("click", function () {
 
-
-    $("#bottone").on("click", function () {
-    if ($("#re-password").val() != $("#password").val()) {
-        var controllo_password = false;
-    }else{
-        var controllo_password = true;
-    }
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val())){
-        var controllo_email=true;
-    }else{
-        var controllo_email=false;
+    let controllo_password = false;
+    if ($("#re-password").val() === $("#password").val()) {
+        controllo_password = true;
     }
 
+    let controllo_email = false;
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val())) {
+        controllo_email = true;
+    }
 
     if ($("#nome")[0].checkValidity() && $("#cognome")[0].checkValidity() && $("#email")[0].checkValidity() && controllo_password && controllo_email) {
-
-        console.log($("#nome").val() + $("#cognome").val() + $("#email").val() + $("#password").val());
 
         var nome = $("#nome").val();
         var cognome = $("#cognome").val();
@@ -58,20 +54,23 @@ $("#email").on('focusout', function(e){
             },
             async: false,
             success: function () {
-                window.location.href="/homeAuth"
+                alert("Registrazione avvenuta con successo. Ti stiamo portando alla home...")
+                window.location.href = "/homeAuth"
             },
             error: function (result) {
-                if(result.responseText === "NOTVALIDEMAIL"){
+                if (result.responseText === "NOTVALIDEMAIL") {
                     $("#message").text("Email già registrata, effettua il login");
                     $("#Error").show();
-                }else{
+                } else {
                     $("#message").text("Errore durante l'invio del Form, riprova");
                     $("#Error").show();
                 }
             }
-        })
+        });
 
-    } else {
+    }
+    else {
         alert("Errore durante l'invio del form, si prega di riprovare")
     }
+
 });
