@@ -33,10 +33,11 @@ public class PrenotazioneController {
         int fkIdPostazione = rs.getInt("fk_id_postazione");
         boolean pagata = rs.getBoolean("pagata");
         boolean annullata = rs.getBoolean("annullata");
-        Timestamp dataOraInizio = rs.getTimestamp("data_ora_inizio");
-        Timestamp dataOraFine = rs.getTimestamp("data_ora_fine");
+        Date dataPrenotazione = rs.getDate("data_prenotazione");
+        Time oraInizio = rs.getTime("ora_inizio");
+        Time oraFine = rs.getTime("ora_fine");
 
-        return new Prenotazione(id, fkIdUtente, fkIdPostazione, pagata, dataOraInizio, dataOraFine, annullata);
+        return new Prenotazione(id, fkIdUtente, fkIdPostazione, pagata, dataPrenotazione, oraInizio, oraFine, annullata);
     }
 
     /**

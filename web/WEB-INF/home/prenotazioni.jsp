@@ -49,13 +49,13 @@
                     #<%= pt.getKey().getFkIdPostazione() %>
                 </td>
                 <td>
-                    <%= new SimpleDateFormat("dd/MM/yyyy").format(pt.getKey().getDataOraInizio())%>
+                    <%= pt.getKey().getDataPrenotazione()%>
                 </td>
                 <td>
-                    <%= new SimpleDateFormat("HH:mm").format(pt.getKey().getDataOraInizio()) %>
+                    <%= pt.getKey().getOraInizio() %>
                 </td>
                 <td>
-                    <%= new SimpleDateFormat("HH:mm").format(pt.getKey().getDataOraFine()) %>
+                    <%= pt.getKey().getOraFine() %>
                 </td>
                 <td>
                     <button class="btn btn-sm btn-danger" id="pren_<%=pt.getKey().getId()%>" onclick="deletePrenotazione(this)" <%=pt.getKey().isAnnullata() ? "disabled" : ""%> >Annulla</button>

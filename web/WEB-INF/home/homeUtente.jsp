@@ -13,7 +13,7 @@
 <div class="container mt-4">
 
 <h1>Nuova Prenotazione</h1>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#prenotazioneModal">
         Inserisci nuova prenotazione
     </button>
     <jsp:include page="nuovaPrenotazione.jsp" />

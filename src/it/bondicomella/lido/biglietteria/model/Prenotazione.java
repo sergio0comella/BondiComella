@@ -1,5 +1,7 @@
 package it.bondicomella.lido.biglietteria.model;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 
 public class Prenotazione {
@@ -8,35 +10,38 @@ public class Prenotazione {
     private int fkIdUtente;
     private int fkIdPostazione;
     private boolean pagata;
-    private Timestamp dataOraInizio;
-    private Timestamp dataOraFine;
+    private Date dataPrenotazione;
+    private Time oraInizio;
+    private Time oraFine;
     private boolean annullata;
 
     /**
      * MAP annullata
      * 0 - tutto in regola
-     * 1 - cancellata
-     * 2 - terminata
+     * 1 - cancellata/terminata
+     *
      */
 
     public Prenotazione(){}
 
-    public Prenotazione(int fkIdUtente, int fkIdPostazione, boolean pagata, Timestamp dataOraInizio, Timestamp dataOraFine, boolean annullata) {
+    public Prenotazione(int fkIdUtente, int fkIdPostazione, boolean pagata, Date dataPrenotazione, Time oraInizio, Time oraFine, boolean annullata) {
         this.fkIdUtente = fkIdUtente;
         this.fkIdPostazione = fkIdPostazione;
         this.pagata = pagata;
-        this.dataOraInizio = dataOraInizio;
-        this.dataOraFine = dataOraFine;
+        this.dataPrenotazione = dataPrenotazione;
+        this.oraInizio = oraInizio;
+        this.oraFine = oraFine;
         this.annullata = annullata;
     }
 
-    public Prenotazione(int id, int fkIdUtente, int fkIdPostazione, boolean pagata, Timestamp dataOraInizio, Timestamp dataOraFine, boolean annullata) {
+    public Prenotazione(int id, int fkIdUtente, int fkIdPostazione, boolean pagata, Date dataPrenotazione, Time oraInizio, Time oraFine, boolean annullata) {
         this.id = id;
         this.fkIdUtente = fkIdUtente;
         this.fkIdPostazione = fkIdPostazione;
         this.pagata = pagata;
-        this.dataOraInizio = dataOraInizio;
-        this.dataOraFine = dataOraFine;
+        this.dataPrenotazione = dataPrenotazione;
+        this.oraInizio = oraInizio;
+        this.oraFine = oraFine;
         this.annullata = annullata;
     }
 
@@ -72,20 +77,28 @@ public class Prenotazione {
         this.pagata = pagata;
     }
 
-    public Timestamp getDataOraInizio() {
-        return dataOraInizio;
+    public Date getDataPrenotazione() {
+        return dataPrenotazione;
     }
 
-    public void setDataOraInizio(Timestamp dataOraInizio) {
-        this.dataOraInizio = dataOraInizio;
+    public void setDataPrenotazione(Date dataPrenotazione) {
+        this.dataPrenotazione = dataPrenotazione;
     }
 
-    public Timestamp getDataOraFine() {
-        return dataOraFine;
+    public Time getOraInizio() {
+        return oraInizio;
     }
 
-    public void setDataOraFine(Timestamp dataOraFine) {
-        this.dataOraFine = dataOraFine;
+    public void setOraInizio(Time oraInizio) {
+        this.oraInizio = oraInizio;
+    }
+
+    public Time getOraFine() {
+        return oraFine;
+    }
+
+    public void setOraFine(Time oraFine) {
+        this.oraFine = oraFine;
     }
 
     public boolean isAnnullata() {
@@ -95,5 +108,4 @@ public class Prenotazione {
     public void setAnnullata(boolean annullata) {
         this.annullata = annullata;
     }
-
 }

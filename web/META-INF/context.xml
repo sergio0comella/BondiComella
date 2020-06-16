@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/login">
     <Resource auth="Container"
-              driverClassName="com.mysql.jdbc.Driver"
+              driverClassName="org.mariadb.jdbc.Driver"
               factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
               maxActive="10"
               minIdle="2"

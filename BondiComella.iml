@@ -33,5 +33,6 @@
     <orderEntry type="library" name="IceFaces-3.1.0" level="project" />
     <orderEntry type="library" name="PrimeFaces-6.1" level="project" />
     <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="moment.js" level="application" />
   </component>
 </module>

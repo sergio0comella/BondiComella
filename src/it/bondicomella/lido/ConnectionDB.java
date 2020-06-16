@@ -11,7 +11,7 @@ public class ConnectionDB{
             String user = "root";
             String password = "";
 
-            Class.forName("com.mysql.jdbc.Driver"); // TODO ERRORE
+            Class.forName("org.mariadb.jdbc.Driver"); // TODO ERRORE
             Connection conn = DriverManager.getConnection(url, user, password);
             return conn;
 
