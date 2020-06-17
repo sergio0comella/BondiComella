@@ -6,6 +6,7 @@ import it.bondicomella.lido.utente.model.Utente;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class UtenteController {
 
@@ -93,6 +94,24 @@ public class UtenteController {
         }
         return false;
     }
+
+    public void creaUtenteFromBigliettaio(String nome, String cognome, String email, String ruolo) throws SQLException {
+        String password = getSaltString();
+        creaUtente(nome,cognome,email,password,ruolo);
+    }
+
+    protected String getSaltString() {
+        String SALTCHARS = "abcdefghijklmnopqrstuvwxyz1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 10) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+    }
+
 
 
 }

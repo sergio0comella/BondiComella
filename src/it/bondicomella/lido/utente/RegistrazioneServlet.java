@@ -10,40 +10,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 @WebServlet("/apiRegistrazione")
 public class RegistrazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        String nome, cognome, email, password,ruolo;
+        String nome, cognome, email, password, ruolo;
+        Boolean fromBgt;
 
+        fromBgt = Boolean.valueOf(request.getParameter("fromBgt"));
         nome = request.getParameter("nome");
         cognome = request.getParameter("cognome");
         email = request.getParameter("email");
-        password = request.getParameter("password");
-        ruolo = "CLT";
-        try {
-            UtenteController nuovoUtente = new UtenteController();
-            if(nuovoUtente.checkEmail(email)){
-                 response.setStatus(400);
-                 out.print("NOTVALIDEMAIL");
-                 out.flush();
+
+
+            try {
+                UtenteController nuovoUtente = new UtenteController();
+                if (nuovoUtente.checkEmail(email)) {
+                    response.setStatus(400);
+                    out.print("NOTVALIDEMAIL");
+                    out.flush();
+                } else {
+                    if(fromBgt){
+                        ruolo=request.getParameter("ruolo");
+                        nuovoUtente.creaUtenteFromBigliettaio(nome,cognome,email,ruolo);
+                    }else{
+                        password = request.getParameter("password");
+                        ruolo = "CLT";
+                        nuovoUtente.creaUtente(nome, cognome, email, password, ruolo);
+                        request.login(email, password);
+                    }
+                }
+            } catch (Exception throwables) {
+                response.setStatus(400);
+                out.print("ERROR");
+                out.flush();
             }
-            else {
-                 nuovoUtente.creaUtente(nome, cognome, email, password, ruolo);
-                 request.login(email,password);
-            }
-        } catch (Exception throwables) {
-            response.setStatus(400);
-            out.print("ERROR");
-            out.flush();
         }
 
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/registrazione.jsp");
+        String address = " ";
+        if(request.isUserInRole("BGT")){
+            address= "home/registrazioneBGT.jsp";
+        }else {
+            address = "WEB-INF/view/registrazione.jsp";
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         dispatcher.forward(request, response);
     }
 }

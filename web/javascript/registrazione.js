@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
 });
 
 $("#re-password").on('focusout', function (e) {
@@ -23,8 +22,9 @@ $("#email").on('focusout', function (e) {
 
 });
 
-//TODO rinominare questo bottone.... Credi di lavorare all'inps? Qui i nomi delle variabili devo essere seri!
-$("#bottone").on("click", function () {
+
+//L'utente si registra
+$("#registrati").on("click", function () {
 
     let controllo_password = false;
     if ($("#re-password").val() === $("#password").val()) {
@@ -50,7 +50,8 @@ $("#bottone").on("click", function () {
                 nome: nome,
                 cognome: cognome,
                 email: email,
-                password: password
+                password: password,
+                fromBgt: false,
             },
             async: false,
             success: function () {
@@ -72,5 +73,47 @@ $("#bottone").on("click", function () {
     else {
         alert("Errore durante l'invio del form, si prega di riprovare")
     }
+});
 
+//Richiesta registrazione da parte del Bigliettaio
+    $("#registraUtente").on("click", function () {
+        let controllo_email = false;
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val())) {
+            controllo_email = true;
+        }
+        if ($("#nome")[0].checkValidity() && $("#cognome")[0].checkValidity() && $("#email")[0].checkValidity() && controllo_email) {
+
+            var nome = $("#nome").val();
+            var cognome = $("#cognome").val();
+            var email = $("#email").val();
+            var ruolo = $("#roleOption").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/apiRegistrazione",
+                    data: {
+                        nome: nome,
+                        cognome: cognome,
+                        email: email,
+                        ruolo: ruolo,
+                        fromBgt: true
+                    },
+                    async: false,
+                    success: function () {
+                        alert("Registrazione avvenuta con successo.")
+                    },
+                    error: function (result) {
+                        if (result.responseText === "NOTVALIDEMAIL") {
+                            $("#message").text("Email già registrata");
+                            $("#Error").show();
+                        } else {
+                            $("#message").text("Errore durante l'invio del Form, riprova");
+                            $("#Error").show();
+                        }
+                    }
+                });
+
+            } else {
+                alert("Errore durante l'invio del form, si prega di riprovare")
+            }
 });

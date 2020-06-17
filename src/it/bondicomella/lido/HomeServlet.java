@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/homeAuth")
 @ServletSecurity(
-        @HttpConstraint(rolesAllowed = {"CLT", "BGN"}))
+        @HttpConstraint(rolesAllowed = {"CLT", "BGN","BGT","CCN"}))
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -47,9 +47,11 @@ public class HomeServlet extends HttpServlet {
                 if(request.isUserInRole("CLT"))
                     request.getRequestDispatcher("WEB-INF/home/homeUtente.jsp").forward(request, response);
                 else if (request.isUserInRole("BGN"))
-                    request.getRequestDispatcher("homeLido.jsp").forward(request, response);
+                    request.getRequestDispatcher("homeBagnino.jsp").forward(request, response);
                 else if (request.isUserInRole("CCN"))
                     request.getRequestDispatcher("homeCucina.jsp").forward(request, response);
+                else if (request.isUserInRole("BGT"))
+                    request.getRequestDispatcher("WEB-INF/home/homeBigliettaio.jsp").forward(request, response);
                 else
                     request.getRequestDispatcher("index.jsp").forward(request, response);
 

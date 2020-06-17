@@ -1,15 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Logout</title>
-</head>
+<jsp:include page="WEB-INF/data/header.jsp" />
 <body>
-Goodbye <%= request.getRemoteUser() %>
-<%request.logout(); %>
-<p>You successfully logged out (<%= request.getRemoteUser() %>)</p>
-<a href="home">Go to reserved area</a>
+<div class="container mt-4">
+   <h1>Arrivederci,</h1>
+    <%request.logout(); %>
+    <p>Speriamo di rivederti presto, <a href="index.jsp">vai alla pagina inziale</a></p>
+    <div class="row">
+        <img src="arrivederci-estate-84c8283c-e3e0-43cb-a3a4-2607aa46bdc3.jpg">
+    </div>
+</div>
 </body>
 </html>

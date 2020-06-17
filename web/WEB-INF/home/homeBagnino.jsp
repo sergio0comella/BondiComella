@@ -17,7 +17,7 @@
             </h4>
         </div>
         <div class="col-4">
-            <h4>Ruolo: <%=ut.getRuolo()%>
+            <h4>Email: <%=ut.getRuolo()%>
             </h4>
         </div>
     </div>
@@ -27,8 +27,8 @@
             <h1>Menu</h1>
         </div>
         <div class="col-12">
-            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('apiRegistrazione')">
-                Registra utente
+            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('listaPostazioni')">
+                Tasto da eliminare/o aggiungere qualcosa
             </button>
         </div>
         <div class="col-12">
