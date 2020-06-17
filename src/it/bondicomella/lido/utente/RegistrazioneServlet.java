@@ -51,7 +51,7 @@ public class RegistrazioneServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String address = " ";
         if(request.isUserInRole("BGT")){
-            address= "home/registrazioneBGT.jsp";
+            address= "WEB-INF/home/registrazioneBGT.jsp";
         }else {
             address = "WEB-INF/view/registrazione.jsp";
         }
