@@ -40,15 +40,24 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="form-group col-md-6 align-self-start">
-                        <label for="timeEnd" class="col-sm-2 col-form-label">Alle:</label>
-                        <div class="input-group date" id="timeEnd" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#timeEnd" id="timeEndValue"/>
-                            <div class="input-group-append" data-target="#timeEnd" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="far fa-clock"></i></div>
+                        <div class="form-group col-md-6 align-self-start">
+                            <label for="timeEnd" class="col-sm-2 col-form-label">Alle:</label>
+                            <div class="input-group date" id="timeEnd" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#timeEnd" id="timeEndValue"/>
+                                <div class="input-group-append" data-target="#timeEnd" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-md-12">
+                            <label class="mr-sm-2" for="isPagato">Scegli dove pagare:</label>
+                            <select class="custom-select mr-sm-2" id="isPagato">
+                                <option value="true">Online</option>
+                                <option value="false">In Biglietteria</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
                 <div id="postazioneSelected" class="text-center">

@@ -14,6 +14,7 @@ public class Prenotazione {
     private Time oraInizio;
     private Time oraFine;
     private boolean annullata;
+    private String codicePrenotazione;
 
     /**
      * MAP annullata
@@ -34,7 +35,7 @@ public class Prenotazione {
         this.annullata = annullata;
     }
 
-    public Prenotazione(int id, int fkIdUtente, int fkIdPostazione, boolean pagata, Date dataPrenotazione, Time oraInizio, Time oraFine, boolean annullata) {
+    public Prenotazione(int id, int fkIdUtente, int fkIdPostazione, boolean pagata, Date dataPrenotazione, Time oraInizio, Time oraFine, boolean annullata, String codicePrenotazione) {
         this.id = id;
         this.fkIdUtente = fkIdUtente;
         this.fkIdPostazione = fkIdPostazione;
@@ -43,6 +44,7 @@ public class Prenotazione {
         this.oraInizio = oraInizio;
         this.oraFine = oraFine;
         this.annullata = annullata;
+        this.codicePrenotazione = codicePrenotazione;
     }
 
     public int getId() {
@@ -107,5 +109,13 @@ public class Prenotazione {
 
     public void setAnnullata(boolean annullata) {
         this.annullata = annullata;
+    }
+
+    public String getCodicePrenotazione() {
+        return codicePrenotazione;
+    }
+
+    public void setCodicePrenotazione(String codicePrenotazione) {
+        this.codicePrenotazione = codicePrenotazione;
     }
 }

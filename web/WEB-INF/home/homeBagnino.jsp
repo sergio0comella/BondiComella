@@ -2,7 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <jsp:include page="../data/header.jsp"/>
-<link rel="stylesheet" type="text/css" href="../../style/testo.css">
 <body>
 <div class="container mt-4">
     <% Utente ut = (Utente) request.getAttribute("utente"); %>

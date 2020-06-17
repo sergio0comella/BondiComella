@@ -2,6 +2,7 @@ package it.bondicomella.lido;
 
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
+import it.bondicomella.lido.util.Mailer;
 
 import java.io.IOException;
 

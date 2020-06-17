@@ -8,6 +8,7 @@
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/moment.min.js"></script>
+    <script src="https://kit.fontawesome.com/3bc88e1c04.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>    <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/bootstrap.min.js" ></script>
     <!-- Bootstrap Tempus Dominus-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>

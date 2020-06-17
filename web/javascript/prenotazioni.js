@@ -63,7 +63,7 @@ $(function () {
         timeEnd.datetimepicker('minDate', e.date.add(1, 'h'));
     });
     timeEnd.on("change.datetimepicker", function (e) {
-        timeStart.datetimepicker('maxDate', e.date.subtract(1, 'h'));
+        timeStart.datetimepicker('maxDate', e.date);
     });
 });
 
@@ -76,17 +76,29 @@ function sendPrenotazione() {
     let oraInizioPrenotazione   = $("#timeStartValue").val();
     let oraFinePrenotazione     = $("#timeEndValue").val();
     let postazione              = $("#idPostazione").val();
+    let isPagato                = $("#isPagato option:selected").val();
+    let emailUtente             = null;
 
-    $.ajax({
-        url: 'http://localhost:8080/addPrenotazione',
+    return $.ajax({
+        url: 'http://localhost:8080/apiPrenotazioni',
         type: 'POST',
-        async: false,
+        dataType: 'json',
+        crossDomain: true,
+        crossOrigin: true,
+        async: false, //deprecato
         data: {
             dataPrenotazione: dataPrenotazione,
             oraInizio: oraInizioPrenotazione,
             oraFine: oraFinePrenotazione,
             postazione: postazione,
+            isPagato: isPagato,
+            emailUtente: emailUtente,
+        },
+        success: function () {
+            alert("success");
+        },
+        error: function () {
+            alert("err");
         }
-        //TODO
     })
 }

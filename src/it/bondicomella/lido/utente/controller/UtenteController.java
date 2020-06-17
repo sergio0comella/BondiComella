@@ -2,6 +2,7 @@ package it.bondicomella.lido.utente.controller;
 
 import it.bondicomella.lido.ConnectionDB;
 import it.bondicomella.lido.utente.model.Utente;
+import it.bondicomella.lido.util.Mailer;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -65,6 +66,8 @@ public class UtenteController {
     }
 
     public Utente getUtenteByEmail(String email) throws SQLException {
+        Mailer mailer = new Mailer();
+        //mailer.sendMail();
         PreparedStatement query = this.conn.prepareStatement("SELECT * FROM utente u WHERE u.email = ?");
         query.setString(1,email);
         ResultSet rs = query.executeQuery();

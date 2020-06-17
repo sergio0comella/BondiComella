@@ -5,13 +5,11 @@ import it.bondicomella.lido.biglietteria.model.Postazione;
 import it.bondicomella.lido.biglietteria.model.Prenotazione;
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
+import it.bondicomella.lido.util.Mailer;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 public class PrenotazioneController {
     protected Connection conn;
@@ -23,6 +21,7 @@ public class PrenotazioneController {
     /**
      * Partendo da un resultset delle prenotazioni mi genera un oggetto
      * di tipo Prenotazione
+     *
      * @param rs
      * @return
      * @throws SQLException
@@ -36,10 +35,14 @@ public class PrenotazioneController {
         Date dataPrenotazione = rs.getDate("data_prenotazione");
         Time oraInizio = rs.getTime("ora_inizio");
         Time oraFine = rs.getTime("ora_fine");
+        String codicePrentonazione = rs.getString("codice_prenotazione");
 
-        return new Prenotazione(id, fkIdUtente, fkIdPostazione, pagata, dataPrenotazione, oraInizio, oraFine, annullata);
+        return new Prenotazione(id, fkIdUtente, fkIdPostazione, pagata, dataPrenotazione, oraInizio, oraFine, annullata, codicePrentonazione);
     }
 
+    private String generateCodePrenotazione(){
+       return UUID.randomUUID().toString();
+    }
     /**
      * Restituisce la lista delle prenotazioni
      *
@@ -103,12 +106,59 @@ public class PrenotazioneController {
 
             this.conn.commit();
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Errore nella commit:" + e.getSQLState());
             this.conn.rollback();
         }
 
     }
+
+    public void addNewPrenotazione(Prenotazione prenotazione, String emailUtente) throws SQLException {
+
+        Mailer mailer = new Mailer();
+
+        try {
+            this.conn.setAutoCommit(false);
+
+            /** Creo un codice identificativo per la prenotazione **/
+            String codice = this.generateCodePrenotazione();
+            prenotazione.setCodicePrenotazione(codice);
+
+            String query = "INSERT INTO prenotazione(fk_id_utente, fk_id_postazione, pagata, data_prenotazione, ora_inizio, ora_fine, annullata, codice_prenotazione) VALUES(?, ?, ?, ?, ?, ?, ?)";
+            /**
+             * Inserisco la prenotazione
+             */
+            PreparedStatement ps = this.conn.prepareStatement(query);
+            ps.setInt(1, prenotazione.getFkIdUtente());
+            ps.setInt(2, prenotazione.getFkIdPostazione());
+            ps.setBoolean(3, prenotazione.isPagata());
+            ps.setDate(4, prenotazione.getDataPrenotazione());
+            ps.setTime(5, prenotazione.getOraInizio());
+            ps.setTime(6, prenotazione.getOraFine());
+            ps.setBoolean(7, false);
+            ps.setString(6, prenotazione.getCodicePrenotazione());
+
+            ps.execute();
+
+            /**
+             * Aggiorno lo stato della postazione a L (libera)
+             */
+            String querySecond = "UPDATE postazione SET stato = 'P' WHERE id = ?";
+            PreparedStatement psSecond = this.conn.prepareStatement(querySecond);
+            psSecond.setInt(1, prenotazione.getFkIdPostazione());
+            psSecond.executeUpdate();
+
+            this.conn.commit();
+            mailer.sendMailNewPrenotazione(prenotazione, emailUtente);
+
+        } catch (SQLException e) {
+            System.out.println("Errore nella commit:" + e.getSQLState());
+            this.conn.rollback();
+        }
+
+    }
+
+
 
 
 }
