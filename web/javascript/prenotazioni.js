@@ -46,13 +46,13 @@ $(function () {
     });
 
     timeStart.datetimepicker({
-        format: 'LT',
+        format: 'HH:mm',
         stepping: 60,
         locale: 'it',
         minDate: Date.now()
     });
     timeEnd.datetimepicker({
-        format: 'LT',
+        format: 'HH:mm',
         stepping: 60,
         locale: 'it',
         minDate: Date.now()
