@@ -2,11 +2,9 @@ package it.bondicomella.lido;
 
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
-import it.bondicomella.lido.util.Mailer;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.ServletSecurity;
@@ -48,9 +46,9 @@ public class HomeServlet extends HttpServlet {
                 if(request.isUserInRole("CLT"))
                     request.getRequestDispatcher("WEB-INF/home/homeUtente.jsp").forward(request, response);
                 else if (request.isUserInRole("BGN"))
-                    request.getRequestDispatcher("homeBagnino.jsp").forward(request, response);
+                    request.getRequestDispatcher("WEB-INF/home/homeBagnino.jsp").forward(request, response);
                 else if (request.isUserInRole("CCN"))
-                    request.getRequestDispatcher("homeCucina.jsp").forward(request, response);
+                    request.getRequestDispatcher("WEB-INF/home/homeCucina.jsp").forward(request, response);
                 else if (request.isUserInRole("BGT"))
                     request.getRequestDispatcher("WEB-INF/home/homeBigliettaio.jsp").forward(request, response);
                 else

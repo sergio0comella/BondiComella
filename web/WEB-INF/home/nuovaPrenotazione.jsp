@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: sergi
-  Date: 13/06/2020
-  Time: 11:44
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Modal -->
 <div class="modal fade" id="prenotazioneModal" tabindex="-1" role="dialog"  data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">

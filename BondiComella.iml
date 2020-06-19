@@ -38,5 +38,6 @@
     <orderEntry type="library" name="JavaMail" level="project" />
     <orderEntry type="library" name="JavaxActivation" level="project" />
     <orderEntry type="library" name="QrCode" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
   </component>
 </module>

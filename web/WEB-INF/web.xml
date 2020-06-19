@@ -44,13 +44,22 @@
         <url-pattern>/registrazione</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>Logout</servlet-name>
-        <servlet-class>it.bondicomella.lido.utente.Logout</servlet-class>
+        <servlet-name>MenuServlet</servlet-name>
+        <servlet-class>it.bondicomella.lido.cucina.MenuServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
-        <url-pattern>/logout</url-pattern>
+        <servlet-name>MenuServlet</servlet-name>
+        <url-pattern>/menu</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AggiungiPiattoServlet</servlet-name>
+        <servlet-class>it.bondicomella.lido.cucina.AggiungiPiattoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AggiungiPiattoServlet</servlet-name>
+        <url-pattern>/aggiungiPiatto</url-pattern>
+    </servlet-mapping>
+
 
     <welcome-file-list>
         <welcome-file>/index.jsp</welcome-file>

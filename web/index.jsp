@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-body">
                     <button class="btn btn-block btn-success" onclick="redirectPage('listaPostazioni')">Situazione Postazioni</button>
-                    <button class="btn btn-block btn-danger">Area Ristorazione</button>
+                    <button class="btn btn-block btn-danger" onclick="redirectPage('menu')">Visualizza Menù del giorno </button>
 
                     <%if(request.getRemoteUser() == null){%>
                     <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Login</button>
