@@ -53,6 +53,9 @@
                         </div>
                     </div>
                 </form>
+                <div class="spinner-border" id="loading" style="width: 3rem; height: 3rem; display: none;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
                 <div id="postazioneSelected" class="text-center">
                     <h3>Stai prenotando la postazione: </h3>
                     <h1 id="idPostazione">

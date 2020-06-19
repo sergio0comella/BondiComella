@@ -15,7 +15,7 @@ public class Mailer {
         String hostSmtpUser = "gginuzzo@gmail.com";
         String host = "smtp.gmail.com";
         String hostPort = "587";
-        String hostSmtpPassword = "carrapipa39";
+        String hostSmtpPassword = "Prototunlea55";
 
 
         Properties properties = System.getProperties();
@@ -38,12 +38,12 @@ public class Mailer {
         try {
 
             MimeMessage message = new MimeMessage(this.oSession);
-            message.setFrom(new InternetAddress("no-reply@lidoB&C.com"));
+            message.setFrom(new InternetAddress("no-reply@lidoBoCo.com"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailUtente));
             message.setSubject("Lido - Nuova Prenotazione");
             message.setContent("Salve, ecco il codice della prenotazione del giorno: "
                     + prenotazione.getDataPrenotazione() + " valida dalle ore: "
-                    + prenotazione.getOraFine() + " alle ore: "
+                    + prenotazione.getOraInizio() + " alle ore: "
                     + prenotazione.getOraFine() + ". <br><h1>" + prenotazione.getCodicePrenotazione() + "</h1>", "text/html");
 
             // Send message

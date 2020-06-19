@@ -1,13 +1,15 @@
 package it.bondicomella.lido.biglietteria;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import it.bondicomella.lido.biglietteria.controller.PrenotazioneController;
 import it.bondicomella.lido.biglietteria.model.Prenotazione;
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
+import it.bondicomella.lido.util.Mailer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.HttpMethodConstraint;
 import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
@@ -19,8 +21,9 @@ import java.io.PrintWriter;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
+import java.time.LocalDate;
 import java.sql.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @WebServlet("/apiPrenotazioni")
@@ -32,45 +35,42 @@ import java.util.Map;
 )
 public class PrenotazioneServlet extends HttpServlet {
     /**
-     * data: {
-     * dataPrenotazione: dataPrenotazione,
-     * oraInizio: oraInizioPrenotazione,
-     * oraFine: oraFinePrenotazione,
-     * postazione: postazione,
-     * isPagato: isPagato,
-     * emailCliente: emailCliente
-     * },
-     *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        //TODO fix cast values
-        Date dataPrenotazione = Date.valueOf(request.getParameter("dataPrenotazione"));
-        Time oraInizioPrenotazione = Time.valueOf(request.getParameter("oraInizioPrenotazione"));
-        Time oraFinePrenotazione = Time.valueOf(request.getParameter("oraFinePrenotazione"));
-        int postazione = Integer.parseInt(request.getParameter("postazione"));
-        boolean isPagato = Boolean.parseBoolean(request.getParameter("isPagato"));
-        String emailCliente = request.getParameter("emailCliente");
-
-        if (emailCliente == null) {
-            emailCliente = request.getRemoteUser();
-        }
-
         try {
+            JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
+            PrenotazioneController prController = new PrenotazioneController();
             UtenteController utController = new UtenteController();
+
+            String datas = data.get("dataPrenotazione").getAsString().replace('/', '-');
+            Date dataPrenotazione = this.convertStringToSqlDate(datas);
+            Time oraInizio = this.convertStringToTime(data.get("oraInizio").getAsString());
+            Time oraFine = this.convertStringToTime(data.get("oraFine").getAsString());
+
+            int postazione = data.get("postazione").getAsInt();
+            boolean isPagato = data.get("isPagato").getAsBoolean();
+            String emailCliente = data.get("emailUtente").getAsString();
+
+            if (emailCliente == null || emailCliente.equals("")) {
+                emailCliente = request.getRemoteUser();
+            }
+
             Utente ut = utController.getUtenteByEmail(emailCliente);
 
-            Prenotazione prTemp = new Prenotazione(ut.getId(), postazione, isPagato, dataPrenotazione, oraInizioPrenotazione, oraFinePrenotazione, false);
-            PrenotazioneController prController = new PrenotazioneController();
-            prController.addNewPrenotazione(prTemp, emailCliente);
+            Prenotazione prTemp = new Prenotazione(ut.getId(), postazione, isPagato, dataPrenotazione, oraInizio, oraFine, false);
+            Prenotazione prFinal = prController.addNewPrenotazione(prTemp, emailCliente);
 
-            /*response.setStatus(200);
             PrintWriter out = response.getWriter();
-            out.print("SUCCESS");*/
+            JsonObject obj = new JsonObject();
+            obj.addProperty("message", "Prenotazione inserita con successo");
+            out.print(obj.toString());
+
+            Mailer mailer = new Mailer();
+            mailer.sendMailNewPrenotazione(prFinal, emailCliente);
 
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
@@ -107,5 +107,18 @@ public class PrenotazioneServlet extends HttpServlet {
             dispatcher.forward(request, response);
             System.out.println("Errore in AnnullaPrenotazione");
         }
+    }
+
+    private Date convertStringToSqlDate(String data){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String tempDate = LocalDate.parse(data, formatter).format(formatter2);
+        return Date.valueOf(tempDate);
+    }
+
+    private Time convertStringToTime(String time) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        long ms = sdf.parse(time).getTime();
+        return new Time(ms); //TODO
     }
 }

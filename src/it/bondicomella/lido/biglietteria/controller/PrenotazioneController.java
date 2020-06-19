@@ -9,7 +9,10 @@ import it.bondicomella.lido.util.Mailer;
 
 import java.sql.*;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.SimpleFormatter;
 
 public class PrenotazioneController {
     protected Connection conn;
@@ -41,8 +44,9 @@ public class PrenotazioneController {
     }
 
     private String generateCodePrenotazione(){
-       return UUID.randomUUID().toString();
+       return UUID.randomUUID().toString().substring(0, 8);
     }
+
     /**
      * Restituisce la lista delle prenotazioni
      *
@@ -113,9 +117,7 @@ public class PrenotazioneController {
 
     }
 
-    public void addNewPrenotazione(Prenotazione prenotazione, String emailUtente) throws SQLException {
-
-        Mailer mailer = new Mailer();
+    public Prenotazione addNewPrenotazione(Prenotazione prenotazione, String emailUtente) throws SQLException {
 
         try {
             this.conn.setAutoCommit(false);
@@ -124,7 +126,8 @@ public class PrenotazioneController {
             String codice = this.generateCodePrenotazione();
             prenotazione.setCodicePrenotazione(codice);
 
-            String query = "INSERT INTO prenotazione(fk_id_utente, fk_id_postazione, pagata, data_prenotazione, ora_inizio, ora_fine, annullata, codice_prenotazione) VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO prenotazione(fk_id_utente, fk_id_postazione, pagata, data_prenotazione, ora_inizio, ora_fine, annullata, codice_prenotazione) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
             /**
              * Inserisco la prenotazione
              */
@@ -136,7 +139,7 @@ public class PrenotazioneController {
             ps.setTime(5, prenotazione.getOraInizio());
             ps.setTime(6, prenotazione.getOraFine());
             ps.setBoolean(7, false);
-            ps.setString(6, prenotazione.getCodicePrenotazione());
+            ps.setString(8, prenotazione.getCodicePrenotazione());
 
             ps.execute();
 
@@ -149,13 +152,13 @@ public class PrenotazioneController {
             psSecond.executeUpdate();
 
             this.conn.commit();
-            mailer.sendMailNewPrenotazione(prenotazione, emailUtente);
 
         } catch (SQLException e) {
-            System.out.println("Errore nella commit:" + e.getSQLState());
+            System.out.println("Errore nella commit addNewPrenotazione: " + e.getSQLState());
             this.conn.rollback();
         }
 
+        return prenotazione;
     }
 
 

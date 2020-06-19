@@ -27,17 +27,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 9.0.35" level="application_server_libraries" />
-    <orderEntry type="library" name="Mojarra-2.4.0" level="project" />
-    <orderEntry type="library" name="Richfaces-4.2.2" level="project" />
-    <orderEntry type="library" name="OpenFaces-3.0" level="project" />
-    <orderEntry type="library" name="IceFaces-3.1.0" level="project" />
-    <orderEntry type="library" name="PrimeFaces-6.1" level="project" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="moment.js" level="application" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="JavaMail" level="project" />
     <orderEntry type="library" name="JavaxActivation" level="project" />
-    <orderEntry type="library" name="QrCode" level="project" />
+    <orderEntry type="library" name="Gson" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
   </component>
 </module>

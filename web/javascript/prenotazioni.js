@@ -30,7 +30,8 @@ $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Const
         today: 'far fa-calendar-check-o',
         clear: 'far fa-trash',
         close: 'far fa-times'
-    } });
+    }
+});
 
 $(function () {
     let timeStart = $("#timeStart");
@@ -46,13 +47,13 @@ $(function () {
     });
 
     timeStart.datetimepicker({
-        format: 'LT',
+        format: 'HH:mm',
         stepping: 60,
         locale: 'it',
         minDate: Date.now()
     });
     timeEnd.datetimepicker({
-        format: 'LT',
+        format: 'HH:mm',
         stepping: 60,
         locale: 'it',
         minDate: Date.now()
@@ -72,32 +73,40 @@ $(function () {
  **/
 function sendPrenotazione() {
 
-    let dataPrenotazione        = $("#dateValue").val();
-    let oraInizioPrenotazione   = $("#timeStartValue").val();
-    let oraFinePrenotazione     = $("#timeEndValue").val();
-    let postazione              = $("#idPostazione").val();
-    let isPagato                = $("#isPagato option:selected").val();
-    let emailUtente             = null;
+    $("#loading").show();
+    $("#postazioneSelected").hide();
 
-    return $.ajax({
+    let dataPrenotazione = $("#dateValue").val();
+    let oraInizioPrenotazione = $("#timeStartValue").val();
+    let oraFinePrenotazione = $("#timeEndValue").val();
+    let postazione = $("#idPostazione").val();
+    let isPagato = $("#isPagato option:selected").val();
+    let emailUtente = '';
+
+    let data = {
+        dataPrenotazione: dataPrenotazione,
+        oraInizio: oraInizioPrenotazione,
+        oraFine: oraFinePrenotazione,
+        postazione: postazione,
+        isPagato: isPagato,
+        emailUtente: emailUtente,
+    };
+
+    $.ajax({
         url: 'http://localhost:8080/apiPrenotazioni',
         type: 'POST',
+        contentType: 'application/json',
         dataType: 'json',
-        crossDomain: true,
-        crossOrigin: true,
-        async: false, //deprecato
-        data: {
-            dataPrenotazione: dataPrenotazione,
-            oraInizio: oraInizioPrenotazione,
-            oraFine: oraFinePrenotazione,
-            postazione: postazione,
-            isPagato: isPagato,
-            emailUtente: emailUtente,
-        },
-        success: function () {
-            alert("success");
+        data: JSON.stringify(data),
+        cache:false,
+        success: function (result) {
+            alert(result.message);
+            $("#loading").hide();
+            $("#postazioneSelected").show();
         },
         error: function () {
+            $("#loading").hide();
+            $("#postazioneSelected").show();
             alert("err");
         }
     })
