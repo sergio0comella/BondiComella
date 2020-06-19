@@ -1,13 +1,15 @@
 package it.bondicomella.lido.biglietteria;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import it.bondicomella.lido.biglietteria.controller.PrenotazioneController;
 import it.bondicomella.lido.biglietteria.model.Prenotazione;
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
+import it.bondicomella.lido.util.Mailer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.HttpMethodConstraint;
 import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
@@ -17,11 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.sql.Date;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -35,15 +35,6 @@ import java.util.Map;
 )
 public class PrenotazioneServlet extends HttpServlet {
     /**
-     * data: {
-     * dataPrenotazione: dataPrenotazione,
-     * oraInizio: oraInizioPrenotazione,
-     * oraFine: oraFinePrenotazione,
-     * postazione: postazione,
-     * isPagato: isPagato,
-     * emailCliente: emailCliente
-     * },
-     *
      * @param request
      * @param response
      * @throws ServletException
@@ -51,31 +42,35 @@ public class PrenotazioneServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
             PrenotazioneController prController = new PrenotazioneController();
             UtenteController utController = new UtenteController();
 
-            String data = request.getParameter("dataPrenotazione").replace('/', '-');
-            Date dataPrenotazione = this.convertStringToSqlDate(data);
-            Time oraInizio = this.convertStringToTime(request.getParameter("oraInizio"));
-            Time oraFine = this.convertStringToTime(request.getParameter("oraFine"));
+            String datas = data.get("dataPrenotazione").getAsString().replace('/', '-');
+            Date dataPrenotazione = this.convertStringToSqlDate(datas);
+            Time oraInizio = this.convertStringToTime(data.get("oraInizio").getAsString());
+            Time oraFine = this.convertStringToTime(data.get("oraFine").getAsString());
 
-            int postazione = Integer.parseInt(request.getParameter("postazione"));
-            boolean isPagato = Boolean.parseBoolean(request.getParameter("isPagato"));
-            String emailCliente = request.getParameter("emailCliente");
+            int postazione = data.get("postazione").getAsInt();
+            boolean isPagato = data.get("isPagato").getAsBoolean();
+            String emailCliente = data.get("emailUtente").getAsString();
 
-            if (emailCliente == null) {
+            if (emailCliente == null || emailCliente.equals("")) {
                 emailCliente = request.getRemoteUser();
             }
 
             Utente ut = utController.getUtenteByEmail(emailCliente);
 
             Prenotazione prTemp = new Prenotazione(ut.getId(), postazione, isPagato, dataPrenotazione, oraInizio, oraFine, false);
-            prController.addNewPrenotazione(prTemp, emailCliente);
+            Prenotazione prFinal = prController.addNewPrenotazione(prTemp, emailCliente);
 
-            response.setStatus(200);
             PrintWriter out = response.getWriter();
-            out.print("SUCCESS");
-            out.flush();
+            JsonObject obj = new JsonObject();
+            obj.addProperty("message", "Prenotazione inserita con successo");
+            out.print(obj.toString());
+
+            Mailer mailer = new Mailer();
+            mailer.sendMailNewPrenotazione(prFinal, emailCliente);
 
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");

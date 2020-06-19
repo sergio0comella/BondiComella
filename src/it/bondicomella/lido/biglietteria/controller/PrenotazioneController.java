@@ -117,9 +117,7 @@ public class PrenotazioneController {
 
     }
 
-    public void addNewPrenotazione(Prenotazione prenotazione, String emailUtente) throws SQLException {
-
-        Mailer mailer = new Mailer();
+    public Prenotazione addNewPrenotazione(Prenotazione prenotazione, String emailUtente) throws SQLException {
 
         try {
             this.conn.setAutoCommit(false);
@@ -153,7 +151,6 @@ public class PrenotazioneController {
             psSecond.setInt(1, prenotazione.getFkIdPostazione());
             psSecond.executeUpdate();
 
-            mailer.sendMailNewPrenotazione(prenotazione, emailUtente);
             this.conn.commit();
 
         } catch (SQLException e) {
@@ -161,6 +158,7 @@ public class PrenotazioneController {
             this.conn.rollback();
         }
 
+        return prenotazione;
     }
 
 
