@@ -47,18 +47,26 @@ public class PrenotazioneController {
        return UUID.randomUUID().toString().substring(0, 8);
     }
 
+    private void sendMailForPrenotazioneCancellata(){
+
+    }
+
     /**
-     * Restituisce la lista delle prenotazioni
+     *  Metodi per il retrieve di informazioni
+     *
+     *  **/
+
+    /**
      *
      * @return
-     * @throws SQLException
+     * @throws Exception
      */
     public Map<Prenotazione, Utente> getListaPrenotazioni() throws Exception {
 
         UtenteController utController = new UtenteController();
         Map<Prenotazione, Utente> prenotazioni = new HashMap<>();
 
-        String query = "SELECT * FROM prenotazione ORDER BY data_ora_inizio desc";
+        String query = "SELECT * FROM prenotazione ORDER BY data_prenotazione desc";
         PreparedStatement ps = this.conn.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
@@ -68,6 +76,12 @@ public class PrenotazioneController {
         return prenotazioni;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public Prenotazione getPrenotazioneById(String id) throws SQLException {
 
         String query = "SELECT * FROM prenotazione WHERE id = ?";
@@ -82,6 +96,61 @@ public class PrenotazioneController {
         }
     }
 
+    /**
+     *
+     * @param idPostazione
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<Prenotazione> getPrenotazioniGiornaliereInPostazione(String idPostazione) throws SQLException {
+
+        ArrayList<Prenotazione> prenotazioni = new ArrayList<>();
+        Calendar currenttime = Calendar.getInstance();
+        Date today = new Date((currenttime.getTime()).getTime());
+        Time now = new Time((currenttime.getTime()).getTime());
+
+        String query = "SELECT * FROM prenotazione WHERE fk_id_postazione = ? AND data_prenotazione = ? AND ora_inizio > ?";
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setString(1, idPostazione);
+        ps.setDate(2, today);
+        ps.setTime(3, now);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            prenotazioni.add(this.createPrenotazioneFromRS(rs));
+        }
+
+        return prenotazioni;
+    }
+
+    /**
+     *
+     * @param idPostazione
+     * @return
+     * @throws SQLException
+     */
+    public Prenotazione getPrenotazioniInPostazione(String idPostazione) throws SQLException {
+
+        String query = "SELECT * FROM prentoazione WHERE fk_id_postazione = ?";
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setString(1, idPostazione);
+
+        ResultSet rs = ps.executeQuery();
+
+        Prenotazione pr = null;
+
+        if (rs.next()) {
+            pr = this.createPrenotazioneFromRS(rs);
+        }
+
+        return pr;
+    }
+
+    /**
+     *  Metodi per la manipolazione dei dati
+     *
+     *  **/
 
     public void annullaPrenotazione(String id) throws SQLException {
         try {
@@ -110,6 +179,8 @@ public class PrenotazioneController {
 
             this.conn.commit();
 
+            this.sendMailForPrenotazioneCancellata();
+
         } catch (SQLException e) {
             System.out.println("Errore nella commit:" + e.getSQLState());
             this.conn.rollback();
@@ -117,7 +188,7 @@ public class PrenotazioneController {
 
     }
 
-    public Prenotazione addNewPrenotazione(Prenotazione prenotazione, String emailUtente) throws SQLException {
+    public Prenotazione addNewPrenotazione(Prenotazione prenotazione) throws SQLException {
 
         try {
             this.conn.setAutoCommit(false);
@@ -160,8 +231,5 @@ public class PrenotazioneController {
 
         return prenotazione;
     }
-
-
-
 
 }

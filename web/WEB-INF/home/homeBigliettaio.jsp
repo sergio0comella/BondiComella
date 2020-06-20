@@ -26,13 +26,18 @@
             <h1>Menu</h1>
         </div>
         <div class="col-12">
-            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('apiRegistrazione')">
+            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('registrazione')">
                 Registra utente
             </button>
         </div>
         <div class="col-12">
             <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('listaPostazioni')" >
                 Visualizza postazioni
+            </button>
+        </div>
+        <div class="col-12">
+            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('home/listaPrenotazioni')" >
+                Elenco Prenotazioni
             </button>
         </div>
     </div>

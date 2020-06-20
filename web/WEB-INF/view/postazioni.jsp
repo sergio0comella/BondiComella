@@ -37,10 +37,10 @@
             <p class="nPostazione">Postazione: <span class="postSelected"></span></p>
         </div>
         <div class="col-3">
-            <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('O')">Occupa</button>
+            <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('O')" id="busyButton" disabled>Occupa</button>
         </div>
         <div class="col-3">
-            <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('L')">Libera</button>
+            <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('L')" id="freeButton" disabled>Libera</button>
         </div>
     </div>
     <%}else if(request.isUserInRole("CLT")){%>
@@ -62,13 +62,13 @@
             <div class="col">
                 <%switch (postazione.getStato()) {
                     case "P":%>
-                    <button class="btn btn-warning btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
+                    <button class="btn btn-warning btn-circle btn-lg m-5 prenotata" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this, 'P')">
                  <% break;
                      case "O":%>
-                    <button class="btn btn-danger btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
+                    <button class="btn btn-danger btn-circle btn-lg m-5 occupata" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this, 'O')">
                 <% break;
                      default:%>
-                    <button class="btn btn-default btn-circle btn-lg m-5" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this)">
+                    <button class="btn btn-default btn-circle btn-lg m-5 libera" id="post_<%=postazione.getId()%>" onclick="setOptionsPostazione(this, 'L')">
                 <% break;
                 }%>
                 <i class="fas fa-umbrella-beach"></i><p class="small text-center">#<%=postazione.getId()%></p></button>
@@ -76,7 +76,9 @@
         <%}%>
 
     </div>
-
+    <div id="dialog-confirm" title="Empty the recycle bin?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+    </div>
 </div>
 <jsp:include page="../home/nuovaPrenotazione.jsp"/>
 </body>

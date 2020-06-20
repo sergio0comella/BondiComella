@@ -4,11 +4,9 @@ import it.bondicomella.lido.ConnectionDB;
 import it.bondicomella.lido.biglietteria.model.Postazione;
 
 import java.net.PortUnreachableException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class PostazioneController {
@@ -69,10 +67,32 @@ public class PostazioneController {
     }
 
     public void liberaPostazione(Postazione postazione) throws SQLException {
+        
+        Calendar currenttime = Calendar.getInstance();
+        Date today = new Date((currenttime.getTime()).getTime());
+        Time now = new Time((currenttime.getTime()).getTime());
+        String qrCheck = "SELECT COUNT(*) > 0 AS result FROM prenotazione " +
+                            " where fk_id_postazione = ? AND data_prenotazione = ? AND ora_inizio > ?";
+
+        boolean isPrenotata = false;
+        PreparedStatement checkPrenotazioni = this.conn.prepareStatement(qrCheck);
+        checkPrenotazioni.setInt(1, postazione.getId());
+        checkPrenotazioni.setDate(2, today);
+        checkPrenotazioni.setTime(3, now);
+
+        ResultSet rs = checkPrenotazioni.executeQuery();
+        if(rs.next()){
+            isPrenotata = rs.getBoolean("result") ;
+        }
+
         String qr = "UPDATE postazione SET stato = ? where id = ?";
         PreparedStatement query = this.conn.prepareStatement(qr);
-        query.setString(1, Postazione.LIBERA);
+
+        String statoPostazione = isPrenotata ? Postazione.PRENOTATA : Postazione.LIBERA;
+        query.setString(1, statoPostazione);
+
         query.setInt(2, postazione.getId());
+
         try{
             query.executeUpdate();
         }catch (SQLException e){
@@ -80,16 +100,4 @@ public class PostazioneController {
         }
     }
 
-    //TODO gestione prenotazione
-    public boolean prenotaPostazione(Postazione postazione) throws SQLException {
-        PreparedStatement query = this.conn.prepareStatement("UPDATE stato = ? FROM postazione where id = '?'");
-        query.setString(1, Postazione.PRENOTATA);
-        query.setInt(2, postazione.getId());
-        try{
-            int result = query.executeUpdate();
-        }catch (SQLException e){
-            throw new SQLException();
-        }
-        return true;
-    }
 }

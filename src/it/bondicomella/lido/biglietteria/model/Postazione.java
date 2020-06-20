@@ -1,7 +1,5 @@
 package it.bondicomella.lido.biglietteria.model;
 
-import java.util.Objects;
-
 public class Postazione {
 
     private int id;

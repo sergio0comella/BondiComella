@@ -62,7 +62,7 @@ public class PrenotazioneServlet extends HttpServlet {
             Utente ut = utController.getUtenteByEmail(emailCliente);
 
             Prenotazione prTemp = new Prenotazione(ut.getId(), postazione, isPagato, dataPrenotazione, oraInizio, oraFine, false);
-            Prenotazione prFinal = prController.addNewPrenotazione(prTemp, emailCliente);
+            Prenotazione prFinal = prController.addNewPrenotazione(prTemp);
 
             PrintWriter out = response.getWriter();
             JsonObject obj = new JsonObject();

@@ -28,6 +28,14 @@
         <url-pattern>/home/listaPrenotazioni</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>InfoPrenotazioniServlet</servlet-name>
+        <servlet-class>it.bondicomella.lido.biglietteria.InfoPrenotazioniServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InfoPrenotazioniServlet</servlet-name>
+        <url-pattern>/home/InfoPrenotazioni</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>it.bondicomella.lido.HomeServlet</servlet-class>
     </servlet>
