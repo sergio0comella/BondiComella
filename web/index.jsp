@@ -30,7 +30,7 @@
                     <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Login</button>
                     <button class="btn btn-block btn-info" onclick="redirectPage('/apiRegistrazione')">Registrati</button>
                     <%}else{%>
-                        <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home/homeBigliettaio.jsp')">Home</button>
+                        <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Home</button>
                     <%}%>
                 </div>
             </div>

@@ -22,44 +22,50 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-12 text-center">
+        <div class="col-12 text-center"> <!-- OGNI 12 COL finisce la row -->
             <h1>Menu</h1>
         </div>
-        <div class="col-12">
-            <form method="post">
-                <div class="form-row">
-                    <div class="col-md-3 mb-3 offset-2">
-                        <label for="nomePiatto">Piatto</label>
-                        <input type="text" class="form-control" id="nomePiatto" placeholder="Pasta al ragù" name="nomePiatto" required>
+    </div>
+    <form >
+        <div class="form-row justify-content-center">
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="nomePiatto" placeholder="Nuovo piatto"
+                       name="nomePiatto" required>
+            </div>
+            <div class="col-sm-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupPrepend">€</span>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="costoPiatto">Costo  €</label>
-                        <input type="number" step="0.01" min="1" max="30" class="form-control" id="costoPiatto" placeholder="5.99"  name="costoPiatto" required>
-                    </div>
+                    <input type="number" step="0.01" min="1" max="30" class="form-control" id="costoPiatto"
+                           placeholder="Prezzo" name="costoPiatto" aria-describedby="inputGroupPrepend" required>
                 </div>
-            </form>
-            <button id="inserisciPiatto"  class="btn btn-info mb-3 mt-4">Aggiungi alla lista</button>
+            </div>
+            <div class="col-2">
+                <button id="inserisciPiatto" class="btn btn-success">Aggiungi alla lista</button>
+            </div>
         </div>
-        </div>
-        <div class="col-12">
-            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('/menu')">
-                Modifica Menù del giorno
-            </button>
-        </div>
+    </form>
+    <div class="col-12">
+        <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('/menu')">
+            Modifica Menù del giorno
+        </button>
     </div>
-    <hr class="mt-4">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h1>Ordinazioni da fare</h1>
-            //TODO
-        </div>
+</div>
+<hr class="mt-4">
+<div class="row">
+    <div class="col-12 text-center">
+        <h1>Ordinazioni da fare</h1>
+        //TODO
     </div>
+</div>
 
-    <jsp:include page="nuovaPrenotazione.jsp"/>
+<jsp:include page="nuovaPrenotazione.jsp"/>
 
 </div>
 </body>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/aggiungiPiatto.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/aggiungiPiatto.js"
+        crossorigin="anonymous"></script>
 <script>
     function redirectPage(pageName) {
         window.location.href = pageName;

@@ -100,9 +100,11 @@ function sendPrenotazione() {
         data: JSON.stringify(data),
         cache:false,
         success: function (result) {
-            alert(result.message);
+            $('#prenotazioneModal').modal('toggle');
             $("#loading").hide();
             $("#postazioneSelected").show();
+            alert(result.message);
+            location.reload();
         },
         error: function () {
             $("#loading").hide();

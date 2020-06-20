@@ -3,7 +3,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<jsp:include page="../data/header.jsp" />
+<jsp:include page="../data/header.jsp"/>
 <body>
 
 <div class="container mt-5">
@@ -11,15 +11,15 @@
         <thead class="thead-light">
         <tr>
             <th scope="col">Piatto</th>
-            <th scope="col">Costo €</th>
+            <th scope="col">Prezzo</th>
             <th scope="col">Attivo</th>
         </tr>
         </thead>
         <tbody>
         <%
             List<Menu> menu = (List<Menu>) request.getAttribute("menu");
-            for(Menu m : menu){
-                int id =  m.getId();
+            for (Menu m : menu) {
+                int id = m.getId();
                 String checked = "";
                 if (m.isAttivo()) {
                     checked = "checked";
@@ -30,7 +30,7 @@
                 <%= m.getNomePiatto() %>
             </td>
             <td>
-                <%= m.getCosto() %>
+                € <%= m.getCosto() %>
             </td>
             <td>
                 <div class="form-check">
@@ -41,8 +41,11 @@
         <%}%>
         </tbody>
     </table>
-    <button  id = "modificaMenu" class="btn btn-primary offset-2">Modifica il Menu</button>
+    <div class="row justify-content-end">
+        <button id="modificaMenu" class="btn btn-primary mr-4">Modifica il Menu</button>
+    </div>
 </div>
 </body>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/modificaMenu.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/modificaMenu.js"
+        crossorigin="anonymous"></script>
 </html>

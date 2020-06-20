@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Modal -->
-<div class="modal fade" id="prenotazioneModal" tabindex="-1" role="dialog"  data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="prenotazioneModal" tabindex="-1" role="dialog" data-backdrop="static"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,7 +16,8 @@
                         <div class="form-group col-md-6">
                             <label for="datePicker">Giorno della prenotazione</label>
                             <div class="input-group date" id="datePicker" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#datePicker" id="dateValue"/>
+                                <input type="text" class="form-control datetimepicker-input" data-target="#datePicker"
+                                       id="dateValue"/>
                                 <div class="input-group-append" data-target="#datePicker" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -27,7 +29,8 @@
                         <div class="form-group col-md-6 align-self-start">
                             <label for="timeStart" class="col-sm-2 col-form-label">Dalle:</label>
                             <div class="input-group date" id="timeStart" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#timeStart" id="timeStartValue"/>
+                                <input type="text" class="form-control datetimepicker-input" data-target="#timeStart"
+                                       id="timeStartValue"/>
                                 <div class="input-group-append" data-target="#timeStart" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="far fa-clock"></i></div>
                                 </div>
@@ -36,7 +39,8 @@
                         <div class="form-group col-md-6 align-self-start">
                             <label for="timeEnd" class="col-sm-2 col-form-label">Alle:</label>
                             <div class="input-group date" id="timeEnd" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#timeEnd" id="timeEndValue"/>
+                                <input type="text" class="form-control datetimepicker-input" data-target="#timeEnd"
+                                       id="timeEndValue"/>
                                 <div class="input-group-append" data-target="#timeEnd" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="far fa-clock"></i></div>
                                 </div>
@@ -53,8 +57,11 @@
                         </div>
                     </div>
                 </form>
-                <div class="spinner-border" id="loading" style="width: 3rem; height: 3rem; display: none;" role="status">
-                    <span class="sr-only">Loading...</span>
+                <div class="text-center">
+                    <div class="spinner-border" id="loading" style="width: 4rem; height: 4rem; display: none;"
+                         role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
                 <div id="postazioneSelected" class="text-center">
                     <h3>Stai prenotando la postazione: </h3>
