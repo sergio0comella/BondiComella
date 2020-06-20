@@ -48,9 +48,9 @@ public class HomeServlet extends HttpServlet {
                 if(request.isUserInRole("CLT"))
                     request.getRequestDispatcher("WEB-INF/home/homeUtente.jsp").forward(request, response);
                 else if (request.isUserInRole("BGN"))
-                    request.getRequestDispatcher("homeBagnino.jsp").forward(request, response);
+                    request.getRequestDispatcher("WEB-INF/home/homeBagnino.jsp").forward(request, response);
                 else if (request.isUserInRole("CCN"))
-                    request.getRequestDispatcher("homeCucina.jsp").forward(request, response);
+                    request.getRequestDispatcher("WEB-INF/home/homeCucina.jsp").forward(request, response);
                 else if (request.isUserInRole("BGT"))
                     request.getRequestDispatcher("WEB-INF/home/homeBigliettaio.jsp").forward(request, response);
                 else
