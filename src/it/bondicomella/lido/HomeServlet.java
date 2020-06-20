@@ -38,9 +38,11 @@ public class HomeServlet extends HttpServlet {
         /** Se ho un utente loggato allora ne creo il bean**/
         if(request.getRemoteUser() != null){
             try {
+
                 UtenteController utController = new UtenteController();
                 Utente ut = utController.getUtenteByEmail(request.getRemoteUser());
                 request.setAttribute("utente", ut);
+
 
                 /** Una volta autenticato faccio il redirects secondo il ruolo **/
                 if(request.isUserInRole("CLT"))

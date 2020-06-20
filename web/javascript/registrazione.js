@@ -38,10 +38,10 @@ $("#registrati").on("click", function () {
 
     if ($("#nome")[0].checkValidity() && $("#cognome")[0].checkValidity() && $("#email")[0].checkValidity() && controllo_password && controllo_email) {
 
-        var nome = $("#nome").val();
-        var cognome = $("#cognome").val();
-        var email = $("#email").val();
-        var password = $("#password").val();
+        let nome = $("#nome").val();
+        let cognome = $("#cognome").val();
+        let email = $("#email").val();
+        let password = $("#password").val();
 
         $.ajax({
             type: "POST",
@@ -83,10 +83,10 @@ $("#registrati").on("click", function () {
         }
         if ($("#nome")[0].checkValidity() && $("#cognome")[0].checkValidity() && $("#email")[0].checkValidity() && controllo_email) {
 
-            var nome = $("#nome").val();
-            var cognome = $("#cognome").val();
-            var email = $("#email").val();
-            var ruolo = $("#roleOption").val();
+            let nome = $("#nome").val();
+            let cognome = $("#cognome").val();
+            let email = $("#email").val();
+            let ruolo = $("#roleOption").val();
 
                 $.ajax({
                     type: "POST",
@@ -100,7 +100,8 @@ $("#registrati").on("click", function () {
                     },
                     async: false,
                     success: function () {
-                        alert("Registrazione avvenuta con successo.")
+                        window.location.href = "/homeAuth"
+                        alert("Registrazione avvenuta con successo.");
                     },
                     error: function (result) {
                         if (result.responseText === "NOTVALIDEMAIL") {

@@ -31,7 +31,7 @@
     </div>
     <div class="dropdown-divider"></div>
 
-    <%if(request.isUserInRole("BGN") || request.isUserInRole("BGL")){%>
+    <%if(request.isUserInRole("BGN") || request.isUserInRole("BGT")){%>
     <div class="row row-cols-3 mt-4 justify-content-center">
         <div class="col-3">
             <p class="nPostazione">Postazione: <span class="postSelected"></span></p>
