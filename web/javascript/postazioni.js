@@ -1,24 +1,54 @@
+
+$(document).ready(function () {
+
+    $('#prenotazioneModal').on('shown.bs.modal', function (e) {
+        e.preventDefault();
+        let id = $(".postSelected").val();
+
+        getPrenotazioniGiornaliereInPostazione(id, (response) => {
+            if(response.length > 0) {
+                $(".riepilogoPrenotazioni").show();
+                let listFasce = '<ul>';
+                $.each(response, function (key, value) {
+                    listFasce += "<li>" + value.oraInizio + " - " + value.oraFine + '</li>'
+                });
+                listFasce += '</ul>';
+                $("#fasceOrarie").html(listFasce);
+            }
+        })
+    });
+    $('#prenotazioneModal').on('hide.bs.modal', function (e) {
+        $(".riepilogoPrenotazioni").hide();
+
+    });
+});
+
 function setOptionsPostazione(postazione, stato) {
 
     let libera = $("#freeButton");
     let occupa = $("#busyButton");
+    let prenota = $("#reserveButton");
 
     switch (stato) {
         case 'O':
             occupa.attr("disabled", true);
             libera.attr("disabled", false);
+            prenota.attr("disabled", true);
             break;
         case 'L':
             occupa.attr("disabled", false);
             libera.attr("disabled", true);
+            prenota.attr("disabled", false);
             break;
         case 'P':
             occupa.attr("disabled", false);
             libera.attr("disabled", true);
+            prenota.attr("disabled", false);
             break;
         default:
             occupa.attr("disabled", true);
             libera.attr("disabled", true);
+            prenota.attr("disabled", true);
             break;
     }
 
@@ -50,8 +80,12 @@ function editStatoPostazione(stato) {
 function checkOccupaPostazione() {
     let id = $(".postSelected").val();
     if ($("#post_" + id).hasClass("prenotata")) {
-        getPrenotazioniGiornaliereInPostazione(id, (confirm) => {
-            if (confirm) {
+        getPrenotazioniGiornaliereInPostazione(id, (response) => {
+            let message = "La postazione è già prenotata negli orari: "
+            $.each(response, function (key, value) {
+                message += " \n" + value.oraInizio + " - " + value.oraFine
+            });
+            if(confirm(message)){
                 occupaPostazione(id);
             }
         });
@@ -66,11 +100,7 @@ function getPrenotazioniGiornaliereInPostazione(id, callback) {
         url: 'http://localhost:8080/infoPrenotazioni?id=' + id,
         dataType: 'json',
         success: function (result) {
-            let message = "La postazione è già prenotata negli orari: "
-            $.each(result, function (key, value) {
-                message += " \n" + value.oraInizio + " - " + value.oraFine
-            });
-            callback(confirm(message));
+            callback(result);
         },
         error: function (error) {
             console.log("Impossibile eseguire l'operazione")
@@ -108,4 +138,3 @@ function liberaPostazione() {
         }
     })
 }
-

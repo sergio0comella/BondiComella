@@ -17,7 +17,38 @@ public class PostazioneController {
         this.conn = new ConnectionDB().connect();
     }
 
+    /**
+     * Fix per allineare lo stato delle postazioni sulla base delle prenotazioni
+     * @throws SQLException
+     */
+    private void updateStatoPostazioni() throws SQLException {
+        Calendar currenttime = Calendar.getInstance();
+        Date today = new Date((currenttime.getTime()).getTime());
+        Time now = new Time((currenttime.getTime()).getTime());
+
+        /**
+         * Modifico le postazioni e imposto a prenotate tutte quelle
+         * prenotate in data odierna
+         */
+        String updateGiornPost = "UPDATE postazione INNER JOIN prenotazione " +
+                        "ON postazione.id = prenotazione.fk_id_postazione " +
+                        "SET postazione.stato = ?" +
+                        "WHERE prenotazione.data_prenotazione = ? " +
+                        "AND prenotazione.ora_inizio > ?" +
+                        "AND postazione.stato <> ? ";
+
+        PreparedStatement psGiornaliere = this.conn.prepareStatement(updateGiornPost);
+        psGiornaliere.setString(1, Postazione.PRENOTATA);
+        psGiornaliere.setDate(2, today);
+        psGiornaliere.setTime(3, now);
+        psGiornaliere.setString(4, Postazione.OCCUPATA);
+
+        psGiornaliere.executeUpdate();
+
+    }
+
     public List<Postazione> getSchemaPostazioni() throws SQLException {
+        this.updateStatoPostazioni();
         PreparedStatement query = this.conn.prepareStatement("SELECT * FROM postazione");
         List<Postazione> postazioni = new ArrayList<>();
         try{
