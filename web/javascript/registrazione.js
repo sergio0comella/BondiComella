@@ -1,5 +1,3 @@
-$(document).ready(function () {
-});
 
 $("#re-password").on('focusout', function (e) {
     e.preventDefault()

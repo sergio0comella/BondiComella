@@ -1,3 +1,35 @@
+$(document).ready(function(){
+    $("#riepilogoButton").on('click', function (e) {
+        e.preventDefault();
+        let codice = $("#codicePrenotazione").val();
+        if(codice === undefined || codice === ''){
+            alert("Inserire un codice");
+        }else{
+            getPrenotazioneByCodice(codice, (prenotazione) => {
+                $("#oraInizio").html(prenotazione.oraInizio);
+                $("#oraFine").html(prenotazione.oraFine);
+                $("#dataPrenotazione").html(prenotazione.dataPrenotazione)
+                $("#riepilogoPrenotazione").modal('show');
+            });
+        }
+    });
+
+});
+
+function getPrenotazioneByCodice(codice, callback) {
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/infoPrenotazioni?codice=' + codice,
+        dataType: 'json',
+        success: function (result) {
+            callback(result);
+        },
+        error: function (error) {
+            console.log("Impossibile eseguire l'operazione")
+        }
+    });
+}
+
 function deletePrenotazione(prenotazione) {
     if (confirm("Vuoi annullare la prenotazione?")) {
         let idPrenotazione = prenotazione.id.split('_')[1];

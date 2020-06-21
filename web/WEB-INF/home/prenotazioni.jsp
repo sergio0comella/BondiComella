@@ -15,7 +15,8 @@
     <jsp:include page="../data/header.jsp" />
 <body>
 <div class="container mt-5">
-    <table class="table">
+    <h1 class="text-center"> Elenco Prenotazioni </h1>
+    <table class="table mt-4">
         <thead class="thead-light">
         <tr>
             <th scope="col">Utente</th>
@@ -64,7 +65,23 @@
         <%}%>
         </tbody>
     </table>
+    <hr class="mt-3 mb-3">
+    <%if(request.isUserInRole("BGN") || request.isUserInRole("BGT")){%>
+    <h3>Verifica Prenotazione</h3>
+    <div class="row justify-content-center mt-3">
+        <div class="col-6">
+            <input type="text" class="form-control" id="codicePrenotazione" maxlength="8" minlength="8" placeholder="Codice">
+        </div>
+        <div class="col-6">
+            <button class="btn btn-block btn-info" data-toggle="modal" id="riepilogoButton">Verifica Prenotazione</button>
+        </div>
+    </div>
+    <%}%>
+
+    <jsp:include page="riepilogoPrenotazione.jsp" />
+
 </div>
+
 </body>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/prenotazioni.js" crossorigin="anonymous"></script>
 
