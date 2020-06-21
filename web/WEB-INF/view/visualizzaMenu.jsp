@@ -10,7 +10,7 @@
         <thead class="thead-light">
         <tr>
             <th scope="col">Piatto</th>
-            <th scope="col">Costo</th>
+            <th scope="col">Prezzo</th>
         </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                 <%= m.getNomePiatto() %>
             </td>
             <td>
-                <%= m.getCosto() %>
+                 € <%= m.getCosto() %>
             </td>
         </tr>
         <%}%>

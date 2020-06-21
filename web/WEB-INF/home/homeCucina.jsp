@@ -1,4 +1,5 @@
 <%@ page import="it.bondicomella.lido.utente.model.Utente" %>
+<%@ page import="it.bondicomella.lido.utente.controller.UtenteController" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <jsp:include page="../data/header.jsp"/>
@@ -26,7 +27,7 @@
             <h1>Menu</h1>
         </div>
     </div>
-    <form >
+    <form method="post">
         <div class="form-row justify-content-center">
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="nomePiatto" placeholder="Nuovo piatto"
@@ -56,12 +57,9 @@
 <div class="row">
     <div class="col-12 text-center">
         <h1>Ordinazioni da fare</h1>
-        //TODO
+        <jsp:include page="ordinazioniDaFare.jsp"/>
     </div>
 </div>
-
-<jsp:include page="nuovaPrenotazione.jsp"/>
-
 </div>
 </body>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/aggiungiPiatto.js"

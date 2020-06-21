@@ -49,6 +49,18 @@ public class MenuServlet extends HttpServlet {
                 dispatcher.forward(request, response);
                 System.out.println("Errore nella modifica del Menu");
             }
+        }else if(request.isUserInRole("CLT")){
+            try {
+                List<Menu> ordineDalMenu = this.controller.getMenuDelGiorno();;
+                request.setAttribute("ordineDalMenu", ordineDalMenu);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/home/effettuaOrdineBar.jsp");
+                dispatcher.forward(request, response);
+
+            } catch (Exception e) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
+                dispatcher.forward(request, response);
+                System.out.println("Riprovare per effettuare l'ordinazione");
+            }
         } else {
             try {
                 List<Menu> menuDelGiorno = this.controller.getMenuDelGiorno();;

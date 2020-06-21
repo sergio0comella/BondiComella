@@ -1,9 +1,12 @@
 package it.bondicomella.lido;
 
+import it.bondicomella.lido.cucina.controller.OrdinazioneController;
+import it.bondicomella.lido.cucina.model.Ordine;
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -12,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class HomeAuth
@@ -41,7 +45,11 @@ public class HomeServlet extends HttpServlet {
 
                 UtenteController utController = new UtenteController();
                 Utente ut = utController.getUtenteByEmail(request.getRemoteUser());
-                request.setAttribute("utente", ut);
+
+                HttpSession session = request.getSession();
+                session.setAttribute("utente", ut);
+                request.setAttribute("utente",ut);
+                session.setMaxInactiveInterval(30*60);
 
 
                 /** Una volta autenticato faccio il redirects secondo il ruolo **/
@@ -49,9 +57,12 @@ public class HomeServlet extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/home/homeUtente.jsp").forward(request, response);
                 else if (request.isUserInRole("BGN"))
                     request.getRequestDispatcher("WEB-INF/home/homeBagnino.jsp").forward(request, response);
-                else if (request.isUserInRole("CCN"))
+                else if (request.isUserInRole("CCN")) {
+                    OrdinazioneController controller = new OrdinazioneController();
+                    List<Ordine> ordinazioni = controller.getListOrdini();
+                    request.setAttribute("ordinazioni", ordinazioni);
                     request.getRequestDispatcher("WEB-INF/home/homeCucina.jsp").forward(request, response);
-                else if (request.isUserInRole("BGT"))
+                }else if (request.isUserInRole("BGT"))
                     request.getRequestDispatcher("WEB-INF/home/homeBigliettaio.jsp").forward(request, response);
                 else
                     request.getRequestDispatcher("index.jsp").forward(request, response);

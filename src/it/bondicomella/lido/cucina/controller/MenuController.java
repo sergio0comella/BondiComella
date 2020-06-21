@@ -2,6 +2,7 @@ package it.bondicomella.lido.cucina.controller;
 
 import it.bondicomella.lido.ConnectionDB;
 import it.bondicomella.lido.cucina.model.Menu;
+import it.bondicomella.lido.utente.model.Utente;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -52,6 +53,21 @@ public class MenuController {
             throw new SQLException();
         }
         return menuDelGiorno;
+    }
+
+    public Menu getMenuById(int id) throws SQLException {
+
+        Menu menu = new Menu();
+        String query = "SELECT * FROM menu WHERE id = ?";
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setInt(1, id);
+
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            menu = this.createMenuFromRS(rs);
+        }
+
+        return menu;
     }
 
     public void modificaMenu(String[] dataActive, String[] dataNotActive) throws SQLException {
