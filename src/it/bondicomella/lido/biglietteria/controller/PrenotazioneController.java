@@ -215,12 +215,17 @@ public class PrenotazioneController {
             ps.execute();
 
             /**
-             * Aggiorno lo stato della postazione a L (libera)
+             * Aggiorno lo stato della postazione a Prenotata solo se
+             * la prenotazione è in data odierna
              */
-            String querySecond = "UPDATE postazione SET stato = 'P' WHERE id = ?";
-            PreparedStatement psSecond = this.conn.prepareStatement(querySecond);
-            psSecond.setInt(1, prenotazione.getFkIdPostazione());
-            psSecond.executeUpdate();
+            Calendar currenttime = Calendar.getInstance();
+            Date today = new Date((currenttime.getTime()).getTime());
+            if(prenotazione.getDataPrenotazione().equals(today)) {
+                String querySecond = "UPDATE postazione SET stato = 'P' WHERE id = ?";
+                PreparedStatement psSecond = this.conn.prepareStatement(querySecond);
+                psSecond.setInt(1, prenotazione.getFkIdPostazione());
+                psSecond.executeUpdate();
+            }
 
             this.conn.commit();
 

@@ -9,9 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 /**
  * Servlet implementation class HomeAuth
@@ -41,8 +39,12 @@ public class HomeServlet extends HttpServlet {
 
                 UtenteController utController = new UtenteController();
                 Utente ut = utController.getUtenteByEmail(request.getRemoteUser());
+
+                HttpSession session = request.getSession();
+                session.setAttribute("utente", ut);
                 request.setAttribute("utente", ut);
 
+                session.setMaxInactiveInterval(30*60);
 
                 /** Una volta autenticato faccio il redirects secondo il ruolo **/
                 if(request.isUserInRole("CLT"))

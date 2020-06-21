@@ -42,7 +42,6 @@ $(function () {
         locale: 'it',
         useCurrent: false,
         format: 'DD/MM/YYYY',
-        stepping: 60,
         minDate: Date.now(),
     });
 
