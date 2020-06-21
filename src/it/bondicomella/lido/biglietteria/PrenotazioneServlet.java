@@ -63,14 +63,18 @@ public class PrenotazioneServlet extends HttpServlet {
 
             Prenotazione prTemp = new Prenotazione(ut.getId(), postazione, isPagato, dataPrenotazione, oraInizio, oraFine, false);
             Prenotazione prFinal = prController.addNewPrenotazione(prTemp);
-
             PrintWriter out = response.getWriter();
             JsonObject obj = new JsonObject();
-            obj.addProperty("message", "Prenotazione inserita con successo");
-            out.print(obj.toString());
 
-            Mailer mailer = new Mailer();
-            mailer.sendMailNewPrenotazione(prFinal, emailCliente);
+            if(prFinal == null){
+                response.setContentType("text/plain");
+                obj.addProperty("message", "Impossibile inserire la prenotazione. \n La postazione risulta già impegnata in quelle fasce orarie");
+            }else{
+                obj.addProperty("message", "Prenotazione inserita con successo");
+                Mailer mailer = new Mailer();
+                mailer.sendMailNewPrenotazione(prFinal, emailCliente);
+            }
+            out.print(obj.toString());
 
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
@@ -98,9 +102,17 @@ public class PrenotazioneServlet extends HttpServlet {
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            /** Annullo la prenotazione**/
             PrenotazioneController controller = new PrenotazioneController();
             String idPrenotazione = request.getParameter("idPrenotazione");
             controller.annullaPrenotazione(idPrenotazione);
+
+            /** Recupero le informazioni per inviare la mail sull'annullamento **/
+            Prenotazione prenotazione = controller.getPrenotazioneById(idPrenotazione);
+            UtenteController utController = new UtenteController();
+            Utente ut = utController.getUtenteById(prenotazione.getFkIdUtente());
+            Mailer mailer = new Mailer();
+            mailer.sendMailAnnullaPrenotazione(prenotazione, ut.getEmail());
 
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");

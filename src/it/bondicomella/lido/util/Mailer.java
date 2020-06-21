@@ -53,4 +53,24 @@ public class Mailer {
             System.out.println("send failed, exception: " + mex);
         }
     }
+
+    public void sendMailAnnullaPrenotazione(Prenotazione prenotazione, String emailUtente){
+        try {
+
+            MimeMessage message = new MimeMessage(this.oSession);
+            message.setFrom(new InternetAddress("no-reply@lidoBoCo.com"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailUtente));
+            message.setSubject("Lido - Avviso annullamento prenotazione");
+            message.setContent("Salve, ci dispiace per l'incoveniente ma la sua prenotazione riferita alla data: "
+                    + prenotazione.getDataPrenotazione() + " valida dalle ore: "
+                    + prenotazione.getOraInizio() + " alle ore: "
+                    + prenotazione.getOraFine() + " è stata <b>cancellata</b>.", "text/html");
+
+            // Send message
+            Transport.send(message);
+
+        } catch (MessagingException mex) {
+            System.out.println("send failed, exception: " + mex);
+        }
+    }
 }

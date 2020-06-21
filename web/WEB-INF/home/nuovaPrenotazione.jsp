@@ -11,6 +11,12 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="row ">
+                    <div class="col-12 text-center riepilogoPrenotazioni" style="display: none;">
+                        <p class="font-weight-bold"> La postazione è già prenotata nelle seguenti fasce orarie: </p>
+                        <span id="fasceOrarie"></span>
+                    </div>
+                </div>
                 <form>
                     <div class='form-row justify-content-center'>
                         <div class="form-group col-md-6">

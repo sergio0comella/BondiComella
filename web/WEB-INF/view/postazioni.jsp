@@ -49,7 +49,7 @@
             <p class="nPostazione">Postazione: <span class="postSelected"></span></p>
         </div>
         <div class="col-6">
-            <button class="btn btn-block btn-info mt-2" data-toggle="modal" data-target="#prenotazioneModal">Prenota</button>
+            <button class="btn btn-block btn-info mt-2" data-toggle="modal" data-target="#prenotazioneModal" id="reserveButton">Prenota</button>
         </div>
     </div>
     <%}%>

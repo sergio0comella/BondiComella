@@ -42,6 +42,7 @@ public class InfoPrenotazioniServlet extends HttpServlet {
             Gson gsonBuilder = new GsonBuilder().create();
             String jsonFromJavaArrayList = gsonBuilder.toJson(prenotazioni);
 
+            response.setContentType("application/json");
             PrintWriter out = response.getWriter();
             out.print(jsonFromJavaArrayList);
 
