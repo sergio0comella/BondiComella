@@ -26,7 +26,7 @@ import java.util.Locale;
 
 @WebServlet("/infoPrenotazioni")
 @ServletSecurity(
-        @HttpConstraint(rolesAllowed = {"CLT", "BGN","BGT","CCN"})
+        @HttpConstraint(rolesAllowed = {"CLT", "BGN", "BGT", "CCN"})
 )
 public class InfoPrenotazioniServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,20 +35,39 @@ public class InfoPrenotazioniServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        try {
-            PrenotazioneController prController = new PrenotazioneController();
-            ArrayList<Prenotazione> prenotazioni = prController.getPrenotazioniGiornaliereInPostazione(id);
+        String codice = request.getParameter("codice");
 
-            Gson gsonBuilder = new GsonBuilder().create();
-            String jsonFromJavaArrayList = gsonBuilder.toJson(prenotazioni);
+        try {
+            String jsonResponse = "";
+            if (id != null) {
+                jsonResponse = getPrenotazioniGiornaliere(id);
+            } else if (codice != null) {
+                jsonResponse = getPrenotaizoneByCodice(codice);
+            }
 
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            out.print(jsonFromJavaArrayList);
+            out.print(jsonResponse);
 
         } catch (SQLException throwables) {
             System.out.println("Errore in get info prenotazioni");
             throwables.printStackTrace();
         }
+    }
+
+    private String getPrenotazioniGiornaliere(String id) throws SQLException {
+        PrenotazioneController prController = new PrenotazioneController();
+        ArrayList<Prenotazione> prenotazioni = prController.getPrenotazioniGiornaliereInPostazione(id);
+
+        Gson gsonBuilder = new GsonBuilder().create();
+        return gsonBuilder.toJson(prenotazioni);
+    }
+
+    private String getPrenotaizoneByCodice(String codice) throws SQLException {
+        PrenotazioneController prController = new PrenotazioneController();
+        Prenotazione prenotazione = prController.getPrenotazioneByCodice(codice);
+
+        Gson gsonBuilder = new GsonBuilder().create();
+        return gsonBuilder.toJson(prenotazione);
     }
 }

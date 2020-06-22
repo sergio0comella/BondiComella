@@ -121,6 +121,20 @@ public class PrenotazioneController {
         }
     }
 
+    public Prenotazione getPrenotazioneByCodice(String codice) throws SQLException{
+
+        String query = "SELECT * FROM prenotazione WHERE codice_prenotazione = ?";
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setString(1, codice);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return createPrenotazioneFromRS(rs);
+        } else {
+            return null;
+        }
+    }
+
     /**
      *
      * @param idPostazione
