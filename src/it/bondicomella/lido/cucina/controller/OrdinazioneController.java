@@ -61,7 +61,7 @@ public class OrdinazioneController {
         this.conn.setAutoCommit(false);
 
         for(Map.Entry<String,JsonElement> entry : ordine.entrySet()){
-            PreparedStatement query = this.conn.prepareStatement("INSERT INTO ordine (fk_id_utente,fk_id_menu,quantita,stato,ora) VALUES(?,?,?,?,current_time)");
+            PreparedStatement query = this.conn.prepareStatement("INSERT INTO ordine (fk_id_utente,fk_id_menu,quantita,stato,ora) VALUES(?,?,?,?,current_time )");
             query.setInt(1, idUtente);
             query.setString(2, entry.getKey());
             query.setInt(3, entry.getValue().getAsInt());

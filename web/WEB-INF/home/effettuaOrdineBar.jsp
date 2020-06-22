@@ -5,7 +5,7 @@
 <jsp:include page="../data/header.jsp" />
 <div class="container mt-5">
     <h1>Effettua un ordine al bar</h1>
-    <h5>*Selezionare la </h5>
+    <h5>*Selezionare la quantità per ogni prodotto che si desidera acquistare</h5>
     <div class="table-responsive text-center">
     <table class="table justify-content-center">
         <thead class="thead-light">
