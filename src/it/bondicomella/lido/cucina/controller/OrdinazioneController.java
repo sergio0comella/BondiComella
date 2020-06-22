@@ -7,6 +7,7 @@ import it.bondicomella.lido.cucina.model.Menu;
 import it.bondicomella.lido.cucina.model.Ordine;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 public class OrdinazioneController {
@@ -24,6 +25,7 @@ public class OrdinazioneController {
         String quantita = rs.getString("quantita");
         int fkUtente = rs.getInt("fk_id_utente");
         int fkMenu = rs.getInt("fk_id_menu");
+        Time ora = rs.getTime("ora");
 
         Ordine o = new Ordine();
         o.setId(id);
@@ -31,6 +33,7 @@ public class OrdinazioneController {
         o.setQuantita(quantita);
         o.setIdMenu(fkMenu);
         o.setIdUtente(fkUtente);
+        o.setOra(ora);
         return o;
     }
 
@@ -58,7 +61,7 @@ public class OrdinazioneController {
         this.conn.setAutoCommit(false);
 
         for(Map.Entry<String,JsonElement> entry : ordine.entrySet()){
-            PreparedStatement query = this.conn.prepareStatement("INSERT INTO ordine (fk_id_utente,fk_id_menu,quantita,stato) VALUES(?,?,?,?)");
+            PreparedStatement query = this.conn.prepareStatement("INSERT INTO ordine (fk_id_utente,fk_id_menu,quantita,stato,ora) VALUES(?,?,?,?,current_time)");
             query.setInt(1, idUtente);
             query.setString(2, entry.getKey());
             query.setInt(3, entry.getValue().getAsInt());
@@ -72,6 +75,18 @@ public class OrdinazioneController {
         PreparedStatement query = this.conn.prepareStatement("UPDATE ordine SET stato = '0' WHERE id = ? ");
         query.setString(1, id);
         query.execute();
+
+    }
+
+    public Ordine getTheFirstOrdine() throws SQLException {
+        PreparedStatement query = this.conn.prepareStatement("SELECT * FROM ordine WHERE ora =(SELECT min(ora) FROM ordine where stato=1 ) ");
+        ResultSet rs = query.executeQuery();
+        if(rs.next()) {
+            Ordine o = createOrdineFromRS(rs);
+            System.out.println(o);
+            return o;
+        }
+        return null;
     }
 
 }

@@ -8,6 +8,7 @@ import it.bondicomella.lido.cucina.model.Ordine;
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,15 +24,14 @@ import java.util.Set;
 public class OrdinazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-
         try {
-           Utente utenteInSessione = (Utente) request.getSession().getAttribute("utente");
-            int id =utenteInSessione.getId();
+            Utente utenteInSessione = (Utente) request.getSession().getAttribute("utente");
+            int id = utenteInSessione.getId();
             OrdinazioneController controller = new OrdinazioneController();
-            controller.effettuaOrdinazione(data,id);
+            controller.effettuaOrdinazione(data, id);
             PrintWriter out = response.getWriter();
             JsonObject obj = new JsonObject();
-            obj.addProperty("message", "Ordinazione inserita con successo");
+            obj.addProperty("message", "Ordinazione inserita con successo, il tuo codice è:" + "#" + id);
             out.print(obj.toString());
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,15 +40,22 @@ public class OrdinazioneServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        try {
+            OrdinazioneController controller = new OrdinazioneController();
+            Ordine ordine = controller.getTheFirstOrdine();
+            request.setAttribute("ordine",ordine);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/displayOrdinazioneInCorso.jsp");
+            dispatcher.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         String id = request.getParameter("id");
+        String id = request.getParameter("id");
         try {
             OrdinazioneController controller = new OrdinazioneController();
             controller.completaOrdinazione(id);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

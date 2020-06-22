@@ -1,5 +1,7 @@
 package it.bondicomella.lido.cucina.model;
 
+import java.sql.Time;
+
 public class Ordine {
 
         private int id;
@@ -7,16 +9,18 @@ public class Ordine {
         private int idMenu;
         private String stato;
         private String quantita;
+        private Time ora;
 
         public Ordine(){
 
         }
 
-        public Ordine(int idUtente, int idMenu, String stato, String quantita) {
+        public Ordine(int idUtente, int idMenu, String stato, String quantita,Time ora) {
             this.idUtente = idUtente;
             this.idMenu = idMenu;
             this.stato = stato;
             this.quantita = quantita;
+            this.ora = ora;
         }
 
 
@@ -58,5 +62,14 @@ public class Ordine {
 
     public void setIdMenu(int idMenu) {
         this.idMenu = idMenu;
+    }
+
+
+    public Time getOra() {
+        return ora;
+    }
+
+    public void setOra(Time ora) {
+        this.ora = ora;
     }
 }
