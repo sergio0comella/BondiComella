@@ -2,6 +2,7 @@ package it.bondicomella.lido.utente.controller;
 
 import it.bondicomella.lido.ConnectionDB;
 import it.bondicomella.lido.utente.model.Utente;
+import it.bondicomella.lido.util.Mailer;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -98,11 +99,13 @@ public class UtenteController {
     }
 
     public void creaUtenteFromBigliettaio(String nome, String cognome, String email, String ruolo) throws SQLException {
-        String password = getSaltString();
-        creaUtente(nome,cognome,email,password,ruolo);
+        String password = this.getSaltString();
+        Mailer mailer = new Mailer();
+        mailer.sendMailRegistrazioneNuovoUtente(email, password);
+        this.creaUtente(nome,cognome,email,password,ruolo);
     }
 
-    protected String getSaltString() {
+    private String getSaltString() {
         String SALTCHARS = "abcdefghijklmnopqrstuvwxyz1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
@@ -113,7 +116,5 @@ public class UtenteController {
         String saltStr = salt.toString();
         return saltStr;
     }
-
-
 
 }

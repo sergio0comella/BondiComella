@@ -36,7 +36,11 @@
         </div>
     </div>
 </form>
-<button  id = "registraUtente" class="btn btn-primary  ">Registra Utente</button>
+    <button  id="registraUtente" class="btn btn-primary  ">Registra Utente</button>
+    <button class="btn btn-primary"  id="loadingRegistra" type="button" disabled style="display: none">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...
+    </button>
 </div>
 </body>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/registrazione.js" crossorigin="anonymous"></script>

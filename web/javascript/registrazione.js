@@ -53,7 +53,7 @@ $("#registrati").on("click", function () {
             },
             async: false,
             success: function () {
-                alert("Registrazione avvenuta con successo. Ti stiamo portando alla home...")
+                alert("Registrazione avvenuta con successo. Ti stiamo portando alla home...");
                 window.location.href = "/homeAuth"
             },
             error: function (result) {
@@ -75,6 +75,8 @@ $("#registrati").on("click", function () {
 
 //Richiesta registrazione da parte del Bigliettaio
     $("#registraUtente").on("click", function () {
+        $("#registraUtente").hide();
+        $("#loadingRegistra").show();
         let controllo_email = false;
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val())) {
             controllo_email = true;
@@ -98,8 +100,10 @@ $("#registrati").on("click", function () {
                     },
                     async: false,
                     success: function () {
-                        window.location.href = "/homeAuth"
+                        $("#loadingRegistra").hide();
+                        $("#registraUtente").show();
                         alert("Registrazione avvenuta con successo.");
+                        window.location.href = "/homeAuth"
                     },
                     error: function (result) {
                         if (result.responseText === "NOTVALIDEMAIL") {

@@ -17,7 +17,6 @@ public class Mailer {
         String hostPort = "587";
         String hostSmtpPassword = "Prototunlea55";
 
-
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.user", hostSmtpUser);
         properties.setProperty("mail.smtp.host", host);
@@ -65,6 +64,24 @@ public class Mailer {
                     + prenotazione.getDataPrenotazione() + " valida dalle ore: "
                     + prenotazione.getOraInizio() + " alle ore: "
                     + prenotazione.getOraFine() + " è stata <b>cancellata</b>.", "text/html");
+
+            // Send message
+            Transport.send(message);
+
+        } catch (MessagingException mex) {
+            System.out.println("send failed, exception: " + mex);
+        }
+    }
+
+    public void sendMailRegistrazioneNuovoUtente(String emailUtente, String password){
+        try {
+
+            MimeMessage message = new MimeMessage(this.oSession);
+            message.setFrom(new InternetAddress("no-reply@lidoBoCo.com"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailUtente));
+            message.setSubject("Lido - Registrazione nuovo utente");
+            message.setContent("Salve, le inviamo la password per accedere al suo account. "
+                            + " \n <h1>" + password +" </h1>", "text/html");
 
             // Send message
             Transport.send(message);
