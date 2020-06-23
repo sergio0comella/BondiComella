@@ -5,16 +5,26 @@ $(document).ready(function(){
         if(codice === undefined || codice === ''){
             alert("Inserire un codice");
         }else{
-            getPrenotazioneByCodice(codice, (prenotazione) => {
-                $("#oraInizio").html(prenotazione.oraInizio);
-                $("#oraFine").html(prenotazione.oraFine);
-                $("#dataPrenotazione").html(prenotazione.dataPrenotazione)
+            getPrenotazioneByCodice(codice, (response) => {
+                $("#utentePrenotazione").html(response.utente);
+                $("#oraInizio").html(response.prenotazione.oraInizio);
+                $("#oraFine").html(response.prenotazione.oraFine);
+                $("#dataPrenotazione").html((response.prenotazione.dataPrenotazione.toUpperCase()));
+                $("#idPrenotazione").val(response.prenotazione.id);
                 $("#riepilogoPrenotazione").modal('show');
             });
         }
     });
 
 });
+
+function confermaPrenotazione() {
+    let idPrenotazione = $("#idPrenotazione").val();
+    $.ajax({
+        type: "PUT",
+        url: ''//todo;
+    })
+}
 
 function getPrenotazioneByCodice(codice, callback) {
     $.ajax({
@@ -143,4 +153,18 @@ function sendPrenotazione() {
             alert("err");
         }
     })
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }

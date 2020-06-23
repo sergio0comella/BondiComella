@@ -16,7 +16,8 @@
                 <h6>Dalle ore: <span class="font-weight-bold" id="oraInizio"></span> alle ore: <span class="font-weight-bold" id="oraFine"></span></h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" onclick="">Conferma</button>
+                <span id="idPrenotazione"></span>
+                <button type="button" class="btn btn-info" onclick="confermaPrenotazione()">Conferma</button>
             </div>
         </div>
     </div>

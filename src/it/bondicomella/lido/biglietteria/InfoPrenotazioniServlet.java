@@ -3,6 +3,8 @@ package it.bondicomella.lido.biglietteria;
 import com.google.gson.*;
 import it.bondicomella.lido.biglietteria.controller.PrenotazioneController;
 import it.bondicomella.lido.biglietteria.model.Prenotazione;
+import it.bondicomella.lido.utente.controller.UtenteController;
+import it.bondicomella.lido.utente.model.Utente;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -42,14 +44,15 @@ public class InfoPrenotazioniServlet extends HttpServlet {
             if (id != null) {
                 jsonResponse = getPrenotazioniGiornaliere(id);
             } else if (codice != null) {
-                jsonResponse = getPrenotaizoneByCodice(codice);
+                jsonResponse = getPrenotazioneByCodice(codice);
             }
 
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
+            System.out.println(jsonResponse);
             out.print(jsonResponse);
 
-        } catch (SQLException throwables) {
+        } catch (Exception throwables) {
             System.out.println("Errore in get info prenotazioni");
             throwables.printStackTrace();
         }
@@ -63,11 +66,19 @@ public class InfoPrenotazioniServlet extends HttpServlet {
         return gsonBuilder.toJson(prenotazioni);
     }
 
-    private String getPrenotaizoneByCodice(String codice) throws SQLException {
+    private String getPrenotazioneByCodice(String codice) throws Exception {
         PrenotazioneController prController = new PrenotazioneController();
         Prenotazione prenotazione = prController.getPrenotazioneByCodice(codice);
 
+        UtenteController utController = new UtenteController();
+        String nomeUtente = utController.getUtenteById(prenotazione.getFkIdUtente()).getCognomeNome();
+
+        JsonObject jo = new JsonObject();
+
+        jo.add("prenotazione", new Gson().toJsonTree(prenotazione));
+        jo.addProperty("utente", nomeUtente);
         Gson gsonBuilder = new GsonBuilder().create();
-        return gsonBuilder.toJson(prenotazione);
+
+        return gsonBuilder.toJson(jo);
     }
 }
