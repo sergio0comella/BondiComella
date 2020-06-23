@@ -16,7 +16,7 @@
             </h4>
         </div>
         <div class="col-4">
-            <h4>Email: <%=ut.getRuolo()%>
+            <h4>Ruolo: <%=ut.getRuolo()%>
             </h4>
         </div>
     </div>
@@ -26,26 +26,18 @@
             <h1>Menu</h1>
         </div>
         <div class="col-12">
-            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('listaPostazioni')">
-                Tasto da eliminare/o aggiungere qualcosa
+            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('listaPostazioni')" >
+                Visualizza postazioni
             </button>
         </div>
         <div class="col-12">
-            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1">
-                Visualizza postazioni
+            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('home/listaPrenotazioni')" >
+                Elenco Prenotazioni
             </button>
         </div>
     </div>
     <hr class="mt-4">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h1>Le tue Prenotazioni</h1>
-            //TODO
-        </div>
-    </div>
-
     <jsp:include page="nuovaPrenotazione.jsp"/>
-
 </div>
 </body>
 <script>

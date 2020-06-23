@@ -13,7 +13,7 @@ public class Prenotazione {
     private Date dataPrenotazione;
     private Time oraInizio;
     private Time oraFine;
-    private boolean annullata;
+    private int annullata;
     private String codicePrenotazione;
 
     /**
@@ -25,7 +25,7 @@ public class Prenotazione {
 
     public Prenotazione(){}
 
-    public Prenotazione(int fkIdUtente, int fkIdPostazione, boolean pagata, Date dataPrenotazione, Time oraInizio, Time oraFine, boolean annullata) {
+    public Prenotazione(int fkIdUtente, int fkIdPostazione, boolean pagata, Date dataPrenotazione, Time oraInizio, Time oraFine, int annullata) {
         this.fkIdUtente = fkIdUtente;
         this.fkIdPostazione = fkIdPostazione;
         this.pagata = pagata;
@@ -35,7 +35,7 @@ public class Prenotazione {
         this.annullata = annullata;
     }
 
-    public Prenotazione(int id, int fkIdUtente, int fkIdPostazione, boolean pagata, Date dataPrenotazione, Time oraInizio, Time oraFine, boolean annullata, String codicePrenotazione) {
+    public Prenotazione(int id, int fkIdUtente, int fkIdPostazione, boolean pagata, Date dataPrenotazione, Time oraInizio, Time oraFine, int annullata, String codicePrenotazione) {
         this.id = id;
         this.fkIdUtente = fkIdUtente;
         this.fkIdPostazione = fkIdPostazione;
@@ -103,11 +103,11 @@ public class Prenotazione {
         this.oraFine = oraFine;
     }
 
-    public boolean isAnnullata() {
+    public int isAnnullata() {
         return annullata;
     }
 
-    public void setAnnullata(boolean annullata) {
+    public void setAnnullata(int annullata) {
         this.annullata = annullata;
     }
 

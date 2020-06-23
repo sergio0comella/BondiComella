@@ -42,15 +42,7 @@
         </div>
     </div>
     <hr class="mt-4">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h1>Le tue Prenotazioni</h1>
-            //TODO
-        </div>
-    </div>
-
     <jsp:include page="nuovaPrenotazione.jsp"/>
-
 </div>
 </body>
 <script>

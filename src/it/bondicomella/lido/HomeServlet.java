@@ -1,11 +1,14 @@
 package it.bondicomella.lido;
 
+import it.bondicomella.lido.biglietteria.controller.PrenotazioneController;
+import it.bondicomella.lido.biglietteria.model.Prenotazione;
 import it.bondicomella.lido.cucina.controller.OrdinazioneController;
 import it.bondicomella.lido.cucina.model.Ordine;
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -49,12 +52,12 @@ public class HomeServlet extends HttpServlet {
 
                 HttpSession session = request.getSession();
                 session.setAttribute("utente", ut);
-                request.setAttribute("utente",ut);
-                session.setMaxInactiveInterval(30*60);
+                request.setAttribute("utente", ut);
+                session.setMaxInactiveInterval(30 * 60);
 
 
                 /** Una volta autenticato faccio il redirects secondo il ruolo **/
-                if(request.isUserInRole("CLT"))
+                if (request.isUserInRole("CLT"))
                     request.getRequestDispatcher("WEB-INF/home/homeUtente.jsp").forward(request, response);
                 else if (request.isUserInRole("BGN"))
                     request.getRequestDispatcher("WEB-INF/home/homeBagnino.jsp").forward(request, response);

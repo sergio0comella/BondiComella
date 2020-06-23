@@ -57,6 +57,23 @@ public class InfoPrenotazioniServlet extends HttpServlet {
             throwables.printStackTrace();
         }
     }
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        String tipo = request.getParameter("tipo");
+        if(tipo.equals("PAGA")){
+            try {
+                pagamentoPrenotazione(id);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }else if(tipo.equals("CONFERMA")){
+            try {
+                prenotazioneConfermata(id);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
 
     private String getPrenotazioniGiornaliere(String id) throws SQLException {
         PrenotazioneController prController = new PrenotazioneController();
@@ -80,5 +97,15 @@ public class InfoPrenotazioniServlet extends HttpServlet {
         Gson gsonBuilder = new GsonBuilder().create();
 
         return gsonBuilder.toJson(jo);
+    }
+
+    private void pagamentoPrenotazione(String id) throws SQLException {
+        PrenotazioneController prController = new PrenotazioneController();
+        prController.pagaPrenotazione(id);
+    }
+
+    private void prenotazioneConfermata(String id) throws SQLException {
+        PrenotazioneController prController = new PrenotazioneController();
+        prController.confermaPrenotazione(id);
     }
 }

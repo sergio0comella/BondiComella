@@ -35,17 +35,14 @@
                 Effettua un ordine al bar
             </button>
         </div>
-    </div>
-    <hr class="mt-4">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h1>Le tue Prenotazioni</h1>
-            //TODO
+        <div class="col-12">
+            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('home/listaPrenotazioni')" >
+                Elenco Prenotazioni
+            </button>
         </div>
     </div>
-
+    <hr class="mt-4">
     <jsp:include page="nuovaPrenotazione.jsp"/>
-
 </div>
 </body>
 <script>

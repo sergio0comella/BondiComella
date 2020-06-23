@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import it.bondicomella.lido.biglietteria.controller.PrenotazioneController;
 import it.bondicomella.lido.biglietteria.model.Prenotazione;
+import it.bondicomella.lido.cucina.model.Menu;
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
 import it.bondicomella.lido.util.Mailer;
@@ -18,18 +19,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.sql.Date;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet("/apiPrenotazioni")
 @ServletSecurity(
         httpMethodConstraints = {
-                @HttpMethodConstraint(value = "GET", rolesAllowed = {"BGN", "BGT"}),
+                @HttpMethodConstraint(value = "GET", rolesAllowed = {"BGN", "BGT","CLT"}),
                 @HttpMethodConstraint(value = "POST", rolesAllowed = {"CLT", "BGN", "BGT"}),
         }
 )
@@ -40,6 +43,7 @@ public class PrenotazioneServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
@@ -61,7 +65,7 @@ public class PrenotazioneServlet extends HttpServlet {
 
             Utente ut = utController.getUtenteByEmail(emailCliente);
 
-            Prenotazione prTemp = new Prenotazione(ut.getId(), postazione, isPagato, dataPrenotazione, oraInizio, oraFine, false);
+            Prenotazione prTemp = new Prenotazione(ut.getId(), postazione, isPagato, dataPrenotazione, oraInizio, oraFine, 0);
             Prenotazione prFinal = prController.addNewPrenotazione(prTemp);
             PrintWriter out = response.getWriter();
             JsonObject obj = new JsonObject();
@@ -85,18 +89,35 @@ public class PrenotazioneServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            PrenotazioneController controller = new PrenotazioneController();
-            response.setCharacterEncoding("UTF-8");
-            Map<Prenotazione, Utente> prenotazioni = controller.getListaPrenotazioni();
-            request.setAttribute("prenotazioni", prenotazioni);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("../WEB-INF/home/prenotazioni.jsp");
-            dispatcher.forward(request, response);
 
-        } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
-            dispatcher.forward(request, response);
-            System.out.println("Errore in GetListaPrenotazioni");
+        if(request.isUserInRole("CLT")){
+            try {
+                Utente utenteInSessione = (Utente) request.getSession().getAttribute("utente");
+                PrenotazioneController controller = new PrenotazioneController();
+                int id = utenteInSessione.getId();
+                Map<Prenotazione,Utente> prenotazioni =controller.getPrenotazioniUtente(id);
+                request.setAttribute("prenotazioni", prenotazioni);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("../WEB-INF/home/prenotazioni.jsp");
+                dispatcher.forward(request, response);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                PrenotazioneController controller = new PrenotazioneController();
+                response.setCharacterEncoding("UTF-8");
+                Map<Prenotazione, Utente> prenotazioni = controller.getListaPrenotazioni();
+                request.setAttribute("prenotazioni", prenotazioni);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("../WEB-INF/home/prenotazioni.jsp");
+                dispatcher.forward(request, response);
+
+            } catch (Exception e) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
+                dispatcher.forward(request, response);
+                System.out.println("Errore in GetListaPrenotazioni");
+            }
         }
     }
 
@@ -107,13 +128,14 @@ public class PrenotazioneServlet extends HttpServlet {
             String idPrenotazione = request.getParameter("idPrenotazione");
             controller.annullaPrenotazione(idPrenotazione);
 
-            /** Recupero le informazioni per inviare la mail sull'annullamento **/
-            Prenotazione prenotazione = controller.getPrenotazioneById(idPrenotazione);
-            UtenteController utController = new UtenteController();
-            Utente ut = utController.getUtenteById(prenotazione.getFkIdUtente());
-            Mailer mailer = new Mailer();
-            mailer.sendMailAnnullaPrenotazione(prenotazione, ut.getEmail());
-
+            if(request.isUserInRole("BGT")) {
+                /** Recupero le informazioni per inviare la mail sull'annullamento **/
+                Prenotazione prenotazione = controller.getPrenotazioneById(idPrenotazione);
+                UtenteController utController = new UtenteController();
+                Utente ut = utController.getUtenteById(prenotazione.getFkIdUtente());
+                Mailer mailer = new Mailer();
+                mailer.sendMailAnnullaPrenotazione(prenotazione, ut.getEmail());
+            }
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
             dispatcher.forward(request, response);

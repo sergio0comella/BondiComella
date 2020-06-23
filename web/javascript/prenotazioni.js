@@ -10,21 +10,52 @@ $(document).ready(function(){
                 $("#oraInizio").html(response.prenotazione.oraInizio);
                 $("#oraFine").html(response.prenotazione.oraFine);
                 $("#dataPrenotazione").html((response.prenotazione.dataPrenotazione.toUpperCase()));
-                $("#idPrenotazione").val(response.prenotazione.id);
+                let isPagata = response.prenotazione.pagata == 1 ? 'Sì' : 'No';
+                $("#statoPagamento").html(isPagata);
+                $(".idPrenotazione").val(response.prenotazione.id);
                 $("#riepilogoPrenotazione").modal('show');
             });
         }
+    });
+    $("#filtro").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tabellaPrenotazioni tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
     });
 
 });
 
 function confermaPrenotazione() {
-    let idPrenotazione = $("#idPrenotazione").val();
+    let idPrenotazione = $(".idPrenotazione").val();
+    console.log(idPrenotazione);
     $.ajax({
         type: "PUT",
-        url: ''//todo;
-    })
+        url: 'http://localhost:8080/infoPrenotazioni?id=' + idPrenotazione + '&tipo=CONFERMA',
+        success: function () {
+            alert("Prenotazione confermata");
+        },
+        error: function () {
+            alert("Postazione NON occupata, riprovare");
+        }
+    });
 }
+
+function pagaPrenotazione() {
+    let idPrenotazione = $(".idPrenotazione").val();
+    $.ajax({
+        type: "PUT",
+        url: 'http://localhost:8080/infoPrenotazioni?id=' +idPrenotazione + '&tipo=PAGA',
+        success: function () {
+            alert("Pagamento effettuato con successo");
+        },
+        error: function () {
+            alert("Pagamento non riuscito");
+        }
+    });
+}
+
+
 
 function getPrenotazioneByCodice(codice, callback) {
     $.ajax({

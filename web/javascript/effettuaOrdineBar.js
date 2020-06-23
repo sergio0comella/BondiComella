@@ -22,11 +22,7 @@ function getIDbyExplode(stringID) {
 
 
 $('#effettuaOrdine').click(function () {
-    console.log("-------------------");
-    console.log(listaOrdini);
-    console.log("----------------------");
    let ordini = JSON.stringify(listaOrdini);
-   console.log(ordini);
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/ordinazione",
@@ -43,7 +39,6 @@ $('#effettuaOrdine').click(function () {
 });
 
 function completaOrdinazione(id) {
-    console.log(id)
     $.ajax({
         type: 'PUT',
         url: 'http://localhost:8080/ordinazione?id='+id,
