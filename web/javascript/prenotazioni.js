@@ -12,6 +12,9 @@ $(document).ready(function(){
                 $("#dataPrenotazione").html((response.prenotazione.dataPrenotazione.toUpperCase()));
                 let isPagata = response.prenotazione.pagata == 1 ? 'Sì' : 'No';
                 $("#statoPagamento").html(isPagata);
+                if(response.prenotazione.pagata){
+                    $("#pagaPrenotazione").hide();
+                }
                 $(".idPrenotazione").val(response.prenotazione.id);
                 $("#riepilogoPrenotazione").modal('show');
             });
