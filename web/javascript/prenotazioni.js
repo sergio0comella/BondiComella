@@ -227,7 +227,7 @@ function checkEmailExist(email, callback) {
         url: 'http://localhost:8080/apiUtente',
         type: 'GET',
         success: function (result) {
-            if (result.indexOf(email) != -1) {
+            if (result.indexOf(email) !== -1) {
                 callback(true);
             } else {
                 callback(false);
