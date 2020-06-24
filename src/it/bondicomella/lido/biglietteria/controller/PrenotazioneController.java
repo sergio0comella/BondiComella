@@ -3,14 +3,16 @@ package it.bondicomella.lido.biglietteria.controller;
 import it.bondicomella.lido.ConnectionDB;
 import it.bondicomella.lido.biglietteria.model.Postazione;
 import it.bondicomella.lido.biglietteria.model.Prenotazione;
-import it.bondicomella.lido.cucina.model.Menu;
 import it.bondicomella.lido.utente.controller.UtenteController;
 import it.bondicomella.lido.utente.model.Utente;
 import it.bondicomella.lido.util.Mailer;
 
 import java.sql.*;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.SimpleFormatter;
 
 public class PrenotazioneController {
     protected Connection conn;
@@ -45,8 +47,33 @@ public class PrenotazioneController {
        return UUID.randomUUID().toString().substring(0, 8);
     }
 
-    private void sendMailForPrenotazioneCancellata(){
+    /**
+     * Restituisce true se la postazione non ha prenotazioni
+     * nel range richiesto
+     * @param prenotazione
+     * @return
+     * @throws SQLException
+     */
+    private boolean checkDisponibilitaPrenotazione(Prenotazione prenotazione) throws SQLException {
 
+        String query = "SELECT COUNT(*) > 0 AS result FROM prenotazione p " +
+                         "WHERE p.data_prenotazione = ? AND " +
+                            " (? BETWEEN ora_inizio AND ora_fine) "+
+                            "OR (? BETWEEN ora_inizio AND ora_fine)" +
+                            " AND fk_id_postazione = ?";
+
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setDate(1, prenotazione.getDataPrenotazione());
+        ps.setTime(2, prenotazione.getOraInizio());
+        ps.setTime(3, prenotazione.getOraFine());
+        ps.setInt(4, prenotazione.getFkIdPostazione());
+
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            return !rs.getBoolean("result");
+        }else{
+            return true;
+        }
     }
 
     /**
@@ -206,8 +233,6 @@ public class PrenotazioneController {
 
             this.conn.commit();
 
-            this.sendMailForPrenotazioneCancellata();
-
         } catch (SQLException e) {
             System.out.println("Errore nella commit:" + e.getSQLState());
             this.conn.rollback();
@@ -216,52 +241,55 @@ public class PrenotazioneController {
     }
 
     public Prenotazione addNewPrenotazione(Prenotazione prenotazione) throws SQLException {
+        if (!checkDisponibilitaPrenotazione(prenotazione)) {
+            return null;
+        } else {
+            try {
+                this.conn.setAutoCommit(false);
 
-        try {
-            this.conn.setAutoCommit(false);
+                /** Creo un codice identificativo per la prenotazione **/
+                String codice = this.generateCodePrenotazione();
+                prenotazione.setCodicePrenotazione(codice);
 
-            /** Creo un codice identificativo per la prenotazione **/
-            String codice = this.generateCodePrenotazione();
-            prenotazione.setCodicePrenotazione(codice);
+                String query = "INSERT INTO prenotazione(fk_id_utente, fk_id_postazione, pagata, data_prenotazione, ora_inizio, ora_fine, annullata, codice_prenotazione) " +
+                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+                /**
+                 * Inserisco la prenotazione
+                 */
+                PreparedStatement ps = this.conn.prepareStatement(query);
+                ps.setInt(1, prenotazione.getFkIdUtente());
+                ps.setInt(2, prenotazione.getFkIdPostazione());
+                ps.setBoolean(3, prenotazione.isPagata());
+                ps.setDate(4, prenotazione.getDataPrenotazione());
+                ps.setTime(5, prenotazione.getOraInizio());
+                ps.setTime(6, prenotazione.getOraFine());
+                ps.setBoolean(7, false);
+                ps.setString(8, prenotazione.getCodicePrenotazione());
 
-            String query = "INSERT INTO prenotazione(fk_id_utente, fk_id_postazione, pagata, data_prenotazione, ora_inizio, ora_fine, annullata, codice_prenotazione) " +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-            /**
-             * Inserisco la prenotazione
-             */
-            PreparedStatement ps = this.conn.prepareStatement(query);
-            ps.setInt(1, prenotazione.getFkIdUtente());
-            ps.setInt(2, prenotazione.getFkIdPostazione());
-            ps.setBoolean(3, prenotazione.isPagata());
-            ps.setDate(4, prenotazione.getDataPrenotazione());
-            ps.setTime(5, prenotazione.getOraInizio());
-            ps.setTime(6, prenotazione.getOraFine());
-            ps.setBoolean(7, false);
-            ps.setString(8, prenotazione.getCodicePrenotazione());
+                ps.execute();
 
-            ps.execute();
+                /**
+                 * Aggiorno lo stato della postazione a Prenotata solo se
+                 * la prenotazione è in data odierna
+                 */
+                Calendar currenttime = Calendar.getInstance();
+                Date today = new Date((currenttime.getTime()).getTime());
+                if (prenotazione.getDataPrenotazione().equals(today)) {
+                    String querySecond = "UPDATE postazione SET stato = 'P' WHERE id = ?";
+                    PreparedStatement psSecond = this.conn.prepareStatement(querySecond);
+                    psSecond.setInt(1, prenotazione.getFkIdPostazione());
+                    psSecond.executeUpdate();
+                }
 
-            /**
-             * Aggiorno lo stato della postazione a Prenotata solo se
-             * la prenotazione è in data odierna
-             */
-            Calendar currenttime = Calendar.getInstance();
-            Date today = new Date((currenttime.getTime()).getTime());
-            if (prenotazione.getDataPrenotazione().equals(today)) {
-                String querySecond = "UPDATE postazione SET stato = 'P' WHERE id = ?";
-                PreparedStatement psSecond = this.conn.prepareStatement(querySecond);
-                psSecond.setInt(1, prenotazione.getFkIdPostazione());
-                psSecond.executeUpdate();
+                this.conn.commit();
+
+            } catch (SQLException e) {
+                System.out.println("Errore nella commit addNewPrenotazione: " + e.getSQLState());
+                this.conn.rollback();
             }
 
-            this.conn.commit();
-
-        } catch (SQLException e) {
-            System.out.println("Errore nella commit addNewPrenotazione: " + e.getSQLState());
-            this.conn.rollback();
+            return prenotazione;
         }
-
-        return prenotazione;
     }
 
     public void pagaPrenotazione(String id) throws SQLException {
