@@ -10,6 +10,8 @@ import it.bondicomella.lido.utente.model.Utente;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpMethodConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,13 @@ import java.util.Map;
 import java.util.Set;
 
 @WebServlet("/BondiComella/OrdinazioneServlet")
+@ServletSecurity(
+        httpMethodConstraints = {
+                @HttpMethodConstraint(value = "GET", rolesAllowed = {"CCN"}),
+                @HttpMethodConstraint(value = "POST", rolesAllowed = {"CLT"}),
+                @HttpMethodConstraint(value = "PUT", rolesAllowed = {"CCN"}),
+        }
+)
 public class OrdinazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);

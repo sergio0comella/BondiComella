@@ -4,6 +4,8 @@ import it.bondicomella.lido.utente.controller.UtenteController;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpMethodConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/BondiComella/apiRegistrazione")
+@ServletSecurity(
+        httpMethodConstraints = {
+                @HttpMethodConstraint(value = "GET", rolesAllowed = {"BGT","CLT"}),
+                @HttpMethodConstraint(value = "POST", rolesAllowed = {"CLT","BGT"}),
+        }
+)
 public class RegistrazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
