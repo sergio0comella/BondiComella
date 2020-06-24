@@ -131,15 +131,12 @@ $(function () {
         format: 'HH:mm',
         stepping: 60,
         locale: 'it',
-        minDate: Date.now()
     });
     timeEnd.datetimepicker({
         format: 'HH:mm',
         stepping: 60,
         locale: 'it',
-        minDate: Date.now()
     })
-
 
     timeStart.on("change.datetimepicker", function (e) {
         timeEnd.datetimepicker('minDate', e.date.add(1, 'h'));
