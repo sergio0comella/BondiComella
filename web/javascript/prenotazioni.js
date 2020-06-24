@@ -200,8 +200,6 @@ function sendPrenotazione() {
 }
 
 function addPrenotazione(data){
-    debugger;
-
     $.ajax({
         url: 'http://localhost:8080/apiPrenotazioni',
         type: 'POST',
