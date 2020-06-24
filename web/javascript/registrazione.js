@@ -43,7 +43,7 @@ $("#registrati").on("click", function () {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/apiRegistrazione",
+            url: "http://localhost:8080/BondiComella/registrazione",
             data: {
                 nome: nome,
                 cognome: cognome,
@@ -54,7 +54,7 @@ $("#registrati").on("click", function () {
             async: false,
             success: function () {
                 alert("Registrazione avvenuta con successo. Ti stiamo portando alla home...");
-                window.location.href = "/homeAuth"
+                window.location.href = "/BondiComella/homeAuth"
             },
             error: function (result) {
                 if (result.responseText === "NOTVALIDEMAIL") {
@@ -90,7 +90,7 @@ $("#registrati").on("click", function () {
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/apiRegistrazione",
+                    url: "http://localhost:8080/BondiComella/registrazione",
                     data: {
                         nome: nome,
                         cognome: cognome,

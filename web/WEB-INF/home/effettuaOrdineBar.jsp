@@ -7,7 +7,7 @@
     <h1>Effettua un ordine al bar</h1>
     <h5>*Selezionare la quantità per ogni prodotto che si desidera acquistare</h5>
     <div class="table-responsive text-center">
-    <table class="table justify-content-center">
+    <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Piatto</th>
@@ -26,8 +26,8 @@
             <td>
                 <%= m.getNomePiatto() %>
             </td>
-            <td>
-                 € <%= m.getCosto() %>
+            <td class="costo">
+                € <%= m.getCosto() %>
             </td>
             <td>
                 <div class="col-3">
@@ -38,8 +38,23 @@
         <%}%>
         </tbody>
     </table>
+
     </div>
-    <button  id = "effettuaOrdine" class="btn btn-primary offset-2">Effettua Ordine</button>
+    <div class="row">
+        <div class="col-2">
+            <button class="btn btn-primary btn-block" onclick="calcolaTotale()">Totale</button>
+        </div>
+        <div class="col-4 input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="simboloEuro">Totale €</span>
+            </div>
+            <input type="text" class="align-self-end form-control" id="totale" value="0" aria-describedby="simboloEuro">
+        </div>
+        <div class="col-6">
+            <button  id = "effettuaOrdine" class="btn btn-primary btn-block">Effettua Ordine</button>
+        </div>
+
+    </div>
 </div>
 </body>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/effettuaOrdineBar.js"

@@ -25,10 +25,10 @@
                 <div class="card-body">
                     <button class="btn btn-block btn-success" onclick="redirectPage('listaPostazioni')">Situazione Postazioni</button>
                     <button class="btn btn-block btn-danger" onclick="redirectPage('menu')">Visualizza Menù del giorno </button>
-                    <button class="btn btn-block btn-danger" onclick="redirectPage('/ordinazione')">Stato ordinazione Bar </button>
+                    <button class="btn btn-block btn-danger" onclick="redirectPage('ordinazione')">Stato ordinazione Bar </button>
                     <%if(request.getRemoteUser() == null){%>
                     <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Login</button>
-                    <button class="btn btn-block btn-info" onclick="redirectPage('/apiRegistrazione')">Registrati</button>
+                    <button class="btn btn-block btn-info" onclick="redirectPage('registrazione')">Registrati</button>
                     <%}else{%>
                         <button class="btn btn-block btn-info mt-5" onclick="redirectPage('home')">Home</button>
                     <%}%>

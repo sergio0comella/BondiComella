@@ -7,6 +7,7 @@ import it.bondicomella.lido.utente.controller.UtenteController;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.HttpMethodConstraint;
 import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,9 +20,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-@WebServlet("/infoPrenotazioni")
+@WebServlet("/BondiComella/infoPrenotazioni/*")
 @ServletSecurity(
-        @HttpConstraint(rolesAllowed = {"CLT", "BGN", "BGT", "CCN"})
+        httpMethodConstraints = {
+                @HttpMethodConstraint(value = "GET", rolesAllowed = {"BGN", "BGT","CLT"}),
+                @HttpMethodConstraint(value = "PUT", rolesAllowed = {"BGN", "BGT"}),
+        }
 )
 public class InfoPrenotazioniServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,6 +53,7 @@ public class InfoPrenotazioniServlet extends HttpServlet {
             throwables.printStackTrace();
         }
     }
+
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         String tipo = request.getParameter("tipo");

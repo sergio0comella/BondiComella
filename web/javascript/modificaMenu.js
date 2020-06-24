@@ -41,7 +41,7 @@ $('#modificaMenu').click(function () {
     let dataJsonNotActive = JSON.stringify(ItemsNotActive)
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/menu",
+        url: "http://localhost:8080/BondiComella/menu",
         data: {
             ItemsActive: dataJsonActive,
             ItemsNotActive: dataJsonNotActive

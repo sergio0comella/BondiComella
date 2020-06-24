@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/apiPrenotazioni")
+@WebServlet("/BondiComella/apiPrenotazioni")
 @ServletSecurity(
         httpMethodConstraints = {
                 @HttpMethodConstraint(value = "GET", rolesAllowed = {"BGN", "BGT","CLT"}),

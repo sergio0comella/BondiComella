@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/apiPostazioni/*")
+@WebServlet("/BondiComella/apiPostazioni")
 public class PostazioneServlet extends HttpServlet {
     private PostazioneController controller;
 

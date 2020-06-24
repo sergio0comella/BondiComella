@@ -9,7 +9,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>UtenteServlet</servlet-name>
-        <url-pattern>/home/listaUtenti</url-pattern>
+        <url-pattern>/home/utenti</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>PostazoniServelt</servlet-name>
@@ -33,7 +33,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>InfoPrenotazioniServlet</servlet-name>
-        <url-pattern>/home/InfoPrenotazioni</url-pattern>
+        <url-pattern>/home/infoPrenotazioni</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>HomeServlet</servlet-name>

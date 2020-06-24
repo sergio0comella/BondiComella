@@ -97,7 +97,7 @@ function checkOccupaPostazione() {
 function getPrenotazioniGiornaliereInPostazione(id, callback) {
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/infoPrenotazioni?id=' + id,
+        url: 'http://localhost:8080/BondiComella/home/infoPrenotazioni?id=' + id,
         dataType: 'json',
         success: function (result) {
             callback(result);
@@ -111,7 +111,7 @@ function getPrenotazioniGiornaliereInPostazione(id, callback) {
 function occupaPostazione(id) {
     $.ajax({
         type: 'PUT',
-        url: 'http://localhost:8080/apiPostazioni?id=' + id + '&stato=O',
+        url: 'http://localhost:8080/BondiComella/listaPostazioni?id=' + id + '&stato=O',
         success: function () {
             //let postazione = $("#post_" + $(".postSelected").val());
             //postazione.addClass('btn-danger');
@@ -126,7 +126,7 @@ function occupaPostazione(id) {
 function liberaPostazione() {
     $.ajax({
         type: 'PUT',
-        url: 'http://localhost:8080/apiPostazioni?id=' + $(".postSelected").val() + '&stato=L',
+        url: 'http://localhost:8080/BondiComella/listaPostazioni?id=' + $(".postSelected").val() + '&stato=L',
         success: function () {
             //let postazione = $("#post_" + $(".postSelected").val());
             // postazione.removeClass('btn-danger');

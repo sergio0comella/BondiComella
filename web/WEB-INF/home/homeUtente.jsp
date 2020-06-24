@@ -31,7 +31,7 @@
             </button>
         </div>
         <div class="col-12">
-            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('/menu')">
+            <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('menu')">
                 Effettua un ordine al bar
             </button>
         </div>

@@ -30,7 +30,7 @@ $(document).ready(function () {
 
     $('.basicAutoComplete').autoComplete({
         resolverSettings: {
-            url: 'http://localhost:8080/apiUtente'
+            url: 'http://localhost:8080/BondiComella/home/utenti'
         },
     });
 });
@@ -41,7 +41,7 @@ function confermaPrenotazione() {
     console.log(idPrenotazione);
     $.ajax({
         type: "PUT",
-        url: 'http://localhost:8080/infoPrenotazioni?id=' + idPrenotazione + '&tipo=CONFERMA',
+        url: 'http://localhost:8080/BondiComella/home/infoPrenotazioni?id=' + idPrenotazione + '&tipo=CONFERMA',
         success: function () {
             alert("Prenotazione confermata");
         },
@@ -55,7 +55,7 @@ function pagaPrenotazione() {
     let idPrenotazione = $(".idPrenotazione").val();
     $.ajax({
         type: "PUT",
-        url: 'http://localhost:8080/infoPrenotazioni?id=' + idPrenotazione + '&tipo=PAGA',
+        url: 'http://localhost:8080/BondiComella/home/infoPrenotazioni?id=' + idPrenotazione + '&tipo=PAGA',
         success: function () {
             alert("Pagamento effettuato con successo");
         },
@@ -69,7 +69,7 @@ function pagaPrenotazione() {
 function getPrenotazioneByCodice(codice, callback) {
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/infoPrenotazioni?codice=' + codice,
+        url: 'http://localhost:8080/BondiComella/home/infoPrenotazioni?codice=' + codice,
         dataType: 'json',
         success: function (result) {
             callback(result);
@@ -85,7 +85,7 @@ function deletePrenotazione(prenotazione) {
         let idPrenotazione = prenotazione.id.split('_')[1];
         $.ajax({
             type: 'PUT',
-            url: 'http://localhost:8080/apiPrenotazioni?idPrenotazione=' + idPrenotazione,
+            url: 'http://localhost:8080/BondiComella/home/listaPrenotazioni?idPrenotazione=' + idPrenotazione,
             success: function () {
                 $("#" + prenotazione.id).parent().parent().addClass('table-dark');
                 $("#" + prenotazione.id).attr('disabled', true);
@@ -201,7 +201,7 @@ function sendPrenotazione() {
 
 function addPrenotazione(data){
     $.ajax({
-        url: 'http://localhost:8080/apiPrenotazioni',
+        url: 'http://localhost:8080/BondiComella/home/listaPrenotazioni',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -224,7 +224,7 @@ function addPrenotazione(data){
 
 function checkEmailExist(email, callback) {
     $.ajax({
-        url: 'http://localhost:8080/apiUtente',
+        url: 'http://localhost:8080/BondiComella/home/utenti',
         type: 'GET',
         success: function (result) {
             if (result.indexOf(email) !== -1) {

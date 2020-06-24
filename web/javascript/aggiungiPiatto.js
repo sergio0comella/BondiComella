@@ -6,7 +6,7 @@ $("#inserisciPiatto").on("click",function () {
         console.log(costo);
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/aggiungiPiatto",
+            url: "http://localhost:8080/BondiComella/aggiungiPiatto",
             data: {
                 nomePiatto: nomePiatto,
                 costo: costo
