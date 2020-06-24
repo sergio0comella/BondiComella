@@ -74,7 +74,7 @@ public class PrenotazioneServlet extends HttpServlet {
 
             if(prFinal == null){
                 response.setContentType("text/plain");
-                obj.addProperty("message", "Impossibile inserire la prenotazione. \n La postazione risulta già impegnata in quelle fasce orarie");
+                obj.addProperty("message", "Impossibile inserire la prenotazione. \n La fascia oraria selezionata non è disponibile");
             }else{
                 obj.addProperty("message", "Prenotazione inserita con successo");
                 Mailer mailer = new Mailer();

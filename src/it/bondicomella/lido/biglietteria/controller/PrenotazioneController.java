@@ -77,6 +77,17 @@ public class PrenotazioneController {
         }
     }
 
+    private boolean checkValidityTime(Date dataPrentazione, Time inizio, Time fine){
+        Calendar currenttime = Calendar.getInstance();
+        Date today = new Date((currenttime.getTime()).getTime());
+        Time now = new Time((currenttime.getTime()).getTime());
+
+        if(!dataPrentazione.equals(today)) return true;
+
+        if(inizio.before(now) || fine.before(now)) return false;
+        else return true;
+    }
+
     /**
      *  Metodi per il retrieve di informazioni
      *
@@ -242,6 +253,11 @@ public class PrenotazioneController {
     }
 
     public Prenotazione addNewPrenotazione(Prenotazione prenotazione) throws SQLException {
+
+        if(!checkValidityTime(prenotazione.getDataPrenotazione(), prenotazione.getOraInizio(), prenotazione.getOraFine())){
+            return null;
+        }
+
         if (!checkDisponibilitaPrenotazione(prenotazione)) {
             return null;
         } else {
