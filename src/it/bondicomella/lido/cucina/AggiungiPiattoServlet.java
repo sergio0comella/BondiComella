@@ -2,6 +2,8 @@ package it.bondicomella.lido.cucina;
 import it.bondicomella.lido.cucina.controller.MenuController;
 import it.bondicomella.lido.cucina.model.Menu;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpMethodConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/BondiComella/AggiungiPiattoServlet")
+@ServletSecurity(
+        httpMethodConstraints = {
+                @HttpMethodConstraint(value = "POST", rolesAllowed = {"CCN"}),
+        }
+)
 public class AggiungiPiattoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nomePiatto = request.getParameter("nomePiatto");
