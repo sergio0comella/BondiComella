@@ -31,7 +31,7 @@ public class OrdinazioneServlet extends HttpServlet {
             controller.effettuaOrdinazione(data, id);
             PrintWriter out = response.getWriter();
             JsonObject obj = new JsonObject();
-            obj.addProperty("message", "Ordinazione inserita con successo, il tuo codice è:" + "#" + id);
+            obj.addProperty("message", "Ordinazione inserita con successo. Codice:" + "#" + id);
             out.print(obj.toString());
         } catch (Exception e) {
             e.printStackTrace();

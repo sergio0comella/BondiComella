@@ -37,6 +37,9 @@
         <div class="col-2" style="color: green;">
             Verde = Pagato
         </div>
+        <div class="col-2" style="color: red;">
+            Rosso = confermata
+        </div>
     </div>
     <div class="dropdown-divider"></div>
     <table class="table mt-4">
@@ -59,14 +62,14 @@
         <% String rowColor = "";
             if(pt.getKey().isAnnullata() == 1){
                  rowColor = "table-dark";
-            } else if(pt.getKey().isPagata()) {
+            } else if(pt.getKey().isPagata() && pt.getKey().isAnnullata()==0) {
                  rowColor = "table-success";
             } else if(pt.getKey().isAnnullata() == 2){
                 rowColor ="table-danger";
             }%>
             <tr class="<%=rowColor%>">
                 <td>
-                    <%= pt.getValue().getCognomeNome() %>
+                    <%= pt.getValue().getCognomeNome() %>S
                 </td>
                 <td>
                     <%= pt.getValue().getEmail() %>

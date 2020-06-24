@@ -23,7 +23,7 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-12 text-center"> <!-- OGNI 12 COL finisce la row -->
+        <div class="col-12 text-center">
             <h1>Menu</h1>
         </div>
     </div>
@@ -39,7 +39,7 @@
                         <span class="input-group-text" id="inputGroupPrepend">€</span>
                     </div>
                     <input type="number" step="0.01" min="1" max="30" class="form-control" id="costoPiatto"
-                           placeholder="Prezzo" name="costoPiatto" aria-describedby="inputGroupPrepend" required>
+                           placeholder="MAX 30,00" name="costoPiatto" aria-describedby="inputGroupPrepend" required>
                 </div>
             </div>
             <div class="col-2">
