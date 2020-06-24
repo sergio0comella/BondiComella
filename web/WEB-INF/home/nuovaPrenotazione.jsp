@@ -18,6 +18,15 @@
                     </div>
                 </div>
                 <form>
+                    <%if(request.isUserInRole("BGT")){%>
+                        <div class="form-row justify-content-center">
+                            <div class="form-group col-md-12">
+                                <label for="emailUtente">Inserire email dell'utente:</label>
+                                <input class="form-control basicAutoComplete" id="emailUtente" type="text" autocomplete="on"
+                                       data-noresults-text="Nessun utente trovato.">
+                            </div>
+                        </div>
+                    <%}%>
                     <div class='form-row justify-content-center'>
                         <div class="form-group col-md-6">
                             <label for="datePicker">Giorno della prenotazione</label>

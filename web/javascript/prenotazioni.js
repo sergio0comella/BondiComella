@@ -17,6 +17,7 @@ $(document).ready(function(){
             });
         }
     });
+
     $("#filtro").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#tabellaPrenotazioni tr").filter(function() {
@@ -24,7 +25,13 @@ $(document).ready(function(){
         });
     });
 
+    $('.basicAutoComplete').autoComplete({
+        resolverSettings: {
+            url: 'http://localhost:8080/apiUtente'
+        },
+    });
 });
+
 
 function confermaPrenotazione() {
     let idPrenotazione = $(".idPrenotazione").val();
@@ -153,7 +160,7 @@ function sendPrenotazione() {
     let oraFinePrenotazione = $("#timeEndValue").val();
     let postazione = $("#idPostazione").val();
     let isPagato = $("#isPagato option:selected").val();
-    let emailUtente = '';
+    let emailUtente = $("#emailUtente").val();
 
     let data = {
         dataPrenotazione: dataPrenotazione,
@@ -184,18 +191,4 @@ function sendPrenotazione() {
             alert("err");
         }
     })
-}
-
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [year, month, day].join('-');
 }

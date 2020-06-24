@@ -4,11 +4,9 @@ import com.google.gson.*;
 import it.bondicomella.lido.biglietteria.controller.PrenotazioneController;
 import it.bondicomella.lido.biglietteria.model.Prenotazione;
 import it.bondicomella.lido.utente.controller.UtenteController;
-import it.bondicomella.lido.utente.model.Utente;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
-import javax.servlet.annotation.HttpMethodConstraint;
 import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,15 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
+
 
 @WebServlet("/infoPrenotazioni")
 @ServletSecurity(

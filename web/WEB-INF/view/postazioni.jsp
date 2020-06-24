@@ -42,6 +42,9 @@
         <div class="col-3">
             <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('L')" id="freeButton" disabled>Libera</button>
         </div>
+        <div class="col-3">
+            <button class="btn btn-block btn-info mt-2" data-toggle="modal" data-target="#prenotazioneModal" id="reserveButton">Prenota</button>
+        </div>
     </div>
     <%}else if(request.isUserInRole("CLT")){%>
     <div class="row row-cols-2 mt-4 justify-content-center">
@@ -75,9 +78,6 @@
             </div>
         <%}%>
 
-    </div>
-    <div id="dialog-confirm" title="Empty the recycle bin?">
-        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
     </div>
 </div>
 <jsp:include page="../home/nuovaPrenotazione.jsp"/>
