@@ -42,9 +42,11 @@
         <div class="col-3">
             <button class="btn btn-block btn-info mt-2" onclick="editStatoPostazione('L')" id="freeButton" disabled>Libera</button>
         </div>
-        <div class="col-3">
-            <button class="btn btn-block btn-info mt-2" data-toggle="modal" data-target="#prenotazioneModal" id="reserveButton">Prenota</button>
-        </div>
+        <%if(request.isUserInRole("BGT")){%>
+            <div class="col-3">
+                <button class="btn btn-block btn-info mt-2" data-toggle="modal" data-target="#prenotazioneModal" id="reserveButton">Prenota</button>
+            </div>
+        <%}%>
     </div>
     <%}else if(request.isUserInRole("CLT")){%>
     <div class="row row-cols-2 mt-4 justify-content-center">

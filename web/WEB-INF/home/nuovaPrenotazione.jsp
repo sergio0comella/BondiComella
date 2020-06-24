@@ -10,6 +10,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <input type="hidden" id="isBgt" value="<%=request.isUserInRole("BGT")%>">
             <div class="modal-body">
                 <div class="row ">
                     <div class="col-12 text-center riepilogoPrenotazioni" style="display: none;">
@@ -62,22 +63,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-row justify-content-center">
-                        <div class="form-group col-md-12">
-                            <label class="mr-sm-2" for="isPagato">Scegli dove pagare:</label>
-                            <select class="custom-select mr-sm-2" id="isPagato">
-                                <option value="true">Online</option>
-                                <option value="false">In Biglietteria</option>
-                            </select>
+                    <%if(request.isUserInRole("CLT")){%>
+                        <div class="form-row justify-content-center">
+                            <div class="form-group col-md-12">
+                                <label class="mr-sm-2" for="isPagato">Scegli dove pagare:</label>
+                                <select class="custom-select mr-sm-2" id="isPagato">
+                                    <option value="1">Online</option>
+                                    <option value="0">In Biglietteria</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    <%}%>
                 </form>
-                <div class="text-center">
-                    <div class="spinner-border" id="loading" style="width: 4rem; height: 4rem; display: none;"
-                         role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </div>
                 <div id="postazioneSelected" class="text-center">
                     <h3>Stai prenotando la postazione: </h3>
                     <h1 id="idPostazione">
@@ -86,7 +83,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
-                <button type="button" class="btn btn-primary" onclick="sendPrenotazione()">Prenota</button>
+                <button type="button" class="btn btn-primary" id="prenotaButton" onclick="sendPrenotazione()">Prenota</button>
+                <button class="btn btn-primary"  id="loadingPrenota" type="button" disabled style="display: none">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
             </div>
         </div>
     </div>

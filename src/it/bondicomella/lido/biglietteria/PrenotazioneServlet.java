@@ -57,10 +57,12 @@ public class PrenotazioneServlet extends HttpServlet {
 
             int postazione = data.get("postazione").getAsInt();
             boolean isPagato = data.get("isPagato").getAsBoolean();
-            String emailCliente = data.get("emailUtente").getAsString();
+            String emailCliente = "";
 
-            if (emailCliente == null || emailCliente.equals("")) {
+            if (data.get("emailUtente") == null) {
                 emailCliente = request.getRemoteUser();
+            }else{
+                emailCliente = data.get("emailUtente").getAsString();
             }
 
             Utente ut = utController.getUtenteByEmail(emailCliente);

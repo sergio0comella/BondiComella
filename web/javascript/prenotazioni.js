@@ -1,16 +1,16 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $("#riepilogoButton").on('click', function (e) {
         e.preventDefault();
         let codice = $("#codicePrenotazione").val();
-        if(codice === undefined || codice === ''){
+        if (codice === undefined || codice === '') {
             alert("Inserire un codice");
-        }else{
+        } else {
             getPrenotazioneByCodice(codice, (response) => {
                 $("#utentePrenotazione").html(response.utente);
                 $("#oraInizio").html(response.prenotazione.oraInizio);
                 $("#oraFine").html(response.prenotazione.oraFine);
                 $("#dataPrenotazione").html((response.prenotazione.dataPrenotazione.toUpperCase()));
-                let isPagata = response.prenotazione.pagata == 1 ? 'Sì' : 'No';
+                let isPagata = response.prenotazione.pagata === "1" ? 'Sì' : 'No';
                 $("#statoPagamento").html(isPagata);
                 $(".idPrenotazione").val(response.prenotazione.id);
                 $("#riepilogoPrenotazione").modal('show');
@@ -18,9 +18,9 @@ $(document).ready(function(){
         }
     });
 
-    $("#filtro").on("keyup", function() {
+    $("#filtro").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#tabellaPrenotazioni tr").filter(function() {
+        $("#tabellaPrenotazioni tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
@@ -52,7 +52,7 @@ function pagaPrenotazione() {
     let idPrenotazione = $(".idPrenotazione").val();
     $.ajax({
         type: "PUT",
-        url: 'http://localhost:8080/infoPrenotazioni?id=' +idPrenotazione + '&tipo=PAGA',
+        url: 'http://localhost:8080/infoPrenotazioni?id=' + idPrenotazione + '&tipo=PAGA',
         success: function () {
             alert("Pagamento effettuato con successo");
         },
@@ -61,7 +61,6 @@ function pagaPrenotazione() {
         }
     });
 }
-
 
 
 function getPrenotazioneByCodice(codice, callback) {
@@ -152,8 +151,8 @@ $(function () {
  **/
 function sendPrenotazione() {
 
-    $("#loading").show();
-    $("#postazioneSelected").hide();
+    $("#prenotaButton").hide();
+    $("#loadingPrenota").show();
 
     let dataPrenotazione = $("#dateValue").val();
     let oraInizioPrenotazione = $("#timeStartValue").val();
@@ -171,24 +170,71 @@ function sendPrenotazione() {
         emailUtente: emailUtente,
     };
 
+    let isBgt = $("#isBgt").val() === 'true';
+
+    if (isBgt) {
+
+        if (emailUtente === undefined || emailUtente === "") {
+            $("#loadingPrenota").hide();
+            $("#prenotaButton").show();
+            alert("Inserire una mail valida");
+            return;
+        }
+
+        checkEmailExist(emailUtente, (esito) => {
+            if (!esito) {
+                $("#loadingPrenota").hide();
+                $("#prenotaButton").show();
+                alert("L'email inserita non è associata ad alcun utente.");
+            } else {
+                if (isBgt) data.isPagato = 1;
+                addPrenotazione(data);
+            }
+        });
+    }else{
+        addPrenotazione(data);
+    }
+}
+
+function addPrenotazione(data){
+    debugger;
+
     $.ajax({
         url: 'http://localhost:8080/apiPrenotazioni',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify(data),
-        cache:false,
+        cache: false,
         success: function (result) {
             $('#prenotazioneModal').modal('toggle');
-            $("#loading").hide();
-            $("#postazioneSelected").show();
+            $("#prenotaButton").show();
+            $("#loadingPrenota").hide();
             alert(result.message);
             location.reload();
         },
         error: function () {
-            $("#loading").hide();
-            $("#postazioneSelected").show();
-            alert("err");
+            $("#loadingPrenota").hide();
+            $("#prenotaButton").show();
+            alert("Qualcosa è andato storto, invitiamo a riprovare");
         }
     })
+}
+
+function checkEmailExist(email, callback) {
+    $.ajax({
+        url: 'http://localhost:8080/apiUtente',
+        type: 'GET',
+        success: function (result) {
+            if (result.indexOf(email) > 0) {
+                callback(true);
+            } else {
+                callback(false);
+            }
+        },
+        error: function () {
+            alert("Qualcosa è andato storto");
+        }
+    })
+
 }

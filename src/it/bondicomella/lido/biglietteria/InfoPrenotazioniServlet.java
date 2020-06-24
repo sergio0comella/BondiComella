@@ -42,7 +42,6 @@ public class InfoPrenotazioniServlet extends HttpServlet {
 
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            System.out.println(jsonResponse);
             out.print(jsonResponse);
 
         } catch (Exception throwables) {
