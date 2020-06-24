@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@WebServlet("/OrdinazioneServlet")
+@WebServlet("/BondiComella/OrdinazioneServlet")
 public class OrdinazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);

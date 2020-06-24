@@ -21,7 +21,7 @@
     </div>
     <%}%>
     <h1 class="text-center"> Elenco Prenotazioni </h1>
-    <input class="form-control mb-3 mt-3 col-4 offset-8" id="filtro" type="text" placeholder="Filtra Utenti">
+    <input class="form-control mb-3 mt-3 col-4 offset-8" id="filtro" type="text" placeholder="Filtra prenotazioni">
     <hr class="mt-3 mb-3">
     <div class="dropdown-divider"></div>
     <div class="row justify-content-center font-italic">

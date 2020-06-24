@@ -11,7 +11,7 @@ $("#re-password").on('focusout', function (e) {
 
 $("#email").on('focusout', function (e) {
     e.preventDefault()
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val())) {
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test($("#email").val())) {
         $("#message").text("Formato email errato");
         $("#Error").show();
     } else {
@@ -30,7 +30,7 @@ $("#registrati").on("click", function () {
     }
 
     let controllo_email = false;
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val())) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test($("#email").val())) {
         controllo_email = true;
     }
 
@@ -78,7 +78,7 @@ $("#registrati").on("click", function () {
         $("#registraUtente").hide();
         $("#loadingRegistra").show();
         let controllo_email = false;
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($("#email").val())) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test($("#email").val())) {
             controllo_email = true;
         }
         if ($("#nome")[0].checkValidity() && $("#cognome")[0].checkValidity() && $("#email")[0].checkValidity() && controllo_email) {

@@ -5,6 +5,8 @@ import it.bondicomella.lido.cucina.model.Menu;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpMethodConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/MenuServlet")
+@WebServlet("/BondiComella/MenuServlet")
+@ServletSecurity(
+        httpMethodConstraints = {
+                @HttpMethodConstraint(value = "POST", rolesAllowed = {"CCN"}),
+        }
+)
 public class MenuServlet extends HttpServlet {
     private MenuController controller;
 
@@ -47,7 +54,7 @@ public class MenuServlet extends HttpServlet {
             } catch (Exception e) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/errore.jsp");
                 dispatcher.forward(request, response);
-                System.out.println("Errore nella modifica del Menu");
+                System.out.println("Errore nella visualizzazione del menu");
             }
         }else if(request.isUserInRole("CLT")){
             try {

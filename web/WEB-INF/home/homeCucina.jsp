@@ -48,7 +48,7 @@
         </div>
     </form>
     <div class="col-12">
-        <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('/menu')">
+        <button type="button" class="btn btn-info btn-lg btn-block mt-1 mb-1" onclick="redirectPage('menu')">
             Modifica Menù del giorno
         </button>
     </div>
