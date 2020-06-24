@@ -15,6 +15,10 @@ $(".quantita").on("change",function () {
     console.log(listaOrdini);
 });
 
+function calcolaTotale() {
+
+}
+
 function getIDbyExplode(stringID) {
     let id = stringID.split("_");
     return id[1];

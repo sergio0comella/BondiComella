@@ -56,17 +56,18 @@ public class PrenotazioneController {
      */
     private boolean checkDisponibilitaPrenotazione(Prenotazione prenotazione) throws SQLException {
 
-        String query = "SELECT COUNT(*) > 0 AS result FROM prenotazione p " +
-                         "WHERE p.data_prenotazione = ? AND " +
-                            " (? BETWEEN ora_inizio AND ora_fine) "+
-                            "OR (? BETWEEN ora_inizio AND ora_fine)" +
-                            " AND fk_id_postazione = ?";
+        String query = "SELECT COUNT(*) > 0 AS result "+
+                "FROM prenotazione p "+
+                "WHERE p.data_prenotazione = ? AND ((? BETWEEN ora_inizio AND ora_fine AND ? NOT IN (ora_fine,ora_fine)) " +
+                " OR (? BETWEEN ora_inizio AND ora_fine AND ? NOT IN (ora_fine,ora_fine))) AND fk_id_postazione = ?";
 
         PreparedStatement ps = this.conn.prepareStatement(query);
         ps.setDate(1, prenotazione.getDataPrenotazione());
         ps.setTime(2, prenotazione.getOraInizio());
-        ps.setTime(3, prenotazione.getOraFine());
-        ps.setInt(4, prenotazione.getFkIdPostazione());
+        ps.setTime(3, prenotazione.getOraInizio());
+        ps.setTime(4, prenotazione.getOraFine());
+        ps.setTime(5, prenotazione.getOraFine());
+        ps.setInt(6, prenotazione.getFkIdPostazione());
 
         ResultSet rs = ps.executeQuery();
         if(rs.next()){
@@ -263,7 +264,7 @@ public class PrenotazioneController {
                 ps.setDate(4, prenotazione.getDataPrenotazione());
                 ps.setTime(5, prenotazione.getOraInizio());
                 ps.setTime(6, prenotazione.getOraFine());
-                ps.setBoolean(7, false);
+                ps.setInt(7, 0);
                 ps.setString(8, prenotazione.getCodicePrenotazione());
 
                 ps.execute();

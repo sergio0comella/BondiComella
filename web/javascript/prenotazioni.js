@@ -10,7 +10,7 @@ $(document).ready(function () {
                 $("#oraInizio").html(response.prenotazione.oraInizio);
                 $("#oraFine").html(response.prenotazione.oraFine);
                 $("#dataPrenotazione").html((response.prenotazione.dataPrenotazione.toUpperCase()));
-                let isPagata = response.prenotazione.pagata === "1" ? 'Sì' : 'No';
+                let isPagata = response.prenotazione.pagata == "1" ? 'Sì' : 'No';
                 $("#statoPagamento").html(isPagata);
                 if(response.prenotazione.pagata){
                     $("#pagaPrenotazione").hide();

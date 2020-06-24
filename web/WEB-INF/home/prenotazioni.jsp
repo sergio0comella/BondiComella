@@ -69,7 +69,7 @@
             }%>
             <tr class="<%=rowColor%>">
                 <td>
-                    <%= pt.getValue().getCognomeNome() %>S
+                    <%= pt.getValue().getCognomeNome() %>
                 </td>
                 <td>
                     <%= pt.getValue().getEmail() %>
