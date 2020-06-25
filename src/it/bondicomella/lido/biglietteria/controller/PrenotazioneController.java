@@ -84,8 +84,7 @@ public class PrenotazioneController {
 
         if(!dataPrenotazione.toLocalDate().equals(today.toLocalDate())) return true;
 
-        if(inizio.before(now) || fine.before(now)) return false;
-        else return true;
+        return inizio.toLocalTime().compareTo(now.toLocalTime()) >= 0 && fine.toLocalTime().compareTo(now.toLocalTime()) >= 0;
     }
 
     /**
