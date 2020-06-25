@@ -77,12 +77,12 @@ public class PrenotazioneController {
         }
     }
 
-    private boolean checkValidityTime(Date dataPrentazione, Time inizio, Time fine){
+    private boolean checkValidityTime(Date dataPrenotazione, Time inizio, Time fine){
         Calendar currenttime = Calendar.getInstance();
         Date today = new Date((currenttime.getTime()).getTime());
         Time now = new Time((currenttime.getTime()).getTime());
 
-        if(!dataPrentazione.equals(today)) return true;
+        if(!dataPrenotazione.toLocalDate().equals(today.toLocalDate())) return true;
 
         if(inizio.before(now) || fine.before(now)) return false;
         else return true;
