@@ -59,7 +59,7 @@ public class PrenotazioneController {
         String query = "SELECT COUNT(*) > 0 AS result "+
                 "FROM prenotazione p "+
                 "WHERE p.data_prenotazione = ? AND ((? BETWEEN ora_inizio AND ora_fine AND ? NOT IN (ora_fine,ora_fine)) " +
-                " OR (? BETWEEN ora_inizio AND ora_fine AND ? NOT IN (ora_fine,ora_fine))) AND fk_id_postazione = ?";
+                " OR (? BETWEEN ora_inizio AND ora_fine AND ? NOT IN (ora_fine,ora_fine)) OR (? < ora_inizio AND ? > ora_fine)) AND fk_id_postazione = ?";
 
         PreparedStatement ps = this.conn.prepareStatement(query);
         ps.setDate(1, prenotazione.getDataPrenotazione());
@@ -67,7 +67,9 @@ public class PrenotazioneController {
         ps.setTime(3, prenotazione.getOraInizio());
         ps.setTime(4, prenotazione.getOraFine());
         ps.setTime(5, prenotazione.getOraFine());
-        ps.setInt(6, prenotazione.getFkIdPostazione());
+        ps.setTime(6, prenotazione.getOraInizio());
+        ps.setTime(7, prenotazione.getOraFine());
+        ps.setInt(8, prenotazione.getFkIdPostazione());
 
         ResultSet rs = ps.executeQuery();
         if(rs.next()){

@@ -25,7 +25,6 @@ import java.util.Set;
 @WebServlet("/BondiComella/OrdinazioneServlet")
 @ServletSecurity(
         httpMethodConstraints = {
-                @HttpMethodConstraint(value = "GET", rolesAllowed = {"CCN"}),
                 @HttpMethodConstraint(value = "POST", rolesAllowed = {"CLT"}),
                 @HttpMethodConstraint(value = "PUT", rolesAllowed = {"CCN"}),
         }

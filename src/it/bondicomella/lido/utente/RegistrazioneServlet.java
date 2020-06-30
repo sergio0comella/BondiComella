@@ -14,12 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/BondiComella/apiRegistrazione")
-@ServletSecurity(
-        httpMethodConstraints = {
-                @HttpMethodConstraint(value = "GET", rolesAllowed = {"BGT","CLT"}),
-                @HttpMethodConstraint(value = "POST", rolesAllowed = {"CLT","BGT"}),
-        }
-)
+
 public class RegistrazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

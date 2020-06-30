@@ -18,7 +18,7 @@
     <%}else{%>
     <h1> STIAMO SERVENDO L'UTENTE: </h1>
     <h1 style="font-size: 10em">#<%= o.getIdUtente()%></h1>
-    <img src="../../resources/panino2.jpg">
+    <img src="resources/panino2.jpg">
     <%}%>
 </div>
 </body>

@@ -103,7 +103,7 @@ $("#registrati").on("click", function () {
                         $("#loadingRegistra").hide();
                         $("#registraUtente").show();
                         alert("Registrazione avvenuta con successo.");
-                        window.location.href = "/homeAuth"
+                        window.location.href = "/BondiComella/homeAuth"
                     },
                     error: function (result) {
                         if (result.responseText === "NOTVALIDEMAIL") {

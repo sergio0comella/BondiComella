@@ -7,7 +7,7 @@
     <%request.logout(); %>
     <p>Speriamo di rivederti presto, <a href="index.jsp">vai alla pagina inziale</a></p>
     <div class="row">
-        <img src="../resources/arrivederci-estate-84c8283c-e3e0-43cb-a3a4-2607aa46bdc3.jpg">
+        <img src="resources/arrivederci-estate-84c8283c-e3e0-43cb-a3a4-2607aa46bdc3.jpg">
     </div>
 </div>
 </body>
