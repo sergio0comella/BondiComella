@@ -1,5 +1,9 @@
 package it.bondicomella.lido;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.*;
 
 public class ConnectionDB{
@@ -7,15 +11,12 @@ public class ConnectionDB{
     public Connection connect() throws SQLException {
 
         try{
-            String url = "jdbc:mysql://localhost:3306/lido_db";
-            String user = "root";
-            String password = "";
 
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(url, user, password);
-            return conn;
+            Context context = new InitialContext();
+            DataSource dataSource = (DataSource)context.lookup("java:comp/env/jdbc/bondicomella");
+            return dataSource.getConnection();
 
-        } catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | NamingException e){
             throw new SQLException("Connessione al db non riuscita.");
         }
     }
